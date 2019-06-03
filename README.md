@@ -59,9 +59,19 @@ Remote the storage bucket from your Google Cloud project, or delete your Google 
 
 ## Running locally
 
-<!-- TODO Install and startup NGINX or python development server. -->
+To run a basic Web server using Python ([[2](#references)], [[3](#references)]), run the following command in folder containing `index.html`:
 
-Open `index.html` in your favorite browser. 😉
+```
+python -m SimpleHTTPServer 8000
+```
+
+With Python 3, command is a bit different:
+
+```
+python -m http.server 8000
+```
+
+Visit `http://localhost:8000/` in your favorite browser. 🤗
 
 
 [Back to top ↑](#)
@@ -91,5 +101,10 @@ No troubleshooting advice has been recorded yet. 😕
  [1] Google Cloud. *Making data public*.
      https://cloud.google.com/storage/docs/access-control/making-data-public
 
+ [2] Python. *SimpleHTTPServer*
+     https://docs.python.org/2/library/simplehttpserver.html
+
+ [3] Python. *http.server*
+     https://docs.python.org/3/library/http.server.html
 
 [Back to top ↑](#)
