@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="38px" height="38px" viewBox="0 0 38 38" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.3 (57544) - http://www.bohemiancoding.com/sketch -->
+    <title>back-icon</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="design-system" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="ui-design-system" transform="translate(-502.000000, -789.000000)" fill-rule="nonzero" stroke="#333333" stroke-width="3">
+            <g id="buttons" transform="translate(50.000000, 754.000000)">
+                <g id="back-button" transform="translate(454.000000, 37.000000)">
+                    <g id="back-icon">
+                        <circle id="circle" fill="#FAFAFA" cx="17" cy="17" r="17"></circle>
+                        <polyline id="arrow" points="20.6397918 10 11 17.8033428 20.6397918 25.4991867"></polyline>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

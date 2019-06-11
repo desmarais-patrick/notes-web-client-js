@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="65px" height="60px" viewBox="0 0 65 60" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.3 (57544) - http://www.bohemiancoding.com/sketch -->
+    <title>delete-button-filled</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#FAFAFA" offset="0%"></stop>
+            <stop stop-color="#A9A9A9" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="50%" x2="88.1886468%" y2="89.1512464%" id="linearGradient-2">
+            <stop stop-color="#F5F5F5" offset="0%"></stop>
+            <stop stop-color="#C7C6C6" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="design-system" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="ui-design-system" transform="translate(-247.000000, -775.000000)" fill-rule="nonzero" stroke="#767676">
+            <g id="buttons" transform="translate(50.000000, 754.000000)">
+                <g id="delete-button-filled" transform="translate(198.000000, 21.000000)">
+                    <ellipse id="interior" fill="url(#linearGradient-1)" cx="31.5" cy="12.5" rx="31.5" ry="6.5"></ellipse>
+                    <path d="M-3.56560042,16.002978 L-3.56560042,35.002978 L42.4343996,35.002978 L42.4343996,16.002978 L-3.56560042,16.002978 Z" id="top-card" fill="#FAFAFA" transform="translate(19.434400, 25.502978) rotate(70.000000) translate(-19.434400, -25.502978) "></path>
+                    <path d="M4.38812181,15.7211685 L4.38812181,34.7211685 L50.3881218,34.7211685 L50.3881218,15.7211685 L4.38812181,15.7211685 Z" id="top-card-copy" fill="#FAFAFA" transform="translate(27.388122, 25.221169) rotate(76.000000) translate(-27.388122, -25.221169) "></path>
+                    <path d="M10.0300504,21.6472071 L10.0300504,40.6472071 L56.0300504,40.6472071 L56.0300504,21.6472071 L10.0300504,21.6472071 Z" id="top-card-copy-2" fill="#FAFAFA" transform="translate(33.030050, 31.147207) rotate(103.000000) translate(-33.030050, -31.147207) "></path>
+                    <path d="M0,14 L10.3344714,53.629454 C14.8595869,57.209818 21.7480964,59 31,59 C40.2519036,59 46.9765256,57.209818 51.1738661,53.629454 L62,14 C54.6004802,17.4298822 44.2671469,19.1448234 31,19.1448234 C17.7328531,19.1448234 7.39951979,17.4298822 0,14 Z" id="front" fill="url(#linearGradient-2)"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

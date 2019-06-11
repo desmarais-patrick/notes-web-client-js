@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="65px" height="55px" viewBox="0 0 65 55" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.3 (57544) - http://www.bohemiancoding.com/sketch -->
+    <title>delete-button-background</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#FAFAFA" offset="0%"></stop>
+            <stop stop-color="#D8D8D8" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="50%" x2="88.1886468%" y2="89.1512464%" id="linearGradient-2">
+            <stop stop-color="#F5F5F5" offset="0%"></stop>
+            <stop stop-color="#C7C6C6" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="design-system" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="ui-design-system" transform="translate(-167.000000, -780.000000)" fill-rule="nonzero" stroke="#767676">
+            <g id="buttons" transform="translate(50.000000, 754.000000)">
+                <g id="delete-button-background" transform="translate(118.000000, 27.000000)">
+                    <ellipse id="interior" fill="url(#linearGradient-1)" cx="31.5" cy="6.5" rx="31.5" ry="6.5"></ellipse>
+                    <path d="M0.5,8 L10.8344714,47.629454 C15.3595869,51.209818 22.2480964,53 31.5,53 C40.7519036,53 47.4765256,51.209818 51.6738661,47.629454 L62.5,8 C55.1004802,11.4298822 44.7671469,13.1448234 31.5,13.1448234 C18.2328531,13.1448234 7.89951979,11.4298822 0.5,8 Z" id="front" fill="url(#linearGradient-2)"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

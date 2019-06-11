@@ -1,0 +1,148 @@
+/************************************************************
+  RESET
+
+  Many resets were manually forked from Bootstrap's reboot SCSS file.
+  Bootstrap is licensed MIT.
+
+************************************************************/
+
+/* GENERAL */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+} /** `width` is not affected by `padding` or `border` **/
+
+body {
+    margin: 0;
+    font-family: Helvetica, sans-serif;
+    font-size: 10px;
+    font-weight: normal;
+    line-height: 1.5;
+    color: #333333;
+    text-align: left;
+    background-color: #FAFAFA;
+    -webkit-text-size-adjust: 100%; /** Prevent adjustments in iOS. **/
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /** iOS tap color transparent. **/
+}
+
+[tabindex="-1"]:focus:not(:focus-visible) {
+    outline: 0 !important;
+} /** Remove focus outline on supported browsers. **/
+
+/* LINKS */
+
+a {
+    color: #FF5252;
+    text-decoration: none;
+    background-color: transparent; /* Gray background on active links in IE 10 :s */
+}
+a:hover {
+    color: #D94545;
+    text-decoration: underline;
+}
+
+/* IMAGES */
+
+img {
+    vertical-align: middle;
+    border-style: none; /* Border on images inside links in IE 10- :s */
+}
+  
+svg {
+    overflow: hidden;
+    vertical-align: middle;
+} /* Workaround for the SVG overflow bug in IE10/11 :s */
+
+/* BUTTONS AND INPUTS */
+
+button {
+    border-radius: 0; /* Chrome default rounding :s */
+    overflow: visible; /* Edge hides it :s */
+}
+
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+    -webkit-appearance: button; /* Webkit and Safari styling defaults */
+}
+
+input,
+button,
+select,
+optgroup,
+textarea {
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+textarea {
+    overflow: auto; /* Default vertical scrollbar in IE. :s */
+    resize: vertical;
+}
+
+/************************************************************
+  DEFAULTS
+************************************************************/
+
+/** FONTS **/
+h1, h2, h3, p {
+    font-family: Helvetica, sans-serif;
+    margin-top: 0;
+    margin-bottom: .5rem;
+}
+
+.title {
+    font-size: 18px;
+    font-weight: normal;
+}
+
+h1, .h1 {
+    font-size: 14px;
+    font-weight: normal;
+}
+
+h2, .h2 {
+    font-size: 12px;
+    font-weight: lighter;
+}
+
+p {
+    font-size: 10px;
+    font-weight: normal;
+}
+
+button {
+    font-size: 10px;
+    font-weight: bold;
+}
+
+small {
+    font-size: 9px;
+    font-weight: lighter;
+}
+
+/** COLORS **/
+
+/**
+ Background: #FAFAFA (almost white)
+ Text1: #333333 (dark grey)
+ Text2: #666666 (light grey)
+ Accent1: #FF5252 (red)
+ DarkerAccent1: #D94545 (darker red)
+ Accent2: #0E48AB
+**/
+
+/** GRID BREAKPOINTS **/
+
+/**
+ xs: 0,
+ sm: 576px,
+ md: 768px,
+ lg: 992px,
+ xl: 1200px
+ **/
+
