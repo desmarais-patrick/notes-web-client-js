@@ -2,9 +2,18 @@
 
 ## Future Considerations
 
+ - Detect browser language
+ - Accessibility
+ - Browser zoom support
  - Routing and Web-crawl-able
- - Progressive Web apps
+ - Progressive Web apps and offline support.
  - Content delivery networks
+ - No JavaScript
+ - Test performance with loading resources asynchronously with JavaScript.
+ - Retry connection automatically.
+ - Error class with message and reporting instructions (auto-fade or manual).
+ - Statistics on application usage and errors.
+ - User interface components and design system.
 
 ## Inspirations
 
@@ -12,6 +21,11 @@
  - Alternatives to MVA, MVC and MVVM approaches to building front-facing apps.
  - React.js, Angular, and Vue.js approach to loading views in browser.
  - Webpack and other approaches to build files for deployment.
+ - Review `@google-cloud/datastore`'s and GMail's approaches to retry connect.
+ - Review how to use HTTP/2 properly with front-end apps.
+ - Review how Sentry.io reports errors in production (and privacy policy).
+ - Review Meteor's module for error overlay during development.
+ - Review how UXPin displays user interface components and design system.
 
 ## References
 
