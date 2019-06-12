@@ -113,3 +113,20 @@ Recommended, simple approach involves adding directives at the end of HTML body:
 
  - Developers.google.com
   [Introduction to HTTP/2](https://developers.google.com/web/fundamentals/performance/http2/)
+
+
+🤔 **Q3** Which browser to support?
+
+While I don't plan to test on all the browsers, I want to be compatible with:
+
+ - Edge
+ - Chrome
+ - Safari
+ - Firefox
+ - Safari on iOS
+ - Chrome on Android
+
+...in their latest versions.
+
+Some browsers that I may support include IE11 and Safari 9.
+Let's how many JavaScript features can be well ported for these older versions.
