@@ -33,6 +33,9 @@
    [Google Chrome Developers](https://www.youtube.com/channel/UCnUYZLuoy1rq1aVMwx4aTzw)
    - Progressive Web Apps
    - UX Design & Accessibility
+ - Udacity courses
+   - Responsive Images by Google
+   - Responsive Web Design Fundamentals by Google
 
 ## Thoughts
 
@@ -61,3 +64,52 @@ Approach C:
 *Approach C* seems to require a bulkier system for building and deploying files. However, with the advent of HTTP/2, I wish to research more on the effects of bundles versus individual files. Bundling seems to lose flexibility in serving the most important files first, unless we're clever about it. With a lot of files though, serving the application in a bundle seems to help linking everything together.
 
 Decision: *Approach A* first, then B, then C in later iterations.
+
+
+🤔 **Q2** Loading CSS and JavaScript
+
+Reading Google Developers' web fundamentals and a few more articles, 
+I learned more about script loading.
+
+*Stylesheets* can be loaded following responsive design guidelines.
+
+The following HTML snippet ensures good scaling of pixels on high-dpi devices.
+```
+<meta name="viewport" content="width=device-width, initial-scale=1">
+```
+
+The following HTML snippet supports major breakpoints, 
+while minor breakpoints can be defined with `@media` queries in CSS code.
+```
+<link rel="stylesheet" media="(max-width:600px)" href="css/index-small.css">
+<link rel="stylesheet" media="(min-width:601px)" href="css/index-large.css">
+```
+
+*JavaScript* loading and rendering performance adds tension.
+Script directives in HTML can block rendering.
+Asynchronous loading in HTML can cause confusion about what is executed first.
+Script directives added through JavaScript can hinder pre-loading.
+Moreover, HTTP/2 is putting in question whether bundles should be created.
+
+Recommended, simple approach involves adding directives at the end of HTML body:
+```
+<script src="//other-domain.com/1.js"></script>
+<script src="2.js"></script>
+```
+
+
+*Articles*
+
+ - Developers.google.com
+  [HTTP Requests](https://developers.google.com/web/fundamentals/performance/get-started/httprequests-5)
+  (May 2019)
+ - HTML5Rocks.com
+  [Deep dive into the murky waters of script loading](https://www.html5rocks.com/en/tutorials/speed/script-loading/)
+ - Developers.google.com
+  [Responsive Web Design Basics](https://developers.google.com/web/fundamentals/design-and-ux/responsive/)
+ - Bits of Code
+  [Understanding the Critical Rendering Path](https://bitsofco.de/understanding-the-critical-rendering-path/)
+  (2017)
+
+ - Developers.google.com
+  [Introduction to HTTP/2](https://developers.google.com/web/fundamentals/performance/http2/)
