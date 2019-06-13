@@ -2,22 +2,11 @@
 // TODO How to not upload this file?
 
 (function (Notes) {
-    var test = function (testSuiteBuilder) {
+    var requestBuilderTestScript = function (testSuiteBuilder) {
         var testSuite = testSuiteBuilder.createTestSuite("RequestBuilder");
-        // DELETE request
-        // GET request
-        // GET request with query params
-        // POST request with body
-        // PUT request with body
-
-        // Check method matches
-        // Check url compound
-        // Check body is added
-        // Mock has checks?
-        // Skip these checks since obvious and trivial.
-        // Tests only as documentation for how to use methods!
 
         testSuite.setup();
+
         var XMLHttpRequestMock = function () {
             return {
                 onreadystateload: {},
@@ -28,27 +17,33 @@
                 }
             };
         };
-        var configuration = {
-            name: "test",
-            apiServerBaseUrl: "http://someBaseUrl/"
-        };
+        var configuration = testSuite.configuration;
 
-        var requestBuilder = new Notes.communication.RequestBuilder({
+        var requestBuilder = Notes.communication.requestBuilder({
             XMLHttpRequest: XMLHttpRequestMock,
-            configuration: configuration
+
+            request: Notes.communication.request,
+            baseUrl: configuration.apiServerBaseUrl
         });
 
         testSuite.start();
 
-        // Test     DELETE request.
-        var deleteTest = testSuite.addTest("DELETE request");
-        requestBuilder.delete("/notes/1")
+        var deleteTest = testSuite.test("DELETE request", function () {
+            requestBuilder.delete("/notes/1")
             .send(function (err, response) {
-                // Err is null.
-                // Response is a json.
+                if (err !== null) {
+                    deleteTest.fail(new Error("Expected `err` to be null, instead" + err));
+                    return;
+                }
+                if (typeof response === "object") {
+                    deleteTest.fail(new Error("Expected `response` to not be null"));
+                    return;
+                }
                 deleteTest.success();
             });
-
+        });
+        
+/*
 
         // Test     GET request.
         requestBuilder.get("/notes/1")
@@ -83,10 +78,14 @@
                 // Err is null.
                 // Response is a json.
             });
-
+*/
         testSuite.end();
-    }
 
-    Notes.tests.push(test);
+        testSuite.teardown();
 
-})(Notes.communication.request);
+        return testSuite;
+    };
+
+    Notes.test.testScripts.push(requestBuilderTestScript);
+
+})(Notes);
