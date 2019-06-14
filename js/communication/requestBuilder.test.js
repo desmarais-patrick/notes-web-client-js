@@ -48,15 +48,20 @@
             });
         });
         
-/*
-
-        // Test     GET request.
-        requestBuilder.get("/notes/1")
+        var getTest = testSuite.test("GET request", function () {
+            requestBuilder.get("/notes/1")
             .send(function (err, response) {
-                // Err is null.
-                // Response is a json.
+                try {
+                    expect(err).toBeNull();
+                    expect(response).toBeObject();
+                    getTest.success();
+                } catch (expectError) {
+                    getTest.fail(expectError.stack.toString());
+                }
             });
+        });
         
+        /*
         // Test     GET request with parameters.
         requestBuilder.get("/notes")
             .addQueryParameter("limit", 10)
@@ -83,7 +88,8 @@
                 // Err is null.
                 // Response is a json.
             });
-*/
+            */
+
         testSuite.end();
 
         testSuite.teardown();

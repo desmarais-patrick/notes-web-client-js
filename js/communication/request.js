@@ -65,7 +65,7 @@
                     return;
                 }
 
-                callback(1, responseContentAsJson);
+                callback(null, responseContentAsJson);
             };
 
             request.send(body);
