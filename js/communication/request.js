@@ -85,12 +85,13 @@
                 return "";
             }
 
-            var queryParameterString = "?";
+            var queryParamTuples = [];
             Object.keys(queryParams).forEach(function (key) {
-                queryParameterString += key + "=" + queryParams[key];
+                var tuple = key + "=" + queryParams[key];
+                queryParamTuples.push(tuple);
             });
 
-            return queryParameterString;
+            return "?" + queryParamTuples.join("&");
         }
 
         return that;

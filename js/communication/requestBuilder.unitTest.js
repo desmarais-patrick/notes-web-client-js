@@ -5,46 +5,32 @@
     var requestBuilderTestScript = function (options) {
         var expect = options.expect;
         var testSuiteBuilder = options.testSuiteBuilder;
+        var xmlHttpRequestMock = options.xmlHttpRequestMock;
 
         var testSuite = testSuiteBuilder.createTestSuite("RequestBuilder");
 
         testSuite.setup();
 
-        var XMLHttpRequestMockBuilder = function (options) {
-            function XMLHttpRequestMock() {
-                this.onload = null;
-            }
-            XMLHttpRequestMock.prototype.open = function (method, url) {};
-            XMLHttpRequestMock.prototype.send = function (body) {
-                var that = this;
-                setTimeout(function () {
-                    that.status = options.responseStatus;
-                    that.responseText = options.responseText;
-                    that.onload();
-                }, 0);
-            };
-            return XMLHttpRequestMock;
-        };
-        var RequestMockSuccess = XMLHttpRequestMockBuilder({
+        var configuration = testSuite.configuration;
+
+        var SuccessXMLHttpRequestMock = xmlHttpRequestMock({
             responseStatus: 200,
             responseText: '{"someProperty":"someJson"}'
         });
-        var RequestMockError = XMLHttpRequestMockBuilder({
-            responseStatus: 500,
-            responseText: '{"someError":500}'
-        });
-
-        var configuration = testSuite.configuration;
-
         var requestBuilder = Notes.communication.requestBuilder({
-            XMLHttpRequest: RequestMockSuccess,
+            XMLHttpRequest: SuccessXMLHttpRequestMock,
             requestTimeoutInMillis: 30000,
 
             request: Notes.communication.request,
             baseUrl: configuration.apiServerBaseUrl
         });
+
+        var ErrorXMLHttpRequestMock = xmlHttpRequestMock({
+            responseStatus: 500,
+            responseText: '{"someError":500}'
+        });
         var errorRequestBuilder = Notes.communication.requestBuilder({
-            XMLHttpRequest: RequestMockError,
+            XMLHttpRequest: ErrorXMLHttpRequestMock,
             requestTimeoutInMillis: 30000,
 
             request: Notes.communication.request,

@@ -2,9 +2,10 @@
 
 (function (Notes) {
     // Setup.
-    var chosenConfiguration = Notes.config.configurations["Test"];
+    var chosenConfiguration = Notes.main.testConfiguration;
 
     var expect = Notes.test.expect;
+    var xmlHttpRequestMock = Notes.test.mocks.xmlHttpRequestMock;
 
     var testHtmlLogger = Notes.test.htmlLogger({
         document: window.document,
@@ -13,7 +14,7 @@
     var setTimeout = window.setTimeout;
     var clearTimeout = window.clearTimeout;
 
-    var testTimeoutInMillis = 100;
+    var testTimeoutInMillis = Notes.main.testTimeoutInMillis;
     var testSuiteBuilder = Notes.test.testSuiteBuilder({
         test: Notes.test.test,
         testSuite: Notes.test.testSuite,
@@ -32,12 +33,14 @@
     console.log("Mode:", chosenConfiguration.name);
 
     var startTime = new Date();
-    testHtmlLogger.log("Tests have started...");
+    testHtmlLogger.log(Notes.main.testType + " tests have started");
+    testHtmlLogger.log("---");
 
     // Run each test
     var testScriptOptions = {
         expect: expect,
-        testSuiteBuilder: testSuiteBuilder
+        testSuiteBuilder: testSuiteBuilder,
+        xmlHttpRequestMock: xmlHttpRequestMock
     };
     var testSuites = [];
     Notes.test.testScripts.forEach(function (testScript) {

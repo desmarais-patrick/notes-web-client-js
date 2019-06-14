@@ -71,7 +71,7 @@
                 testsAsOneString = testsAsStrings.join("\n");
             }
     
-            return "Testing " + name + "\n\n" + testsAsOneString + "\n\n";
+            return "▪ " + name + "\n\n" + testsAsOneString + "\n\n";
         };
         
         that.teardown = function () {};
