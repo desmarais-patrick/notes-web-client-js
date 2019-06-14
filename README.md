@@ -17,8 +17,22 @@ See also mother [notes](https://github.com/desmarais-patrick/notes) repo for glo
 
 | Name                        | Description                                  |
 |-----------------------------|----------------------------------------------|
-| deploy.sh                   | Script to deploy to Google Cloud Storage.    |
-| index.html                  | App home page                                |
+| *css*/                      | Styles                                       |
+| *img*/                      | Image resources                              |
+| *img/favorites-icons*/      | Secondary favorites icons (Chrome, iOS, etc.)|
+| *js*/                       | JavaScript                                   |
+| *js/communication*/         | Module to communicate with API server        |
+| *js/config*/                | Module to divide environment settings        |
+| *js/test*/                  | Module to test with `*.test.js`              |
+| *js*/index.js               | App root script for structure                |
+| *js*/main.js                | App entry point and initialization           |
+| *js*/main.test.js           | App tests entry point and initialization     |
+| deploy.sh                   | Deployment script                            |
+| favicon.ico                 | Default favorites icon                       |
+| index.html                  | App launch page                              |
+| index.test.html             | Test launch page                             |
+
+Each module contains an `index.js` file which initializes the module structure.
 
 <!-- TODO How to point to different API URLs. -->
 
@@ -65,13 +79,9 @@ To run a basic Web server using Python ([[2](#references)], [[3](#references)]),
 python -m SimpleHTTPServer 8000
 ```
 
-With Python 3, command is a bit different:
+> In Python 3, command is a bit different. It uses `http.server` module instead of `SimpleHTTPServer`.
 
-```
-python -m http.server 8000
-```
-
-Visit `http://localhost:8000/` in your favorite browser. 🤗
+Visit [`http://localhost:8000/`](http://localhost:8000/) in your favorite browser. 🤗
 
 
 [Back to top ↑](#)
@@ -79,9 +89,10 @@ Visit `http://localhost:8000/` in your favorite browser. 🤗
 
 ## Running tests
 
-No tests have been implemented yet. 😕
+*Unit tests* can be run by opening [`http://localhost:8000/index.test.html`](http://localhost:8000/index.test.html). ✓
 
-<!-- TODO Unit tests -->
+> You may follow the above instructions in *Running locally* to start a development server.
+
 <!-- TODO Preview project styles, components and animations. Like UXPin ad. -->
 
 
