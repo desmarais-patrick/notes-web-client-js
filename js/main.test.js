@@ -4,7 +4,6 @@
     // Setup.
     var chosenConfiguration = Notes.config.configurations["Test"];
 
-    // Instantiate classes.
     var expect = Notes.test.expect;
 
     var testHtmlLogger = Notes.test.htmlLogger({
@@ -14,6 +13,7 @@
     var setTimeout = window.setTimeout;
     var clearTimeout = window.clearTimeout;
 
+    var testTimeoutInMillis = 100;
     var testSuiteBuilder = Notes.test.testSuiteBuilder({
         test: Notes.test.test,
         testSuite: Notes.test.testSuite,
@@ -21,20 +21,20 @@
         logger: testHtmlLogger,
 
         setTimeout: setTimeout,
-        timeoutInMillis: 2000,
+        timeoutInMillis: testTimeoutInMillis,
         clearTimeout: clearTimeout,
 
         configuration: chosenConfiguration
     });
 
-    // Run 
+    // Start 
     console.log("Hello from Notes app!");
     console.log("Mode:", chosenConfiguration.name);
 
-    console.log("===============================");
-    console.log(" TEST START");
-    console.log("===============================");
+    var startTime = new Date();
+    testHtmlLogger.log("Tests have started...");
 
+    // Run each test
     var testScriptOptions = {
         expect: expect,
         testSuiteBuilder: testSuiteBuilder
@@ -45,28 +45,14 @@
         testSuites.push(testSuite);
     });
 
-    var anyPendingTests = function () {
-        return testSuites.find(function (testSuite) {
-            return testSuite.isPending();
-        });
-    };
-    var printEnd = function () {
-        console.log("===============================");
-        console.log(" TEST END");
-        console.log("===============================");
-    };
-
-    if (anyPendingTests()) {
-        // Final timeout.
-        setTimeout(function () {
-            testSuites.forEach(function (testSuite) {
-                if (testSuite.isPending()) {
-                    console.log("Test", testSuite.name, "takes too long to complete.");
-                }
-            });
-            printEnd();
-        }, 2000);
-    } else {
-        printEnd();
-    }
+    // Wait to finish
+    setTimeout(function () {
+        var stopTime = new Date();
+        var duration = stopTime.getTime() - startTime.getTime();
+        var formattedDuration = duration > 1000 ?
+            (duration / 1000) + "s" : 
+            duration + "ms";
+        testHtmlLogger.log("---");
+        testHtmlLogger.log("Tests completed in " + formattedDuration);
+    }, testTimeoutInMillis);
 })(Notes);

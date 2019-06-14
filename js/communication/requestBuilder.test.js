@@ -11,7 +11,9 @@
         testSuite.setup();
 
         var XMLHttpRequestMockBuilder = function (options) {
-            function XMLHttpRequestMock() {}
+            function XMLHttpRequestMock() {
+                this.onload = null;
+            }
             XMLHttpRequestMock.prototype.open = function (method, url) {};
             XMLHttpRequestMock.prototype.send = function (body) {
                 var that = this;
@@ -19,7 +21,7 @@
                     that.status = options.responseStatus;
                     that.responseText = options.responseText;
                     that.onload();
-                }, 1);
+                }, 0);
             };
             return XMLHttpRequestMock;
         };

@@ -67,9 +67,11 @@
 
         that.toString = function () {
             var duration = stopTime.getTime() - startTime.getTime();
-            var durationInSeconds = Math.ceil(duration / 1000);
+            var formattedDuration = duration > 1000 ?
+                (duration / 1000) + "s" : 
+                duration + "ms";
             return name + " " + status + " " + messages.join(", ") + " " +
-                "(" + durationInSeconds.toString() + "s)";
+                "(" + formattedDuration + ")";
         };
 
         return that;
