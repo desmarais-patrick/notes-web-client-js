@@ -84,12 +84,11 @@
             if (queryParams === null) {
                 return "";
             }
-            
+
             var queryParameterString = "?";
-            var queryParamKeys = Object.keys(queryParams);
-            for (var i = 0; i < queryParamKeys.length; i++) {
-                url += key + "=" + this.queryParams[key];
-            }
+            Object.keys(queryParams).forEach(function (key) {
+                queryParameterString += key + "=" + queryParams[key];
+            });
 
             return queryParameterString;
         }

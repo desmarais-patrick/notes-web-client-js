@@ -16,6 +16,12 @@
             }
         }
 
+        that.toNotBeNull = function () {
+            if (value1 === null) {
+                throw new Error("'" + value1 + "' is null");
+            }
+        }
+
         that.toBeObject = function () {
             if (typeof value1 !== "object") {
                 throw new Error("'" + value1 + "' is not an object");
