@@ -5,6 +5,8 @@
     var chosenConfiguration = Notes.config.configurations["Test"];
 
     // Instantiate classes.
+    var expect = Notes.test.expect;
+
     var testHtmlLogger = Notes.test.htmlLogger({
         document: window.document,
         rootNodeId: "testResults"
@@ -33,9 +35,13 @@
     console.log(" TEST START");
     console.log("===============================");
 
+    var testScriptOptions = {
+        expect: expect,
+        testSuiteBuilder: testSuiteBuilder
+    };
     var testSuites = [];
     Notes.test.testScripts.forEach(function (testScript) {
-        var testSuite = testScript(testSuiteBuilder);
+        var testSuite = testScript(testScriptOptions);
         testSuites.push(testSuite);
     });
 

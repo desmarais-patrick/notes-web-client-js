@@ -2,25 +2,32 @@
 // TODO How to not upload this file?
 
 (function (Notes) {
-    var requestBuilderTestScript = function (testSuiteBuilder) {
+    var requestBuilderTestScript = function (options) {
+        var expect = options.expect;
+        var testSuiteBuilder = options.testSuiteBuilder;
+
         var testSuite = testSuiteBuilder.createTestSuite("RequestBuilder");
 
         testSuite.setup();
 
-        var XMLHttpRequestMock = function () {
-            return {
-                onreadystateload: {},
-                send: function (body) {
-                    setTimeout(function () {
-                        // To be completed.
-                    }, 1);
-                }
+        var XMLHttpRequestMockBuilder = function () {
+            function XMLHttpRequestMock() {}
+            XMLHttpRequestMock.prototype.open = function (method, url) {};
+            XMLHttpRequestMock.prototype.send = function (body) {
+                var that = this;
+                setTimeout(function () {
+                    that.status = 200;
+                    that.responseText = '{"someProperty":"someJson"}';
+                    that.onload();
+                }, 1);
             };
+            return XMLHttpRequestMock;
         };
         var configuration = testSuite.configuration;
 
         var requestBuilder = Notes.communication.requestBuilder({
-            XMLHttpRequest: XMLHttpRequestMock,
+            XMLHttpRequest: XMLHttpRequestMockBuilder(),
+            requestTimeoutInMillis: 30000,
 
             request: Notes.communication.request,
             baseUrl: configuration.apiServerBaseUrl
@@ -31,15 +38,13 @@
         var deleteTest = testSuite.test("DELETE request", function () {
             requestBuilder.delete("/notes/1")
             .send(function (err, response) {
-                if (err !== null) {
-                    deleteTest.fail(new Error("Expected `err` to be null, instead" + err));
-                    return;
+                try {
+                    expect(err).toBeNull();
+                    expect(response).toBeObject();
+                    deleteTest.success();
+                } catch (expectError) {
+                    deleteTest.fail(expectError.stack.toString());
                 }
-                if (typeof response === "object") {
-                    deleteTest.fail(new Error("Expected `response` to not be null"));
-                    return;
-                }
-                deleteTest.success();
             });
         });
         

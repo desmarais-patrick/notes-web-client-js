@@ -29,7 +29,7 @@
             }, timeoutInMillis);
             setTimeout(function () {
                 try {
-                    testToRun()
+                    testToRun();
                 } catch (err) {
                     that.addMessage(err.stack);
                     that.fail(err);
