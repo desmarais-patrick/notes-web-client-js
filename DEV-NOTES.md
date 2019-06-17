@@ -130,3 +130,28 @@ While I don't plan to test on all the browsers, I want to be compatible with:
 
 Some browsers that I may support include IE11 and Safari 9.
 Let's how many JavaScript features can be well ported for these older versions.
+
+
+🤔 **Q4** How to work with CORS?
+
+CORS: Cross-Origin Resource Sharing
+
+Since the Front-End is hosted on a different domain from the API server,
+I must circumvent a security established by browsers for running scripts
+from multiple domains.
+
+In the API server, I temporarily added a new header:
+
+ - `Access-Control-Allow-Origin: http://localhost:8000`
+
+This temporary solution needs to be re-worked.
+How to set this configuration to abstract running in development or production?
+
+Moreover, when working through live tests, I realized a new method.
+The `OPTIONS` method is a preflight request for special requests.
+`PUT` or `DELETE` requests which intend for modification are sensitive.
+Hence, the `OPTIONS` method validates if this is allowed when CORS'ing. 😛
+
+I implemented this call as well.
+The live tests revealed quite interested topic.
+Having control over the API server helped resolve this issue today. 😃
