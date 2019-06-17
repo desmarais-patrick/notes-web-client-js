@@ -24,13 +24,17 @@ See also mother [notes](https://github.com/desmarais-patrick/notes) repo for glo
 | *js/communication*/         | Module to communicate with API server        |
 | *js/config*/                | Module to divide environment settings        |
 | *js/test*/                  | Module to test with `*.test.js`              |
+| *js/test/mocks*/            | Module to re-use mock classes for tests      |
 | *js*/index.js               | App root script for structure                |
 | *js*/main.js                | App entry point and initialization           |
-| *js*/main.test.js           | App tests entry point and initialization     |
+| *js*/main.liveTest.js       | App live tests entry point                   |
+| *js*/main.test.js           | App tests initialization                     |
+| *js*/main.unitTest.js       | App unit tests entry point                   |
 | deploy.sh                   | Deployment script                            |
 | favicon.ico                 | Default favorites icon                       |
 | index.html                  | App launch page                              |
-| index.test.html             | Test launch page                             |
+| index.liveTest.html         | Live test launch page                        |
+| index.unitTest.html         | Unit test launch page                        |
 
 Each module contains an `index.js` file which initializes the module structure.
 
@@ -89,9 +93,14 @@ Visit [`http://localhost:8000/`](http://localhost:8000/) in your favorite browse
 
 ## Running tests
 
-*Unit tests* can be run by opening [`http://localhost:8000/index.test.html`](http://localhost:8000/index.test.html). ✓
+*Unit tests* can be run by opening [`http://localhost:8000/index.unitTest.html`](http://localhost:8000/index.unitTest.html). ✓
+
+*Live tests* can be run by opening [`http://localhost:8000/index.liveTest.html`](http://localhost:8000/index.liveTest.html). ✓
 
 > You may follow the above instructions in *Running locally* to start a development server.
+
+> For live tests, you may refer to the `config`'s `configurations.js` file for
+> connecting to an API server. Note that live tests dirty the database. 
 
 <!-- TODO Preview project styles, components and animations. Like UXPin ad. -->
 
