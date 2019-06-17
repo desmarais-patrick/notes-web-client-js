@@ -6,7 +6,7 @@
         var testSuiteBuilder = options.testSuiteBuilder;
         var xmlHttpRequestMock = options.xmlHttpRequestMock;
 
-        var testSuite = testSuiteBuilder.createTestSuite("Request");
+        var testSuite = testSuiteBuilder.createTestSuite("[Communication] Request");
 
         testSuite.setup();
 
