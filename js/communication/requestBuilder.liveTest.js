@@ -11,18 +11,13 @@
 
         var XMLHttpRequest = window.XMLHttpRequest;
         var configuration = testSuite.configuration;
+        var requestBuilder = Notes.communication.requestBuilder({
+            XMLHttpRequest: XMLHttpRequest,
+            requestTimeoutInMillis: 30000,
 
-        var requestBuilderFactory = function (timeoutInMillis) {
-            return Notes.communication.requestBuilder({
-                XMLHttpRequest: XMLHttpRequest,
-                requestTimeoutInMillis: timeoutInMillis,
-    
-                request: Notes.communication.request,
-                baseUrl: configuration.apiServerBaseUrl
-            });
-        };
-        var requestBuilder = requestBuilderFactory(30000);
-        var impatientRequestBuilder = requestBuilderFactory(10);
+            request: Notes.communication.request,
+            baseUrl: configuration.apiServerBaseUrl
+        });
 
         testSuite.start();
 
@@ -75,7 +70,8 @@
                             return;
                         }
     
-                        var lastOne = response.items[response.items.length];
+                        var lastOnesIndex = response.items.length - 1;
+                        var lastOne = response.items[lastOnesIndex];
                         getTheOne(lastOne.id);
                     });
             };
@@ -130,23 +126,17 @@
             };
         });
 
-        /*
-
-
-        // 404
-        // 400
-        // timeout
-        var errorTest = testSuite.test("GET request (with server error)", function () {
-            errorRequestBuilder.get("serverReturnsBadRequest")
+        var scenario2Test = testSuite.test("Invalid URL", function () {
+            requestBuilder.get("/invalid-url")
                 .send(function (err, response) {
                     try {
                         expect(err).toNotBeNull();
-                        errorTest.success();
+                        scenario2Test.success();
                     } catch (expectError) {
-                        errorTest.fail(expectError.stack.toString());
+                        scenario2Test.fail(expectError.stack.toString());
                     }
                 });
-        });*/
+        });
 
         testSuite.end();
 

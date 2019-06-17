@@ -24,16 +24,6 @@
         that.send = function (callback) {
             var request = new XMLHttpRequest();
 
-            request.timeout = requestTimeoutInMillis;
-            request.ontimeout = function () {
-                var error = new Error(
-                    "Request didn't receive response under " + 
-                    requestTimeoutInMillis + "ms " +
-                    "for " + url + "."
-                );
-                callback(error);
-            };
-
             if (method === null) {
                 throw new Error("Missing method for request");
             }
@@ -43,11 +33,13 @@
                 var status = request.status;
                 var responseContent = request.responseText;
 
-                if (status !== 200) {
+                var SUCCESS_RESPONSE_STATUSES = [200, 201];
+                if (SUCCESS_RESPONSE_STATUSES.indexOf(status) === -1) {
                     var error = new Error(
-                        "Request received error response for " + 
+                        "Request received error (or unknown) response status for " + 
                         method + " " + url + ". " +
                         "Response status was: " + status + ". " +
+                        "(Expected " + SUCCESS_RESPONSE_STATUSES.toString() + ") " + 
                         "Response content was: " + responseContent + ".");
                     callback(error);
                     return;
@@ -66,6 +58,16 @@
                 }
 
                 callback(null, responseContentAsJson);
+            };
+
+            request.timeout = requestTimeoutInMillis;
+            request.ontimeout = function () {
+                var error = new Error(
+                    "Request didn't receive response under " + 
+                    requestTimeoutInMillis + "ms " +
+                    "for " + url + "."
+                );
+                callback(error);
             };
 
             request.send(body);
