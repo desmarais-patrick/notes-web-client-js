@@ -8,6 +8,7 @@
         var text = text || "";
         var date = date || new Date();
 
+        // Uniquely identifiable.
         that.getId = function () { return id; };
 
         that.getText = function () { return text; };
@@ -16,6 +17,19 @@
         };
 
         that.getDate = function () { return date; }
+
+        // Comparable from newest to oldest.
+        that.compare = function (otherNote) {
+            var otherTime = otherNote.getDate().getTime();
+            var thisTime = this.getDate().getTime();
+            if (thisTime < otherTime) {
+                return -1;
+            } else if (thisTime > otherTime) {
+                return 1;
+            } else {
+                return 0;
+            }
+        };
 
         that.toString = function () {
             return JSON.stringify({

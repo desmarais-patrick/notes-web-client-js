@@ -16,6 +16,12 @@
             }
         }
 
+        that.toBeDefined = function () {
+            if (typeof value1 === "undefined") {
+                throw new Error("'" + value1 + "' is NOT defined");
+            }
+        }
+
         that.toBeNull = function () {
             if (value1 !== null) {
                 throw new Error("'" + value1 + "' is NOT null");

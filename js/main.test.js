@@ -5,6 +5,7 @@
     var chosenConfiguration = Notes.main.testConfiguration;
 
     var expect = Notes.test.expect;
+    var createSortableFakeObject = Notes.test.mocks.sortableFakeObject;
     var xmlHttpRequestMock = Notes.test.mocks.xmlHttpRequestMock;
 
     var testHtmlLogger = Notes.test.htmlLogger({
@@ -40,6 +41,9 @@
     var testScriptOptions = {
         expect: expect,
         testSuiteBuilder: testSuiteBuilder,
+
+        // Test helpers.
+        createSortableFakeObject: createSortableFakeObject,
         xmlHttpRequestMock: xmlHttpRequestMock
     };
     var testSuites = [];

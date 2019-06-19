@@ -1,10 +1,11 @@
 "use strict";
 
 (function (Notes) {
-    Notes.model.linkedList = function () {
+    Notes.model.cache = function () {
         var that = {};
 
-        var list = null;
+        var notesById = {};
+        var list = [];
 
         // get list as ordered array
         // push node
