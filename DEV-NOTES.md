@@ -13,7 +13,11 @@
  - Retry connection automatically.
  - Error class with message and reporting instructions (auto-fade or manual).
  - Statistics on application usage and errors.
- - User interface components and design system.
+ - Reference for user interface components and design system.
+ - Application strings and formats; notify on change language or settings.
+ - App-wide event logger for debugging or informing user on app state.
+ - Command router to centralize event triggers and navigation.
+ - "Are you sure you want to quit? There are pending changes."
 
 ## Inspirations
 
