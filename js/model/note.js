@@ -23,9 +23,9 @@
             var otherTime = otherNote.getDate().getTime();
             var thisTime = this.getDate().getTime();
             if (thisTime < otherTime) {
-                return -1;
-            } else if (thisTime > otherTime) {
                 return 1;
+            } else if (thisTime > otherTime) {
+                return -1;
             } else {
                 return 0;
             }

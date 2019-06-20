@@ -28,7 +28,7 @@
             // ...such as when creating a new note.
 
             // (!) Hopefully, note is NOT already in the list. :s
-            list = list.shift(newNote);
+            list.unshift(newNote);
             list.sort(function (a, b) {
                 return a.compare(b);
             });
@@ -41,8 +41,8 @@
 
             // (!) Hopefully, notes are NOT already in the list. :s
             //     Especially in the case client is de-synched with server.
-            //     Ex. Two browsers are open and create/delete different notes. 
-            list = list.append(notes);
+            //     Ex. Two browsers are open and create/delete different notes.
+            list = list.concat(notes);
             list.sort(function (a, b) {
                 return a.compare(b);
             });
