@@ -19,6 +19,15 @@
  - Command router to centralize event triggers and navigation.
  - "Are you sure you want to quit? There are pending changes."
 
+
+ Extra:
+
+ - Review NoteList class:
+   - Use a sorted linked list data structure and insertion sort algorithm.
+   - Compare performance with old implementation.
+   - Store list by IDs and sort field values to optimize access for sorting.
+   - Use a binary search algorithm to find notes in list.
+
 ## Inspirations
 
  - Review `request` module created by TJ Hollowaychuk for communication layer
