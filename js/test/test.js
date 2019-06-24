@@ -48,6 +48,10 @@
         }
 
         that.fail = function (message) {
+            if (status === FAILED_STATUS) {
+                throw new Error("Implementation Error! Called more than once!");
+            }
+
             clearTimeout(timeoutId);
             that.addMessage(message);
             status = FAILED_STATUS;
@@ -55,6 +59,10 @@
         };
 
         that.success = function () {
+            if (status === SUCCESS_STATUS) {
+                throw new Error("Implementation Error! Called more than once!");
+            }
+
             clearTimeout(timeoutId);
             status = SUCCESS_STATUS;
             stopTime = new Date();
