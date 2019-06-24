@@ -8,7 +8,8 @@
  - Routing and Web-crawl-able
  - Progressive Web apps and offline support.
  - Content delivery networks
- - No JavaScript
+ - No JavaScript (a simple editor?)
+ - Cookie notice and tracking settings.
  - Test performance with loading resources asynchronously with JavaScript.
  - Retry connection automatically.
  - Error class with message and reporting instructions (auto-fade or manual).
@@ -18,6 +19,9 @@
  - App-wide event logger for debugging or informing user on app state.
  - Command router to centralize event triggers and navigation.
  - "Are you sure you want to quit? There are pending changes."
+ - Request queue for multiple, optionally dependent, operations.
+ - Authentication and app secret with server API.
+ - App-wide notifications (dismissable errors, actionable events).
 
 
  Extra:
@@ -27,6 +31,14 @@
    - Compare performance with old implementation.
    - Store list by IDs and sort field values to optimize access for sorting.
    - Use a binary search algorithm to find notes in list.
+ - Re-build the same app with:
+   - ES2015
+   - TypeScript
+   - React.js
+   - Angular
+   - Vue.js
+   - Svelt (?)
+   - Gatsby (?)
 
 ## Inspirations
 
@@ -39,6 +51,9 @@
  - Review how Sentry.io reports errors in production (and privacy policy).
  - Review Meteor's module for error overlay during development.
  - Review how UXPin displays user interface components and design system.
+ - How do React and Angular build around the shadow DOM?
+ - What is the Google Lighthouse performance for this app?
+ - Review how e-tag works and what are the caveats for caching.
 
 ## References
 
