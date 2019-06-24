@@ -11,11 +11,14 @@
 
         var createNote = Notes.model.note;
         var createNoteList = Notes.model.noteList;
-        var NOTE_LIST_STATUS_ENUM = Notes.model.NOTE_LIST_STATUS_ENUM;
+        var testOptions = {
+            NOTE_LIST_STATUS_ENUM: Notes.model.noteList.NOTE_LIST_STATUS_ENUM
+        };
 
         testSuite.start();
 
         var emptyTest = testSuite.test("Empty", function () {
+            var NOTE_LIST_STATUS_ENUM = testOptions.NOTE_LIST_STATUS_ENUM;
             var noteList = createNoteList();
             try {
                 expect(noteList.getList().length).toEqual(0);
