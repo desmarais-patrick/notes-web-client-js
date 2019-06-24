@@ -8,7 +8,6 @@
         WORKING: "Working"
     }; // (!) Hopefully, nobody changes that object. :s
 
-    Notes.model.APP_STATUS_ENUM = APP_STATUS_ENUM;
     Notes.model.app = function () {
         var that = {};
 
@@ -28,4 +27,5 @@
 
         return that;
     };
+    Notes.model.app.APP_STATUS_ENUM = APP_STATUS_ENUM;
 })(Notes);

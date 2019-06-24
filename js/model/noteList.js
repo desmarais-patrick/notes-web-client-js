@@ -7,7 +7,6 @@
         READY: "Ready"
     }; // (!) Hopefully, nobody changes that object. :s
 
-    Notes.model.NOTE_LIST_STATUS_ENUM = NOTE_LIST_STATUS_ENUM;
     Notes.model.noteList = function () {
         var that = {};
 
@@ -90,4 +89,5 @@
 
         return that;
     };
+    Notes.model.noteList.NOTE_LIST_STATUS_ENUM = NOTE_LIST_STATUS_ENUM;
 })(Notes);
