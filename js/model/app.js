@@ -11,33 +11,13 @@
     Notes.model.app = function (options) {
         var that = {};
 
+        options.changeEventableBehaviour.addBehaviourTo({
+            host: that,
+            name: "App"
+        });
+
         var defaultStatus = APP_STATUS_ENUM.UNKNOWN;
         var status = defaultStatus;
-
-        var changeEventBuilder = options.changeEventBuilder;
-        var changeEventListeners = [];
-
-        that.addChangeEventListener = function (listenerCallback) {
-            if (changeEventListeners.indexOf(listenerCallback) !== -1) {
-                throw new Error("Implementation error!" + 
-                    "Listener already added for change events on App.");
-            }
-
-            changeEventListeners.push(listenerCallback);
-
-            var changeEvent = changeEventBuilder.createChangeEvent(this);
-            listenerCallback(changeEvent);
-        };
-
-        that.removeChangeEventListener = function (listenerCallback) {
-            var index = changeEventListeners.indexOf(listenerCallback);
-            if (index === -1) {
-                throw new Error("Implementation error!" + 
-                    "Listener never registered for change events on App.");
-            }
-
-            changeEventListeners.splice(index, 1);
-        };
 
         that.getStatus = function () {
             return status;
@@ -50,7 +30,7 @@
 
             if (newStatus !== status) {
                 status = newStatus;
-                this.notifyListeners();
+                this.notifyChange();
             }
         };
 
@@ -59,13 +39,6 @@
                 return (value === array[key]);
             });
             return (key !== null);
-        };
-
-        that.notifyListeners = function () {
-            var changeEvent = changeEventBuilder.createChangeEvent(this);
-            changeEventListeners.forEach(function (listenerCallback) {
-                listenerCallback(changeEvent);
-            });
         };
 
         return that;

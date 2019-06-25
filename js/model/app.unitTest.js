@@ -13,10 +13,13 @@
         var changeEventBuilder = Notes.model.changeEventBuilder({
             createChangeEvent: createChangeEvent
         });
+        var changeEventableBehaviour = Notes.model.changeEventableBehaviour({
+            changeEventBuilder: changeEventBuilder
+        });
 
         var createApp = Notes.model.app;
         var createAppOptions = {
-            changeEventBuilder: changeEventBuilder
+            changeEventableBehaviour: changeEventableBehaviour
         };
 
         var testOptions = {
@@ -29,7 +32,7 @@
             var app = createApp(createAppOptions);
             var APP_STATUS_ENUM = testOptions.APP_STATUS_ENUM;
 
-            // Imagine someone is waiting for app to be ready.
+            // Imagine someone listens for app to be ready.
 
             var latestAppStatus = null;
             var onAppStatusChange = function (changeEvent) {
