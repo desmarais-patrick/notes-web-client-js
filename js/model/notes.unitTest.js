@@ -10,16 +10,8 @@
         testSuite.setup();
 
         var createEvents = Notes.model.events;
-        var events = createEvents();
-
         var createNote = Notes.model.note;
         var createNotes = Notes.model.notes;
-        var createNotesOptions = {
-            events: events,
-            list: null,
-            hasMore: null,
-            status: null
-        };
         var testOptions = {
             STATUS_ENUM: Notes.model.notes.STATUS_ENUM
         };
@@ -28,7 +20,12 @@
 
         var emptyTest = testSuite.test("Empty", function () {
             var STATUS_ENUM = testOptions.STATUS_ENUM;
-            var notes = createNotes(createNotesOptions);
+            var notes = createNotes({
+                events: createEvents(),
+                list: null,
+                hasMore: null,
+                status: null
+            });
             try {
                 expect(notes.getList().length).toEqual(0);
                 expect(notes.hasMore()).toEqual(true);
@@ -40,7 +37,12 @@
         });
 
         var insertManyTest = testSuite.test("InsertMany", function () {
-            var notes = createNotes(createNotesOptions);
+            var notes = createNotes({
+                events: createEvents(),
+                list: null,
+                hasMore: null,
+                status: null
+            });
 
             var note1 = createNote({
                 clientId: null,
@@ -75,7 +77,12 @@
         });
 
         var insertOneTest = testSuite.test("InsertOne", function () {
-            var notes = createNotes(createNotesOptions);
+            var notes = createNotes({
+                events: createEvents(),
+                list: null,
+                hasMore: null,
+                status: null
+            });
 
             var note1 = createNote({
                 clientId: null,
@@ -117,7 +124,12 @@
         });
 
         var deleteTest = testSuite.test("Delete", function () {
-            var notes = createNotes(createNotesOptions);
+            var notes = createNotes({
+                events: createEvents(),
+                list: null,
+                hasMore: null,
+                status: null
+            });
 
             var note1 = createNote({
                 clientId: null,
@@ -154,7 +166,12 @@
         });
 
         var updateTest = testSuite.test("Update", function () {
-            var notes = createNotes(createNotesOptions);
+            var notes = createNotes({
+                events: createEvents(),
+                list: null,
+                hasMore: null,
+                status: null
+            });
 
             var note1 = createNote({
                 clientId: null,
@@ -194,6 +211,54 @@
             } catch (expectError) {
                 updateTest.fail(expectError.stack.toString());
             }
+        });
+
+        var eventsTest = testSuite.test("Events", function () {
+            var events = createEvents();
+            var notes = createNotes({
+                events: events,
+                list: null,
+                hasMore: null,
+                status: null
+            });
+            var STATUS_ENUM = testOptions.STATUS_ENUM;
+
+            // A new list is dispatched!
+            eventIterator = events.listen("change Notes.List");
+            var note = createNote({
+                clientId: null,
+                id: "1",
+                text: "some text 1",
+                date: new Date("2019-01-01")
+            });
+            notes.insertMany([note]);
+            expect(eventIterator.next().options.newList[0])
+                .toEqual(note.getClientId());
+
+            var newNote = createNote({
+                clientId: null,
+                id: "99",
+                text: "some text 99",
+                date: new Date("2019-01-25")
+            });
+            notes.insertOne(newNote);
+            expect(eventIterator.next().options.newList[0])
+                .toEqual(newNote.getClientId());
+
+            // A new hasMore is dispatched.
+            var eventIterator = events.listen("change Notes.HasMore");
+            notes.setHasMore(false);
+            expect(eventIterator.next().options.newHasMore)
+                .toEqual(false);
+
+
+            // A new status is dispatched!
+            var eventIterator = events.listen("change Notes.Status");
+            notes.setStatus(STATUS_ENUM.LOADING);
+            expect(eventIterator.next().options.newStatus)
+                .toEqual(STATUS_ENUM.LOADING);
+
+            eventsTest.success();
         });
 
         testSuite.end();

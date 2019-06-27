@@ -31,7 +31,7 @@
             });
 
             events.dispatch("change Notes.List", "note inserted", {
-                newNoteClientId: newNote.getClientId()
+                newList: getClientIds()
             });
 
             return list.length;
@@ -49,13 +49,8 @@
                 return a.compare(b);
             });
 
-            var newNoteClientIds = [];
-            newNotes.forEach(function (newNote) {
-                var clientId = newNote.getClientId();
-                newNoteClientIds.push(clientId);
-            });
             events.dispatch("change Notes.List", "many notes inserted", {
-                newNoteClientIds: newNoteClientIds
+                newList: getClientIds()
             });
 
             return list.length;
@@ -72,7 +67,7 @@
             list.splice(deleteIndex, 1);
 
             events.dispatch("change Notes.List", "one less note", {
-                deletedNoteClientId: targetNoteClientId
+                newList: getClientIds()
             });
 
             return list.length;
@@ -87,12 +82,21 @@
                     list[i] = updatedNote;
 
                     events.dispatch("change Notes.List", "updated note", {
-                        updatedNoteClientId: updatedNote.getClientId()
+                        newList: getClientIds()
                     });
                     break;
                 }
             }
-        }
+        };
+
+        var getClientIds = function () {
+            var clientIds = [];
+            list.forEach(function (note) {
+                var clientId = note.getClientId();
+                clientIds.push(clientId);
+            });
+            return clientIds;
+        };
 
         that.hasMore = function () {
             return hasMore;
@@ -101,8 +105,8 @@
             if (newValue !== hasMore) {
                 hasMore = newValue;
 
-                events.dispatch("change Notes.HasMore", "new hasMore value", {
-                    newHasMoreValue: newValue
+                events.dispatch("change Notes.HasMore", "new hasMore", {
+                    newHasMore: newValue
                 });
             }
         };
