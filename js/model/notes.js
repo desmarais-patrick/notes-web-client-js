@@ -1,23 +1,20 @@
 "use strict";
 
 (function (Notes) {
-    var NOTE_LIST_STATUS_ENUM = {
+    var STATUS_ENUM = {
         LOADING: "Loading",
         READY: "Ready"
     }; // (!) Hopefully, nobody changes that object. :s
 
-    Notes.model.noteList = function noteList(options) {
+    Notes.model.notes = function notes(options) {
         var that = {};
 
         var events = options.events;
 
         var list = options.list || []; // Keep sorted!
         var hasMore = options.hasMore || true; // To avoid unnecessary server requests.
-        var status = options.status || NOTE_LIST_STATUS_ENUM.READY;
+        var status = options.status || STATUS_ENUM.READY;
             // To initialize list and show loading.
-
-        // TODO Add changeListener or readyListener here!
-        //      Or put this logic in Model.
 
         that.getList = function () {
             return list;
@@ -33,34 +30,51 @@
                 return a.compare(b);
             });
 
-
+            events.dispatch("change Notes.List", "note inserted", {
+                newNoteClientId: newNote.getClientId()
+            });
 
             return list.length;
         };
 
-        that.insertMany = function (notes) {
+        that.insertMany = function (newNotes) {
             // Assuming added notes have older dates.
             // ...such as when fetching more notes from server.
 
             // (!) Hopefully, notes are NOT already in the list. :s
             //     Especially in the case client is de-synched with server.
             //     Ex. Two browsers are open and create/delete different notes.
-            list = list.concat(notes);
+            list = list.concat(newNotes);
             list.sort(function (a, b) {
                 return a.compare(b);
             });
+
+            var newNoteClientIds = [];
+            newNotes.forEach(function (newNote) {
+                var clientId = newNote.getClientId();
+                newNoteClientIds.push(clientId);
+            });
+            events.dispatch("change Notes.List", "many notes inserted", {
+                newNoteClientIds: newNoteClientIds
+            });
+
             return list.length;
         };
 
-        that.delete = function (targetNoteId) {
+        that.delete = function (targetNoteClientId) {
             // (!) Hopefully, note is already in the list. :s
             var deleteIndex = -1;
             // TODO Find a better way to find an element's index.
             list.find(function (note) {
                 deleteIndex++;
-                return (note.getId() === targetNoteId);
+                return (note.getClientId() === targetNoteClientId);
             });
             list.splice(deleteIndex, 1);
+
+            events.dispatch("change Notes.List", "one less note", {
+                deletedNoteClientId: targetNoteClientId
+            });
+
             return list.length;
         };
 
@@ -71,6 +85,10 @@
                 var note = list[i];
                 if (note.getId() === updatedNoteId) {
                     list[i] = updatedNote;
+
+                    events.dispatch("change Notes.List", "updated note", {
+                        updatedNoteClientId: updatedNote.getClientId()
+                    });
                     break;
                 }
             }
@@ -80,7 +98,13 @@
             return hasMore;
         };
         that.setHasMore = function (newValue) {
-            hasMore = newValue;
+            if (newValue !== hasMore) {
+                hasMore = newValue;
+
+                events.dispatch("change Notes.HasMore", "new hasMore value", {
+                    newHasMoreValue: newValue
+                });
+            }
         };
         
         that.getStatus = function () {
@@ -89,14 +113,20 @@
         that.setStatus = function (newStatus) {
             if (isEnumValue(newStatus) === false) {
                 throw new Error("Implementation error! " + 
-                    newStatus + " is not value part of NOTE_LIST_STATUS_ENUM.");
+                    newStatus + " is not value part of STATUS_ENUM.");
             }
 
-            status = newStatus;
+            if (newStatus !== status) {
+                status = newStatus;
+
+                events.dispatch("change Notes.Status", "new status", {
+                    newStatus: newStatus
+                });
+            }
         };
 
         var isEnumValue = function (value) {
-            var key = Object.keys(NOTE_LIST_STATUS_ENUM).find(function (key, index, array) {
+            var key = Object.keys(STATUS_ENUM).find(function (key, index, array) {
                 return (value === array[key]);
             });
             return (key !== null);
@@ -104,5 +134,5 @@
 
         return that;
     };
-    Notes.model.noteList.NOTE_LIST_STATUS_ENUM = NOTE_LIST_STATUS_ENUM;
+    Notes.model.notes.STATUS_ENUM = STATUS_ENUM;
 })(Notes);

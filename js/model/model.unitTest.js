@@ -11,23 +11,25 @@
 
         var createApp = Notes.model.app;
         var createEvents = Notes.model.events;
+        var createNotes = Notes.model.notes;
 
         var createModel = Notes.model.model;
         var createModelOptions = {
             createApp: createApp,
-            createEvents: createEvents
+            createEvents: createEvents,
+            createNotes: createNotes
         };
 
         var testOptions = {
-            APP_STATUS_ENUM: Notes.model.app.APP_STATUS_ENUM,
-            NOTE_LIST_STATUS_ENUM: Notes.model.noteList.NOTE_LIST_STATUS_ENUM
+            APP_STATUS_ENUM: Notes.model.app.STATUS_ENUM,
+            NOTES_STATUS_ENUM: Notes.model.notes.STATUS_ENUM
         };
 
         testSuite.start();
 
         var listenTest = testSuite.test("Listen", function () {
             var model = createModel(createModelOptions);
-            var NOTE_LIST_STATUS_ENUM = testOptions.NOTE_LIST_STATUS_ENUM;
+            var NOTES_STATUS_ENUM = testOptions.NOTES_STATUS_ENUM;
 
             var statusEventIterator = model.listen("change Notes.Status");
             expect(statusEventIterator.hasNext()).toEqual(false);
@@ -38,14 +40,14 @@
 
             expect(statusEventIterator.hasNext()).toEqual(true);
             expect(statusEventIterator.next().source.getStatus())
-                .toEqual(NOTE_LIST_STATUS_ENUM.LOADING_MORE);
+                .toEqual(NOTES_STATUS_ENUM.LOADING_MORE);
             expect(listEventIterator.hasNext()).toEqual(false);
 
             // Request completes.
 
             expect(statusEventIterator.hasNext()).toEqual(true);
             expect(statusEventIterator.next().source.getStatus())
-                .toEqual(NOTE_LIST_STATUS_ENUM.READY);
+                .toEqual(NOTES_STATUS_ENUM.READY);
 
             expect(listEventIterator.hasNext()).toEqual(true);
             expect(statusEventIterator.next().source.getList().length)

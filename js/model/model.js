@@ -29,8 +29,18 @@
             status: null
         });
 
+        var notes = options.createNotes({
+            events: events,
+            status: null,
+            list: []
+        });
+
         that.getApp = function () {
             return app;
+        };
+
+        that.getNotes = function () {
+            return notes;
         };
 
         that.listen = function listen(topic) {

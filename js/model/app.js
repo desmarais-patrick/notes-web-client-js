@@ -1,7 +1,7 @@
 "use strict";
 
 (function (Notes) {
-    var APP_STATUS_ENUM = {
+    var STATUS_ENUM = {
         UNKNOWN: "Unknown",
         INITIALIZING: "Initializing",
         READY: "Ready",
@@ -13,27 +13,28 @@
 
         var events = options.events;
 
-        var defaultStatus = APP_STATUS_ENUM.UNKNOWN;
+        var defaultStatus = STATUS_ENUM.UNKNOWN;
         var status = options.status || defaultStatus;
 
         that.getStatus = function () {
             return status;
         };
         that.setStatus = function (newStatus) {
-            if (!isEnumValue(newStatus)) {
-                    throw new Error("Implementation error! " + 
-                    newStatus + " is not value part of APP_STATUS_ENUM.");
+            if (isEnumValue(newStatus) === false) {
+                throw new Error("Implementation error! " + 
+                    newStatus + " is not value part of STATUS_ENUM.");
             }
 
             if (newStatus !== status) {
                 status = newStatus;
-                events.dispatch("change App.Status", "new value", 
-                    {source: this.clone()});
+                events.dispatch("change App.Status", "new value", {
+                    newStatus: newStatus
+                });
             }
         };
 
         var isEnumValue = function (value) {
-            var key = Object.keys(APP_STATUS_ENUM).find(function (key, index, array) {
+            var key = Object.keys(STATUS_ENUM).find(function (key, index, array) {
                 return (value === array[key]);
             });
             return (key !== null);
@@ -48,5 +49,5 @@
 
         return that;
     };
-    Notes.model.app.APP_STATUS_ENUM = APP_STATUS_ENUM;
+    Notes.model.app.STATUS_ENUM = STATUS_ENUM;
 })(Notes);
