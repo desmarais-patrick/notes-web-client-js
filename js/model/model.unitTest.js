@@ -9,9 +9,13 @@
 
         testSuite.setup();
 
+        var createApp = Notes.model.app;
+        var createEvents = Notes.model.events;
+
         var createModel = Notes.model.model;
         var createModelOptions = {
-
+            createApp: createApp,
+            createEvents: createEvents
         };
 
         var testOptions = {
@@ -21,76 +25,36 @@
 
         testSuite.start();
 
-        var appStatusTest = testSuite.test("App.Status model", function () {
+        var listenTest = testSuite.test("Listen", function () {
             var model = createModel(createModelOptions);
-            var APP_STATUS_ENUM = testOptions.APP_STATUS_ENUM;
+            var NOTE_LIST_STATUS_ENUM = testOptions.NOTE_LIST_STATUS_ENUM;
 
-            // Imagine someone is waiting for app to be ready.
+            var statusEventIterator = model.listen("change Notes.Status");
+            expect(statusEventIterator.hasNext()).toEqual(false);
+            var listEventIterator = model.listen("change Notes.List");
+            expect(listEventIterator.hasNext()).toEqual(false);
 
-            var latestAppStatus = null;
-            var onAppStatusChange = function (changeEvent) {
-                var app = changeEvent.getSource();
-                latestAppStatus = app.getStatus();
-            };
-            model.addEventListener("App.Status", onAppStatusChange);
-            expect(latestAppStatus).toEqual(APP_STATUS_ENUM.UNKNOWN);
+            model.requestMoreNotes();
 
-            // App started its initialization.
+            expect(statusEventIterator.hasNext()).toEqual(true);
+            expect(statusEventIterator.next().source.getStatus())
+                .toEqual(NOTE_LIST_STATUS_ENUM.LOADING_MORE);
+            expect(listEventIterator.hasNext()).toEqual(false);
 
-            model.setAppStatus(APP_STATUS_ENUM.INITIALIZING);
-            expect(latestAppStatus).toEqual(APP_STATUS_ENUM.INITIALIZING);
+            // Request completes.
 
-            // App finishes its initialization process.
+            expect(statusEventIterator.hasNext()).toEqual(true);
+            expect(statusEventIterator.next().source.getStatus())
+                .toEqual(NOTE_LIST_STATUS_ENUM.READY);
 
-            model.setAppStatus(APP_STATUS_ENUM.READY);
-            expect(latestAppStatus).toEqual(APP_STATUS_ENUM.READY);
+            expect(listEventIterator.hasNext()).toEqual(true);
+            expect(statusEventIterator.next().source.getList().length)
+                .toEqual(3);
 
-            // App is working on getting or saving some content, for example.
+            expect(statusEventIterator.hasNext()).toEqual(false);
+            expect(listEventIterator.hasNext()).toEqual(false);
 
-            model.setAppStatus(APP_STATUS_ENUM.WORKING);
-            expect(latestAppStatus).toEqual(APP_STATUS_ENUM.WORKING);
-
-            // Imagine this someone is no longer interested in the change.
-
-            model.removeEventListener("App.Status", onAppStatusChange);
-            model.setAppStatus(APP_STATUS_ENUM.READY);
-            expect(latestAppStatus).toEqual(APP_STATUS_ENUM.WORKING);
-
-            appStatusTest.success();
-        });
-
-        var noteListStatusTest = testSuite.test("NoteList.Status", function () {
-            var model = createModel(createModelOptions);
-            var NOTE_LIST_STATUS_ENUM = testOpionts.NOTE_LIST_STATUS_ENUM;
-
-            // Imagine someone is interested in the NoteList model.
-
-            var latestNoteList = null;
-            var latestNoteListStatus = null;
-            var onNoteListChange = function (changeEvent) {
-                latestNoteList = changeEvent.getSource();
-                latestNoteListStatus = latestNoteList.getStatus();
-            };
-            model.addEventListener("NoteList.Status", onNoteListChange);
-            expect(latestNoteListStatus).toEqual(NOTE_LIST_STATUS_ENUM.EMPTY);
-            expect(latestNoteList.getList().length).toEqual(0);
-
-            // Imagine this someone looks for more notes to display.
-
-            expect(latestNoteList.hasMore()).toEqual(true);
-            model.loadMoreNotes();
-            expect(latestNoteListStatus).toEqual(NOTE_LIST_STATUS_ENUM.LOADING_MORE);
-
-            // List acquires the requested notes.
-
-            // TODO Complete request on model based on injection here in tests.
-
-            expect(latestNoteListStatus).toEqual(NOTE_LIST_STATUS_ENUM.READY);
-            expect(latestNoteList.getList().length).toBeGreaterThan(0);
-            expect(latestNoteList.hasMore()).toEqual(false);
-                // For testing purposes ;) .. there could be more.
-
-            noteListStatusTest.success();
+            listenTest.success();
         });
         
         // Get note X

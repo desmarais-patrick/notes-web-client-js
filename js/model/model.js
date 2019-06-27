@@ -4,54 +4,38 @@
     Notes.model.model = function (options) {
         var that = {};
 
-        var eventListeners = {
-            "App.Status": []
+        // Create event dispatch.
+        // Create cache for individual notes.
+        // Create app.
+        // Create noteList.
+        // Receive request builder instance.
+
+        // Expose a few methods:
+        // Get app...model.getApp(); ==> App
+        // Get note list...model.getNotes(); ==> NoteList
+        // Request more notes...model.requestMoreNotes(callback?); ...events "change Notes.Status (noteList)", "change Notes.List (noteList)"
+        // Get note X...model.requestNote(x, callback?); => Note ...events "change Notes.x.Status Notes.x.Text (note)" -- Status: NotFound, Error, Loading, Ready
+        // Create note with text...model.createNote(text); => Note ...events "change Notes.x.BackendId" (use our own client IDs to avoid waiting on backend ID)
+        // Update note X with newText...model.updateNote(x, newText); => Note ...events "change Notes.x.Text"
+        // Delete note X...model.deleteNote(x); ...events "change Notes.x (null)", "change Notes.List" "change App.Status"
+        // listen(topic); => EventIterator.
+
+        // I'll need a refreshNotes() with communication after delete and creation to confirm synchronicity.
+
+        var events = options.createEvents();
+
+        var app = options.createApp({
+            events: events,
+            status: null
+        });
+
+        that.getApp = function () {
+            return app;
         };
 
-        var app = options.createApp();
-
-        that.addEventListener = function (eventName, callback) {
-            var activeListeners = eventListeners[eventName];
-            if (!activeListeners) {
-                throw new Error("Implementation error!" + 
-                    "No listeners can be configured for event " + eventName);
-            }
-            if (activeListeners.indexOf(callback) !== -1) {
-                throw new Error("Implementation error!" + 
-                    "Listener already added for event " + eventName);
-            }
-
-            activeListeners.push(callback);
-            notifyListeners(eventName, callback);
+        that.listen = function listen(topic) {
+            return events.listen(topic);
         };
-
-        var notifyListeners = function (eventName, callback) {
-            switch (eventName) {
-                case "App.Status":
-                    notifyAppStatus(callback);
-                    break;
-                default:
-                    throw new Error("Implementation error!" + 
-                        "Unconfigured event for notifications " + eventName);
-            }
-        };
-
-        var notifyAppStatus = function (callback) {
-            var notifyListener = function (listener) {
-                var changeEvent = {
-                    getSource: function () {
-                        return app;
-                    }
-                };
-                listener(changeEvent);
-            };
-            if (!callback) {
-                var activeListeners = eventListeners[eventName];
-                activeListeners.forEach(notifyListener);
-            } else {
-                notifyListener(callback);
-            }
-        }
 
         return that;
     };

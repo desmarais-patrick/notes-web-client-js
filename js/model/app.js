@@ -8,29 +8,27 @@
         WORKING: "Working"
     }; // (!) Hopefully, nobody changes that object. :s
 
-    Notes.model.app = function (options) {
+    Notes.model.app = function app(options) {
         var that = {};
 
-        options.changeEventableBehaviour.addBehaviourTo({
-            host: that,
-            name: "App"
-        });
+        var events = options.events;
 
         var defaultStatus = APP_STATUS_ENUM.UNKNOWN;
-        var status = defaultStatus;
+        var status = options.status || defaultStatus;
 
         that.getStatus = function () {
             return status;
         };
         that.setStatus = function (newStatus) {
             if (!isEnumValue(newStatus)) {
-                throw new Error("Implementation error! " + 
+                    throw new Error("Implementation error! " + 
                     newStatus + " is not value part of APP_STATUS_ENUM.");
             }
 
             if (newStatus !== status) {
                 status = newStatus;
-                this.notifyChange();
+                events.dispatch("change App.Status", "new value", 
+                    {source: this.clone()});
             }
         };
 
@@ -39,6 +37,13 @@
                 return (value === array[key]);
             });
             return (key !== null);
+        };
+
+        that.clone = function () {
+            return app({
+                events: events,
+                status: status
+            });
         };
 
         return that;
