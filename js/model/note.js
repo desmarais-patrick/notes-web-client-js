@@ -1,14 +1,17 @@
 "use strict";
 
 (function (Notes) {
-    Notes.model.note = function(id, text, date) {
+    Notes.model.note = function(options) {
         var that = {};
 
-        var id = id || null;
-        var text = text || "";
-        var date = date || new Date();
+        var clientId = options.clientId || ++Notes.model.note.clientId;
+        var id = options.id || null;
+        var text = options.text || "";
+        var date = options.date || new Date();
+        var time = date.getTime();
 
-        // Uniquely identifiable.
+        that.getClientId = function () { return clientId; };
+
         that.getId = function () { return id; };
 
         that.getText = function () { return text; };
@@ -16,18 +19,17 @@
             text = newText;
         };
 
-        that.getDate = function () { return date; }
+        that.getDate = function () { return date; };
+        that.getTime = function () { return time; };
 
-        // Comparable from newest to oldest.
         that.compare = function (otherNote) {
-            var otherTime = otherNote.getDate().getTime();
-            var thisTime = this.getDate().getTime();
-            if (thisTime < otherTime) {
-                return 1;
-            } else if (thisTime > otherTime) {
-                return -1;
+            var otherTime = otherNote.getTime();
+            if (time < otherTime) {
+                return 1; // This is older, so after.
+            } else if (time > otherTime) {
+                return -1; // This is newer, so before.
             } else {
-                return 0;
+                return 0; // Equal!
             }
         };
 
@@ -41,4 +43,5 @@
 
         return that;
     };
+    Notes.model.note.clientId = 0;
 })(Notes);
