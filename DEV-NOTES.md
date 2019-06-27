@@ -22,6 +22,7 @@
  - Request queue for multiple, optionally dependent, operations.
  - Authentication and app secret with server API.
  - App-wide notifications (dismissable errors, actionable events).
+ - Undo.
 
 
  Extra:
@@ -39,6 +40,12 @@
    - Vue.js
    - Svelt (?)
    - Gatsby (?)
+ - Read on Enums and their implementation in TypeScript.
+   - Why use enums over simple strings?
+ - Review how to make it clear what kind of options are expected,
+   and how to reuse this options object as basis for object returned.
+ - Review push and pull approach for efficient rendering, animations and 
+   user interface reactivity.
 
 ## Inspirations
 
