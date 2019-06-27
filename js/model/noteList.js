@@ -2,17 +2,18 @@
 
 (function (Notes) {
     var NOTE_LIST_STATUS_ENUM = {
-        EMPTY: "Empty",
-        LOADING_MORE: "LoadingMore",
+        LOADING: "Loading",
         READY: "Ready"
     }; // (!) Hopefully, nobody changes that object. :s
 
-    Notes.model.noteList = function () {
+    Notes.model.noteList = function noteList(options) {
         var that = {};
 
-        var list = []; // Sorted list to return fast.
-        var hasMore = true; // To avoid unnecessary server requests.
-        var status = NOTE_LIST_STATUS_ENUM.EMPTY;
+        var events = options.events;
+
+        var list = options.list || []; // Keep sorted!
+        var hasMore = options.hasMore || true; // To avoid unnecessary server requests.
+        var status = options.status || NOTE_LIST_STATUS_ENUM.READY;
             // To initialize list and show loading.
 
         // TODO Add changeListener or readyListener here!
@@ -31,6 +32,9 @@
             list.sort(function (a, b) {
                 return a.compare(b);
             });
+
+
+
             return list.length;
         };
 
@@ -83,8 +87,19 @@
             return status;
         };
         that.setStatus = function (newStatus) {
-            // (!) Hopefully, it's one of APP_STATUS_ENUM. :s
+            if (isEnumValue(newStatus) === false) {
+                throw new Error("Implementation error! " + 
+                    newStatus + " is not value part of NOTE_LIST_STATUS_ENUM.");
+            }
+
             status = newStatus;
+        };
+
+        var isEnumValue = function (value) {
+            var key = Object.keys(NOTE_LIST_STATUS_ENUM).find(function (key, index, array) {
+                return (value === array[key]);
+            });
+            return (key !== null);
         };
 
         return that;
