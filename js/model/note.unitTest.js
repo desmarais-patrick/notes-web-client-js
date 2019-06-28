@@ -14,6 +14,30 @@
 
         testSuite.start();
 
+        var dateTest = testSuite.test("Date", function () {
+            var events = createEvents();
+            var note = createNote({
+                events: events,
+                id: "some id",
+                text: "some text",
+                date: new Date("2019-01-01")
+            });
+            var clientId = note.getClientId();
+
+            expect(note.getDate().toISOString())
+                .toEqual("2019-01-01T00:00:00.000Z");
+            
+            var newDate = new Date(0);
+            note.setDate(newDate);
+
+            var topic = "change Notes[" + clientId + "].Date";
+            var eventIterator = events.listen(topic);
+            expect(eventIterator.next().options.newDate.toISOString())
+                .toEqual("1970-01-01T00:00:00.000Z");
+
+            dateTest.success();
+        });
+
         var eventsTest = testSuite.test("Events", function () {
             var events = createEvents();
             var note = createNote({

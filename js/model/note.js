@@ -6,13 +6,16 @@
 
         var events = options.events;
 
+        // Specifying clientId through options, meant for cloning.
         var clientId = options.clientId || ++Notes.model.note.clientId;
+
         var id = options.id || null;
         var text = options.text || "";
         var date = options.date || new Date();
         var time = date.getTime();
 
         var changeTextTopic = "change Notes[" + clientId + "].Text";
+        var changeDateTopic = "change Notes[" + clientId + "].Date";
 
         that.getClientId = function () { return clientId; };
 
@@ -29,6 +32,15 @@
 
         that.getDate = function () { return date; };
         that.getTime = function () { return time; };
+        that.setDate = function (newDate) {
+            var newTime = newDate.getTime();
+            if (newTime !== time) {
+                date = new Date(newDate);
+                time = newTime;
+                events.dispatch(changeDateTopic, "new date", 
+                    {newDate: new Date(newDate)});
+            }
+        }
 
         that.compare = function (otherNote) {
             var otherTime = otherNote.getTime();
