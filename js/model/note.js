@@ -4,11 +4,15 @@
     Notes.model.note = function(options) {
         var that = {};
 
+        var events = options.events;
+
         var clientId = options.clientId || ++Notes.model.note.clientId;
         var id = options.id || null;
         var text = options.text || "";
         var date = options.date || new Date();
         var time = date.getTime();
+
+        var changeTextTopic = "change Notes[" + clientId + "].Text";
 
         that.getClientId = function () { return clientId; };
 
@@ -16,7 +20,11 @@
 
         that.getText = function () { return text; };
         that.setText = function (newText) {
-            text = newText;
+            if (newText !== text) {
+                text = newText;
+                events.dispatch(changeTextTopic, "new text", 
+                    {newText: newText});
+            }
         };
 
         that.getDate = function () { return date; };
