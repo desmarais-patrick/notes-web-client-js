@@ -43,6 +43,16 @@
             return notes;
         };
 
+        that.requestMoreNotes = function (optionalCallback) {
+            // Set list to loading.
+            // Send request.
+            // ...
+            //    Parse response
+            //    Update model, if any change.
+            //    Set list to ready.
+            //    Handle optionalCallback with notes.
+        };
+
         that.listen = function listen(topic) {
             return events.listen(topic);
         };

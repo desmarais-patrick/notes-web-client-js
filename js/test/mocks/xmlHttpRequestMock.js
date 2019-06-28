@@ -34,4 +34,22 @@
         };
         return XMLHttpRequestMock;
     };
+    Notes.test.mocks.xmlHttpRequestMock2 = function (sendCallback) {
+        function XMLHttpRequestMock() {
+            this.onload = null;
+        }
+        XMLHttpRequestMock.prototype.open = function (method, url) { };
+        XMLHttpRequestMock.prototype.send = function (body) {
+            sendCallback(this);
+        };
+        XMLHttpRequestMock.prototype.load = function (options, callback) {
+            setTimeout(function () {
+                that.status = options.responseStatus;
+                that.responseText = options.responseText;
+                that.onload();
+                callback();
+            }, 0);
+        };
+        return XMLHttpRequestMock;
+    };
 })(Notes);

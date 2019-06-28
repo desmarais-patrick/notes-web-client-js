@@ -4,10 +4,25 @@
     var modelTestScript = function (options) {
         var expect = options.expect;
         var testSuiteBuilder = options.testSuiteBuilder;
+        var xmlHttpRequestMock2 = options.xmlHttpRequestMock2;
 
         var testSuite = testSuiteBuilder.createTestSuite("[Model] Model");
 
         testSuite.setup();
+
+        var lastXMLHttpRequest = null;
+        var XMLHttpRequestMock = xmlHttpRequestMock2(function (request) {
+            lastXMLHttpRequest = request;
+        });
+        var configuration = testSuite.configuration;
+        var createRequest = Notes.communication.request;
+        var requestBuilder = Notes.communication.requestBuilder({
+            XMLHttpRequest: XMLHttpRequestMock,
+            requestTimeoutInMillis: 30000,
+
+            request: createRequest,
+            baseUrl: configuration.apiServerBaseUrl
+        });
 
         var createApp = Notes.model.app;
         var createEvents = Notes.model.events;
@@ -17,7 +32,8 @@
         var createModelOptions = {
             createApp: createApp,
             createEvents: createEvents,
-            createNotes: createNotes
+            createNotes: createNotes,
+            requestBuilder: requestBuilder
         };
 
         var testOptions = {
@@ -36,27 +52,47 @@
             var listEventIterator = model.listen("change Notes.List");
             expect(listEventIterator.hasNext()).toEqual(false);
 
+            // Send a request for more notes.
             model.requestMoreNotes();
 
+            // List is loading.
             expect(statusEventIterator.hasNext()).toEqual(true);
             expect(statusEventIterator.next().source.getStatus())
-                .toEqual(NOTES_STATUS_ENUM.LOADING_MORE);
+                .toEqual(NOTES_STATUS_ENUM.LOADING);
             expect(listEventIterator.hasNext()).toEqual(false);
 
-            // Request completes.
-
-            expect(statusEventIterator.hasNext()).toEqual(true);
-            expect(statusEventIterator.next().source.getStatus())
-                .toEqual(NOTES_STATUS_ENUM.READY);
-
-            expect(listEventIterator.hasNext()).toEqual(true);
-            expect(statusEventIterator.next().source.getList().length)
-                .toEqual(3);
-
-            expect(statusEventIterator.hasNext()).toEqual(false);
-            expect(listEventIterator.hasNext()).toEqual(false);
-
-            listenTest.success();
+            // Request completes with some results.
+            var noteItemInResponseFormat = {
+                type: "Note",
+                id: "1",
+                text: "some text",
+                date: (new Date("2019-01-01")).toISOString()
+            };
+            var collectionInResponseFormat = {
+                type: "Collection",
+                items: [noteItemInResponseFormat],
+                offset: 0,
+                limit: 10
+            };
+            lastXMLHttpRequest.load({
+                responseStatus: 200,
+                responseText: JSON.stringify(collectionInResponseFormat)
+            }, function afterLoad() {
+                // List is ready.
+                expect(statusEventIterator.hasNext()).toEqual(true);
+                expect(statusEventIterator.next().source.getStatus())
+                    .toEqual(NOTES_STATUS_ENUM.READY);
+    
+                // List has been updated.
+                expect(listEventIterator.hasNext()).toEqual(true);
+                expect(statusEventIterator.next().source.getList().length)
+                    .toEqual(1);
+    
+                expect(statusEventIterator.hasNext()).toEqual(false);
+                expect(listEventIterator.hasNext()).toEqual(false);
+    
+                listenTest.success();
+            });
         });
         
         // Get note X

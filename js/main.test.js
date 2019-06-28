@@ -7,6 +7,7 @@
     var expect = Notes.test.expect;
     var createSortableFakeObject = Notes.test.mocks.sortableFakeObject;
     var xmlHttpRequestMock = Notes.test.mocks.xmlHttpRequestMock;
+    var xmlHttpRequestMock2 = Notes.test.mocks.xmlHttpRequestMock2;
 
     var testHtmlLogger = Notes.test.htmlLogger({
         document: window.document,
@@ -44,7 +45,8 @@
 
         // Test helpers.
         createSortableFakeObject: createSortableFakeObject,
-        xmlHttpRequestMock: xmlHttpRequestMock
+        xmlHttpRequestMock: xmlHttpRequestMock,
+        xmlHttpRequestMock2: xmlHttpRequestMock2
     };
     var testSuites = [];
     Notes.test.testScripts.forEach(function (testScript) {
