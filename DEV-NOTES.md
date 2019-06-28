@@ -46,6 +46,8 @@
    and how to reuse this options object as basis for object returned.
  - Review push and pull approach for efficient rendering, animations and 
    user interface reactivity.
+ - Review how to refresh lists efficiently in a concurrent client setting.
+   (Some inspiration from GraphQL? Keep-Alive mechanism? Meteor live feature?)
 
 ## Inspirations
 
