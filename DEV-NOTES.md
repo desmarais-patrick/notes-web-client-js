@@ -13,6 +13,7 @@
  - Test performance with loading resources asynchronously with JavaScript.
  - Retry connection automatically.
  - Error class with message and reporting instructions (auto-fade or manual).
+   Error strategy consuming errors and displaying them using error class.
  - Statistics on application usage and errors.
  - Reference for user interface components and design system.
  - Application strings and formats; notify on change language or settings.
@@ -48,6 +49,8 @@
    user interface reactivity.
  - Review how to refresh lists efficiently in a concurrent client setting.
    (Some inspiration from GraphQL? Keep-Alive mechanism? Meteor live feature?)
+ - Review how I should handle data corruption from back-end service.
+   (To avoid front-end becoming unresponsive!)
 
 ## Inspirations
 
