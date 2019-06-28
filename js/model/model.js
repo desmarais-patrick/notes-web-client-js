@@ -23,17 +23,20 @@
         // I'll need a refreshNotes() with communication after delete and creation to confirm synchronicity.
 
         var events = options.createEvents();
+        var requestBuilder = options.requestBuilder;
 
         var app = options.createApp({
             events: events,
             status: null
         });
 
+        var NOTES_STATUS_ENUM = options.NOTES_STATUS_ENUM;
         var notes = options.createNotes({
             events: events,
             status: null,
             list: []
         });
+        var createNote = options.createNote;
 
         that.getApp = function () {
             return app;
@@ -44,13 +47,48 @@
         };
 
         that.requestMoreNotes = function (optionalCallback) {
-            // Set list to loading.
-            // Send request.
-            // ...
-            //    Parse response
-            //    Update model, if any change.
-            //    Set list to ready.
-            //    Handle optionalCallback with notes.
+            notes.setStatus(NOTES_STATUS_ENUM.LOADING);
+            requestBuilder.get("/notes")
+                .addQueryParameter("limit", 10)
+                .addQueryParameter("offset", 0)
+                .send(function (err, response) {
+                    if (err) {
+                        notes.setStatus(NOTES_STATUS_ENUM.READY);
+
+                        if (optionalCallback) {
+                            var message = "Unable to request more notes. ";
+                            message += "Cause: ";
+                            message += err.stack;
+                            var newError = new Error(message);
+                            optionalCallback(newError);
+                        }
+                        return;
+                    }
+
+                    var newNotes = parseNotesResponse(response);
+                    notes.insertMany(newNotes);
+                    notes.setStatus(NOTES_STATUS_ENUM.READY);
+
+                    if (optionalCallback) {
+                        optionalCallback(null, notes);
+                    }
+                });
+        };
+
+        var parseNotesResponse = function (response) {
+            var items = response.items;
+            var newNotes = [];
+            items.forEach(function (item) {
+                var date = new Date(item.date);
+                var note = createNote({
+                    events: events,
+                    id: item.id,
+                    text: item.text,
+                    date: date
+                });
+                newNotes.push(note);
+            });
+            return newNotes;
         };
 
         that.listen = function listen(topic) {

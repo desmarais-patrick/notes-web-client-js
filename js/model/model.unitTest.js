@@ -26,19 +26,23 @@
 
         var createApp = Notes.model.app;
         var createEvents = Notes.model.events;
+        var createNote = Notes.model.note;
         var createNotes = Notes.model.notes;
+        var NOTES_STATUS_ENUM = Notes.model.notes.STATUS_ENUM;
 
         var createModel = Notes.model.model;
         var createModelOptions = {
             createApp: createApp,
             createEvents: createEvents,
+            createNote: createNote,
             createNotes: createNotes,
+            NOTES_STATUS_ENUM: NOTES_STATUS_ENUM,
             requestBuilder: requestBuilder
         };
 
         var testOptions = {
             APP_STATUS_ENUM: Notes.model.app.STATUS_ENUM,
-            NOTES_STATUS_ENUM: Notes.model.notes.STATUS_ENUM
+            NOTES_STATUS_ENUM: NOTES_STATUS_ENUM
         };
 
         testSuite.start();
@@ -57,7 +61,7 @@
 
             // List is loading.
             expect(statusEventIterator.hasNext()).toEqual(true);
-            expect(statusEventIterator.next().source.getStatus())
+            expect(statusEventIterator.next().options.newStatus)
                 .toEqual(NOTES_STATUS_ENUM.LOADING);
             expect(listEventIterator.hasNext()).toEqual(false);
 
@@ -80,18 +84,53 @@
             }, function afterLoad() {
                 // List is ready.
                 expect(statusEventIterator.hasNext()).toEqual(true);
-                expect(statusEventIterator.next().source.getStatus())
+                expect(statusEventIterator.next().options.newStatus)
                     .toEqual(NOTES_STATUS_ENUM.READY);
     
                 // List has been updated.
                 expect(listEventIterator.hasNext()).toEqual(true);
-                expect(statusEventIterator.next().source.getList().length)
+                expect(listEventIterator.next().options.newList.length)
                     .toEqual(1);
     
                 expect(statusEventIterator.hasNext()).toEqual(false);
                 expect(listEventIterator.hasNext()).toEqual(false);
     
                 listenTest.success();
+            });
+        });
+
+        var requestFailTest = testSuite.test("Handle fail request", function () {
+            var model = createModel(createModelOptions);
+            var NOTES_STATUS_ENUM = testOptions.NOTES_STATUS_ENUM;
+
+            // List is ready before error.
+            var statusEventIterator = model.listen("change Notes.Status");
+            expect(statusEventIterator.hasNext()).toEqual(false);
+            expect(model.getNotes().getStatus())
+                .toEqual(NOTES_STATUS_ENUM.READY);
+
+            // Send request.
+            model.requestMoreNotes();
+
+            // List is loading pending response.
+            expect(statusEventIterator.next().options.newStatus)
+                    .toEqual(NOTES_STATUS_ENUM.LOADING);
+
+            // Respond with error.
+            var errorResponse = {
+                type: "Error",
+                code: 500,
+                message: "Some server error"
+            };
+            lastXMLHttpRequest.load({
+                responseStatus: 500,
+                responseText: JSON.stringify(errorResponse)
+            }, function afterLoad() {
+                // List is ready after error.
+                expect(statusEventIterator.next().options.newStatus)
+                    .toEqual(NOTES_STATUS_ENUM.READY);
+                
+                requestFailTest.success();
             });
         });
         

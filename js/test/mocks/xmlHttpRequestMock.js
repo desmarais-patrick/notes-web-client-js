@@ -43,6 +43,7 @@
             sendCallback(this);
         };
         XMLHttpRequestMock.prototype.load = function (options, callback) {
+            var that = this;
             setTimeout(function () {
                 that.status = options.responseStatus;
                 that.responseText = options.responseText;
