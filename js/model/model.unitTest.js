@@ -25,16 +25,20 @@
         });
 
         var createApp = Notes.model.app;
+        var createCache = Notes.model.cache;
         var createEvents = Notes.model.events;
         var createNote = Notes.model.note;
+        var NOTE_STATUS_ENUM = Notes.model.note.STATUS_ENUM;
         var createNotes = Notes.model.notes;
         var NOTES_STATUS_ENUM = Notes.model.notes.STATUS_ENUM;
 
         var createModel = Notes.model.model;
         var createModelOptions = {
             createApp: createApp,
+            createCache: createCache,
             createEvents: createEvents,
             createNote: createNote,
+            NOTE_STATUS_ENUM: NOTE_STATUS_ENUM,
             createNotes: createNotes,
             NOTES_STATUS_ENUM: NOTES_STATUS_ENUM,
             requestBuilder: requestBuilder
@@ -48,6 +52,7 @@
         testSuite.start();
 
         var requestAndListenTest = testSuite.test("Request and listen", function () {
+            lastXMLHttpRequest = null;
             var model = createModel(createModelOptions);
             var NOTES_STATUS_ENUM = testOptions.NOTES_STATUS_ENUM;
 
@@ -100,6 +105,7 @@
         });
 
         var requestFailTest = testSuite.test("Handle fail request", function () {
+            lastXMLHttpRequest = null;
             var model = createModel(createModelOptions);
             var NOTES_STATUS_ENUM = testOptions.NOTES_STATUS_ENUM;
 
@@ -115,6 +121,7 @@
             // List is loading pending response.
             expect(statusEventIterator.next().options.newStatus)
                     .toEqual(NOTES_STATUS_ENUM.LOADING);
+            expect(lastXMLHttpRequest).toNotBeNull();
 
             // Respond with error.
             var errorResponse = {
@@ -134,41 +141,63 @@
             });
         });
         
-        // Get note X
-        var getNoteXTest = testSuite.test("Get note X", function () {
+        var requestNoteXTest = testSuite.test("Request note X", function () {
+            lastXMLHttpRequest = null;
             var model = createModel(createModelOptions);
 
             // Imagine someone enters the app with bookmark to note X.
-
             var noteId = "x";
-            model.getNote(noteId, function (err, note) {
-                // Error is null.
-                // Note is returned.
+            var pendingNote = model.requestNote(noteId, function (err, note) {
+                expect(err).toBeNull();
+                expect(note).toNotBeNull();
+                expect(note.getId()).toEqual("x");
+                expect(note).toEqual(pendingNote);
+                expect(note.getText()).toEqual("some text");
+                expect(note.getStatus()).toEqual(NOTE_STATUS_ENUM.READY);
             });
+            expect(pendingNote.getStatus()).toEqual(NOTE_STATUS_ENUM.LOADING);
 
-            // Imagine someone returns to page with bookmark to same note X, 
-            // already in cache.
+            expect(lastXMLHttpRequest).toNotBeNull();
+            var noteX = {
+                type: "Note",
+                id: "x",
+                text: "some text",
+                date: (new Date("2019-01-01")).toISOString()
+            };
+            lastXMLHttpRequest.load({
+                responseStatus: 200,
+                responseText: JSON.stringify(noteX)
+            }, function afterLoad() {
+                lastXMLHttpRequest = null; // Reset for next test.
 
-            model.getNote(noteId, function (err, note) {
-                // Request hasn't been called.
+                // Then imagine someone returns to page with bookmark to same note X, 
+                // already in cache.
+
+                var pendingNote2 = model.requestNote(noteId, function (err, note) {
+                    expect(err).toBeNull();
+                    expect(note).toEqual(pendingNote);
+                });
+                expect(lastXMLHttpRequest).toBeNull(); // No request!
+                expect(pendingNote2).toEqual(pendingNote);
+
+                // Imagine someone returns to note that doesn't exist (anymore).
+                var anotherNoteId = "404";
+                model.getNote(anotherNoteId, function (err, note) {
+                    // Error is null.
+                    // Note is null.
+                });
+
+                // Imagine some view is referencing a note made available through a list of notes.
+
+                // Imagine someone is offline and network is not accessible for note Y.
+                var yetAnotherNoteId = "y";
+                model.getNote(yetAnotherNoteId, function (err, note) {
+                    // Error is not null.
+                    // Error is about offline, note can't be accessed.
+                    // Note is null.
+                });
+                requestNoteXTest.success();
             });
-
-            // Imagine someone returns to note that doesn't exist (anymore).
-            var anotherNoteId = "404";
-            model.getNote(anotherNoteId, function (err, note) {
-                // Error is null.
-                // Note is null.
-            });
-
-            // Imagine someone is offline and network is not accessible for note Y.
-            var yetAnotherNoteId = "y";
-            model.getNote(yetAnotherNoteId, function (err, note) {
-                // Error is not null.
-                // Error is about offline, note can't be accessed.
-                // Note is null.
-            });
-
-            getNoteXTest.success();
         });
 
         // Get note X (404)

@@ -23,6 +23,7 @@
         // I'll need a refreshNotes() with communication after delete and creation to confirm synchronicity.
 
         var events = options.createEvents();
+        var cache = options.createCache();
         var requestBuilder = options.requestBuilder;
 
         var app = options.createApp({
@@ -36,6 +37,8 @@
             status: null,
             list: []
         });
+
+        var NOTE_STATUS_ENUM = options.NOTE_STATUS_ENUM;
         var createNote = options.createNote;
 
         that.getApp = function () {
@@ -60,7 +63,7 @@
                             message += "Cause: ";
                             message += err.stack;
                             var newError = new Error(message);
-                            optionalCallback(newError);
+                            optionalCallback(newError, null);
                         }
                         return;
                     }
@@ -89,6 +92,58 @@
                 newNotes.push(note);
             });
             return newNotes;
+        };
+
+        that.requestNote = function (id, optionalCallback) {
+            var note = cache.get(id);
+            if (note !== null) {
+                if (optionalCallback) {
+                    optionalCallback(null, note);
+                }
+
+                return note;
+            }
+
+            note = createNote({
+                events: events,
+                id: id,
+                text: null,
+                date: null,
+                status: NOTE_STATUS_ENUM.LOADING
+            });
+            cache.save(note);
+
+            requestBuilder.get("/note/" + id)
+                .send(function (err, response) {
+                    if (err) {
+                        note.setStatus(NOTE_STATUS_ENUM.FAILED_TO_LOAD);
+
+                        if (optionalCallback) {
+                            var message = "Failed to request note '" + id + "' ";
+                            message += "Cause: ";
+                            message += err.stack;
+                            var newError = new Error(message);
+                            optionalCallback(newError, null);
+                        }
+                        return;
+                    }
+
+                    parseNoteResponse(note, response);
+                    note.setStatus(NOTE_STATUS_ENUM.READY);
+
+                    if (optionalCallback) {
+                        optionalCallback(null, note);
+                    }
+                });
+
+            return note;
+        };
+
+        var parseNoteResponse = function (note, response) {
+            note.setText(response.text);
+
+            var date = new Date(response.date);
+            note.setDate(date);
         };
 
         that.listen = function listen(topic) {
