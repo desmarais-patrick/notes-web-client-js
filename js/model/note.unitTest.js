@@ -11,6 +11,7 @@
 
         var createEvents = Notes.model.events;
         var createNote = Notes.model.note;
+        var STATUS_ENUM = Notes.model.note.STATUS_ENUM;
 
         testSuite.start();
 
@@ -20,7 +21,8 @@
                 events: events,
                 id: "some id",
                 text: "some text",
-                date: new Date("2019-01-01")
+                date: new Date("2019-01-01"),
+                status: STATUS_ENUM.READY
             });
             var clientId = note.getClientId();
 
@@ -41,7 +43,11 @@
         var eventsTest = testSuite.test("Events", function () {
             var events = createEvents();
             var note = createNote({
-                events: events
+                events: events,
+                id: null,
+                text: null,
+                date: null,
+                status: null
             });
 
             var clientId = note.getClientId();
@@ -53,6 +59,29 @@
                 .toEqual("some new text");
 
             eventsTest.success();
+        });
+
+        var statusTest = testSuite.test("Status", function () {
+            var events = createEvents();
+            var note = createNote({
+                events: events,
+                id: "some id",
+                text: null,
+                date: null,
+                status: STATUS_ENUM.LOADING
+            });
+            expect(note.getStatus()).toEqual(STATUS_ENUM.LOADING);
+
+            // Error requesting the additional information for note.
+            note.setStatus(STATUS_ENUM.FAILED_TO_LOAD);
+            expect(note.getStatus()).toEqual(STATUS_ENUM.FAILED_TO_LOAD);
+
+            // Success in recovering info for note.
+            note.setText("new text");
+            note.setDate(new Date("2019-01-01"));
+            note.setStatus(STATUS_ENUM.READY);
+
+            statusTest.success();
         });
 
         testSuite.end();

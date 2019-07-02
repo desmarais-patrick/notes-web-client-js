@@ -1,6 +1,12 @@
 "use strict";
 
 (function (Notes) {
+    var STATUS_ENUM = {
+        FAILED_TO_LOAD: "Failed to load",
+        LOADING: "Loading",
+        READY: "Ready"
+    }; // (!) Hopefully, nobody changes that object. :s
+
     Notes.model.note = function(options) {
         var that = {};
 
@@ -10,12 +16,14 @@
         var clientId = options.clientId || ++Notes.model.note.clientId;
 
         var id = options.id || null;
-        var text = options.text || "";
-        var date = options.date || new Date();
-        var time = date.getTime();
+        var text = options.text || null;
+        var date = options.date || null;
+        var time = options.date ? date.getTime() : null;
+        var status = options.status || null;
 
         var changeTextTopic = "change Notes[" + clientId + "].Text";
         var changeDateTopic = "change Notes[" + clientId + "].Date";
+        var changeStatusTopic = "change Notes[" + clientId + "].Status";
 
         that.getClientId = function () { return clientId; };
 
@@ -33,12 +41,22 @@
         that.getDate = function () { return date; };
         that.getTime = function () { return time; };
         that.setDate = function (newDate) {
-            var newTime = newDate.getTime();
+            var newTime = (newDate === null) ? null : newDate.getTime();
             if (newTime !== time) {
-                date = new Date(newDate);
+                date = (newDate === null) ? null : new Date(newDate);
                 time = newTime;
+                var eventDate = (newDate === null) ? null : new Date(newDate);
                 events.dispatch(changeDateTopic, "new date", 
-                    {newDate: new Date(newDate)});
+                    {newDate: eventDate});
+            }
+        }
+
+        that.getStatus = function () { return status; };
+        that.setStatus = function (newStatus) {
+            if (status !== newStatus) {
+                status = newStatus;
+                events.dispatch(changeStatusTopic, "new status",
+                    {newStatus: newStatus});
             }
         }
 
@@ -48,6 +66,10 @@
                 return 1; // This is older, so after.
             } else if (time > otherTime) {
                 return -1; // This is newer, so before.
+            } else if (time === null && otherTime !== null) {
+                return 1; // Leave null values at the end.
+            } else if (time !== null && otherTime === null) {
+                return -1; // Leave null values at the end.
             } else {
                 return 0; // Equal!
             }
@@ -63,5 +85,6 @@
 
         return that;
     };
+    Notes.model.note.STATUS_ENUM = STATUS_ENUM;
     Notes.model.note.clientId = 0;
 })(Notes);
