@@ -3,6 +3,7 @@
 (function (Notes) {
     var STATUS_ENUM = {
         FAILED_TO_LOAD: "Failed to load",
+        FAILED_TO_SYNC: "Failed to sync",
         LOADING: "Loading",
         READY: "Ready"
     }; // (!) Hopefully, nobody changes that object. :s
