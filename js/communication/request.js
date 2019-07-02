@@ -70,6 +70,7 @@
                 callback(error);
             };
 
+            // TODO Or maybe it throws! :s
             request.onerror = function (err) {
                 var error = new Error("Request for '" + method + " " + url + 
                     "' completed with error: " + err.stack);
