@@ -53,12 +53,24 @@
 
         that.getStatus = function () { return status; };
         that.setStatus = function (newStatus) {
+            if (isEnumValue(newStatus) === false) {
+                throw new Error("Implementation error! " + 
+                newStatus + " is not value part of STATUS_ENUM.");
+            }
+
             if (status !== newStatus) {
                 status = newStatus;
                 events.dispatch(changeStatusTopic, "new status",
                     {newStatus: newStatus});
             }
         }
+
+        var isEnumValue = function (value) {
+            var key = Object.keys(STATUS_ENUM).find(function (key, index, array) {
+                return (value === array[key]);
+            });
+            return (key !== null);
+        };
 
         that.compare = function (otherNote) {
             var otherTime = otherNote.getTime();
