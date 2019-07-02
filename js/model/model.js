@@ -119,7 +119,7 @@
             });
             cache.save(note);
 
-            requestBuilder.get("/note/" + id)
+            requestBuilder.get("/notes/" + id)
                 .send(function (err, response) {
                     if (err) {
                         note.setStatus(NOTE_STATUS_ENUM.FAILED_TO_LOAD);
@@ -150,6 +150,33 @@
 
             var date = new Date(response.date);
             note.setDate(date);
+        };
+
+        that.createNote = function (text) {
+            var date = new Date();
+            var note = createNote({
+                events: events,
+                id: null,
+                text: text,
+                date: date,
+                status: NOTE_STATUS_ENUM.LOADING
+            });
+
+            var body = JSON.stringify({
+                text: text,
+                date: date.toISOString()
+            });
+            requestBuilder.post("/notes", body)
+                .send(function (err) {
+                    if (err) {
+                        note.setStatus(NOTE_STATUS_ENUM.FAILED_TO_SYNC);
+                        return;
+                    }
+
+                    note.setStatus(NOTE_STATUS_ENUM.READY);
+                });
+
+            return note;
         };
 
         that.listen = function listen(topic) {

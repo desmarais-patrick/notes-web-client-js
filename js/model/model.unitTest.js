@@ -257,8 +257,47 @@
                 });
         });
 
-        // Create note with text
-        // Create note with text (offline)
+        var createNoteTest = testSuite.test("Create", function () {
+            lastXMLHttpRequest = null;
+            var model = createModel(createModelOptions);
+
+            var newNote = model.createNote("some initial text");
+            expect(newNote.getClientId()).toNotBeNull();
+            expect(newNote.getId()).toBeNull();
+            expect(newNote.getText()).toEqual("some initial text");
+            expect(newNote.getStatus()).toEqual(NOTE_STATUS_ENUM.LOADING);
+
+            var createResponse = {
+                type: "NoteCreated"
+            };
+            lastXMLHttpRequest.load({
+                responseStatus: 201,
+                responseText: JSON.stringify(createResponse)
+            }, function afterLoad() {
+                expect(newNote.getStatus()).toEqual(NOTE_STATUS_ENUM.READY);
+                createNoteTest.success();
+            });
+        });
+
+        var createNoteFailedTest = testSuite.test("Create offline", function () {
+            lastXMLHttpRequest = null;
+            var model = createModel(createModelOptions);
+
+            var newNote = model.createNote("some initial text");
+            var errorResponse = {
+                type: "Error",
+                code: 500,
+                message: "Failed to save note with text 'some in...'."
+            };
+            lastXMLHttpRequest.load({
+                responseStatus: 500,
+                responseText: JSON.stringify(errorResponse)
+            }, function afterLoad() {
+                expect(newNote.getStatus()).toEqual(NOTE_STATUS_ENUM.FAILED_TO_SYNC);
+                createNoteFailedTest.success();
+            });
+        });
+
         // Update note X with newText
         // Delete note X
 
