@@ -24,7 +24,9 @@
 
         var events = options.createEvents();
         var cache = options.createCache();
+
         var requestBuilder = options.requestBuilder;
+        var setTimeout = options.setTimeout;
 
         var app = options.createApp({
             events: events,
@@ -87,9 +89,11 @@
                     events: events,
                     id: item.id,
                     text: item.text,
-                    date: date
+                    date: date,
+                    status: NOTE_STATUS_ENUM.READY
                 });
                 newNotes.push(note);
+                cache.save(note);
             });
             return newNotes;
         };
@@ -98,7 +102,9 @@
             var note = cache.get(id);
             if (note !== null) {
                 if (optionalCallback) {
-                    optionalCallback(null, note);
+                    setTimeout(function () {
+                        optionalCallback(null, note);
+                    }, 0);
                 }
 
                 return note;

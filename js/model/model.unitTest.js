@@ -24,6 +24,8 @@
             baseUrl: configuration.apiServerBaseUrl
         });
 
+        var setTimeout = window.setTimeout;
+
         var createApp = Notes.model.app;
         var createCache = Notes.model.cache;
         var createEvents = Notes.model.events;
@@ -41,7 +43,8 @@
             NOTE_STATUS_ENUM: NOTE_STATUS_ENUM,
             createNotes: createNotes,
             NOTES_STATUS_ENUM: NOTES_STATUS_ENUM,
-            requestBuilder: requestBuilder
+            requestBuilder: requestBuilder,
+            setTimeout: setTimeout
         };
 
         var testOptions = {
@@ -141,17 +144,20 @@
             });
         });
         
-        var requestNoteXTest = testSuite.test("Request note X", function () {
+        var requestNoteTest = testSuite.test("Request note X", function () {
             lastXMLHttpRequest = null;
             var model = createModel(createModelOptions);
 
-            // Imagine someone enters the app with bookmark to note X.
+            // Example use case:
+            // Someone enters the app with bookmark to note X.
             var noteId = "x";
             var pendingNote = model.requestNote(noteId, function (err, note) {
                 expect(err).toBeNull();
                 expect(note).toNotBeNull();
-                expect(note.getId()).toEqual("x");
+                
+                // Note is updated instead of replaced.
                 expect(note).toEqual(pendingNote);
+                expect(note.getId()).toEqual("x");                
                 expect(note.getText()).toEqual("some text");
                 expect(note.getStatus()).toEqual(NOTE_STATUS_ENUM.READY);
             });
@@ -168,39 +174,89 @@
                 responseStatus: 200,
                 responseText: JSON.stringify(noteX)
             }, function afterLoad() {
+                requestNoteTest.success();
+            });
+        });
+        
+        var cacheTest = testSuite.test("Cache", function () {
+            lastXMLHttpRequest = null;
+            var model = createModel(createModelOptions);
+
+            // Example use case:
+            // Imagine someone chooses to open note from list.
+            var noteId = "1";
+            var noteItemInResponseFormat = {
+                type: "Note",
+                id: noteId,
+                text: "some text",
+                date: (new Date("2019-01-01")).toISOString()
+            };
+            var collectionInResponseFormat = {
+                type: "Collection",
+                items: [noteItemInResponseFormat],
+                offset: 0,
+                limit: 10
+            };
+            model.requestMoreNotes();
+            lastXMLHttpRequest.load({
+                responseStatus: 200,
+                responseText: JSON.stringify(collectionInResponseFormat)
+            }, function afterLoad() {
                 lastXMLHttpRequest = null; // Reset for next test.
 
-                // Then imagine someone returns to page with bookmark to same note X, 
-                // already in cache.
-
-                var pendingNote2 = model.requestNote(noteId, function (err, note) {
+                var requestedNote = model.requestNote(noteId, function (err, note) {
                     expect(err).toBeNull();
-                    expect(note).toEqual(pendingNote);
+                    expect(note).toNotBeNull();
                 });
-                expect(lastXMLHttpRequest).toBeNull(); // No request!
-                expect(pendingNote2).toEqual(pendingNote);
-
-                // Imagine someone returns to note that doesn't exist (anymore).
-                var anotherNoteId = "404";
-                model.getNote(anotherNoteId, function (err, note) {
-                    // Error is null.
-                    // Note is null.
-                });
-
-                // Imagine some view is referencing a note made available through a list of notes.
-
-                // Imagine someone is offline and network is not accessible for note Y.
-                var yetAnotherNoteId = "y";
-                model.getNote(yetAnotherNoteId, function (err, note) {
-                    // Error is not null.
-                    // Error is about offline, note can't be accessed.
-                    // Note is null.
-                });
-                requestNoteXTest.success();
+                expect(lastXMLHttpRequest).toBeNull(); // No request, cached!
+                expect(requestedNote.getId()).toEqual(noteId); // Cached!
+                expect(requestedNote.getStatus()).toEqual(NOTE_STATUS_ENUM.READY);
+                cacheTest.success();
             });
         });
 
-        // Get note X (404)
+        var noteNotFoundTest = testSuite.test("Note not found", function () {
+            lastXMLHttpRequest = null;
+            var model = createModel(createModelOptions);
+
+            // Example use case:
+            // Imagine someone chooses to open note from list.
+            var noteId = "notFound";
+            var pendingNote = model.requestNote(noteId, function (err, note) {
+                expect(err).toNotBeNull();
+                expect(note).toBeNull();
+            });
+            var response = {
+                type: "Error",
+                code: 404,
+                message: "Resource 'notFound' could not be found."
+            };
+            lastXMLHttpRequest.load({
+                responseStatus: 404,
+                responseText: JSON.stringify(response)
+            }, function afterLoad() {
+                expect(pendingNote.getStatus()).toEqual(NOTE_STATUS_ENUM.FAILED_TO_LOAD);
+                noteNotFoundTest.success();
+            });
+        });
+
+        var networkUnavailable = testSuite.test("Network unavailable", function () {
+            lastXMLHttpRequest = null;
+            var model = createModel(createModelOptions);
+
+            // Example use case:
+            // Imagine someone tries to open a new note from start while offline.
+            var requestedNote = model.requestNote("y", function (err, note) {
+                expect(err).toNotBeNull();
+                expect(note).toBeNull();
+            });
+            lastXMLHttpRequest.error(new Error("Network unavailable"),
+                function afterLoad() {
+                    expect(requestedNote.getStatus()).toEqual(NOTE_STATUS_ENUM.FAILED_TO_LOAD);
+                    networkUnavailable.success();
+                });
+        });
+
         // Create note with text
         // Create note with text (offline)
         // Update note X with newText
