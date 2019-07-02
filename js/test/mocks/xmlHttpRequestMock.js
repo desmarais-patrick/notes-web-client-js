@@ -37,6 +37,7 @@
     Notes.test.mocks.xmlHttpRequestMock2 = function (sendCallback) {
         function XMLHttpRequestMock() {
             this.onload = null;
+            this.onerror = null;
         }
         XMLHttpRequestMock.prototype.open = function (method, url) { };
         XMLHttpRequestMock.prototype.send = function (body) {
@@ -50,6 +51,12 @@
                 that.onload();
                 callback();
             }, 0);
+        };
+        XMLHttpRequestMock.prototype.error = function (err, callback) {
+            this.onerror(err);
+            callback();
+            throw new Error("TODO Check for existence of onerror callback.");
+            throw new Error("TODO Check if onerror is called async or sync.");
         };
         return XMLHttpRequestMock;
     };
