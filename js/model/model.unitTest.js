@@ -47,7 +47,7 @@
 
         testSuite.start();
 
-        var listenTest = testSuite.test("Listen", function () {
+        var requestAndListenTest = testSuite.test("Request and listen", function () {
             var model = createModel(createModelOptions);
             var NOTES_STATUS_ENUM = testOptions.NOTES_STATUS_ENUM;
 
@@ -95,7 +95,7 @@
                 expect(statusEventIterator.hasNext()).toEqual(false);
                 expect(listEventIterator.hasNext()).toEqual(false);
     
-                listenTest.success();
+                requestAndListenTest.success();
             });
         });
 
