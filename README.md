@@ -26,6 +26,8 @@ See also mother [notes](https://github.com/desmarais-patrick/notes) repo for glo
 | *js/model*/                 | Module to cache objects and keep data logic  |
 | *js/test*/                  | Module to test with `*.test.js`              |
 | *js/test/mocks*/            | Module to re-use mock classes for tests      |
+| *js/view*/                  | Module to render views: pages and components |
+| *js/viewModel*/             | Module to hold model for views               |
 | *js*/index.js               | App root script for structure                |
 | *js*/main.js                | App entry point and initialization           |
 | *js*/main.liveTest.js       | App live tests entry point                   |
