@@ -22,6 +22,7 @@
         var time = options.date ? date.getTime() : null;
         var status = options.status || null;
 
+        var changeIdTopic = "change Notes[" + clientId + "].Id";
         var changeTextTopic = "change Notes[" + clientId + "].Text";
         var changeDateTopic = "change Notes[" + clientId + "].Date";
         var changeStatusTopic = "change Notes[" + clientId + "].Status";
@@ -29,6 +30,13 @@
         that.getClientId = function () { return clientId; };
 
         that.getId = function () { return id; };
+        that.setId = function (newId) {
+            if (newId !== id) {
+                id = newId;
+                events.dispatch(changeIdTopic, "new id", 
+                    {newId: newId});
+            }
+        };
 
         that.getText = function () { return text; };
         that.setText = function (newText) {
