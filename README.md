@@ -23,6 +23,7 @@ See also mother [notes](https://github.com/desmarais-patrick/notes) repo for glo
 | *js*/                       | JavaScript                                   |
 | *js/communication*/         | Module to communicate with API server        |
 | *js/config*/                | Module to divide environment settings        |
+| *js/model*/                 | Module to cache objects and keep data logic  |
 | *js/test*/                  | Module to test with `*.test.js`              |
 | *js/test/mocks*/            | Module to re-use mock classes for tests      |
 | *js*/index.js               | App root script for structure                |
