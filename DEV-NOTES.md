@@ -1,5 +1,15 @@
 # Development Notes
 
+## TODO
+
+ - Review model synchronization after immediate create
+   (update and delete w\o ID)
+ - Review when to refresh list
+   (after creation, for modifications from different clients)
+ - Review where to detect and merge conflicting updates to a note
+ - Review how to batch and throttle data model operations
+   (based on connectivity and user input)
+
 ## Future Considerations
 
  - Detect browser language
