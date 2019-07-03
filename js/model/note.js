@@ -22,6 +22,7 @@
         var time = options.date ? date.getTime() : null;
         var status = options.status || null;
         var isSynchronized = true;
+        var isDeleted = false;
 
         var changeIdTopic = "change Notes[" + clientId + "].Id";
         var changeTextTopic = "change Notes[" + clientId + "].Text";
@@ -87,6 +88,13 @@
         };
         that.setIsSynchronized = function (newValue) {
             isSynchronized = newValue;
+        };
+
+        that.isDeleted = function () {
+            return isDeleted;
+        };
+        that.setIsDeleted = function (newValue) {
+            isDeleted = newValue;
         };
 
         that.compare = function (otherNote) {

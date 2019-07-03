@@ -10,53 +10,63 @@
 
         testSuite.setup();
 
-        var lastXMLHttpRequest = null;
-        var XMLHttpRequestMock = xmlHttpRequestMock2(function (request) {
-            lastXMLHttpRequest = request;
-        });
-        var configuration = testSuite.configuration;
-        var createRequest = Notes.communication.request;
-        var requestBuilder = Notes.communication.requestBuilder({
-            XMLHttpRequest: XMLHttpRequestMock,
-            requestTimeoutInMillis: 30000,
+        var setupNewTestContext = function () {
+            var testContext = {
+                lastXMLHttpRequest: null,
+                model: null
+            };
 
-            request: createRequest,
-            baseUrl: configuration.apiServerBaseUrl
-        });
+            var XMLHttpRequestMock = xmlHttpRequestMock2(function (request) {
+                testContext.lastXMLHttpRequest = request;
+            });
+            var configuration = testSuite.configuration;
+            var createRequest = Notes.communication.request;
+            var requestBuilder = Notes.communication.requestBuilder({
+                XMLHttpRequest: XMLHttpRequestMock,
+                requestTimeoutInMillis: 30000,
+    
+                request: createRequest,
+                baseUrl: configuration.apiServerBaseUrl
+            });
+    
+            var setTimeout = window.setTimeout;
+    
+            var createApp = Notes.model.app;
+            var createCache = Notes.model.cache;
+            var createEvents = Notes.model.events;
+            var createNote = Notes.model.note;
+            var NOTE_STATUS_ENUM = Notes.model.note.STATUS_ENUM;
+            var createNotes = Notes.model.notes;
+            var NOTES_STATUS_ENUM = Notes.model.notes.STATUS_ENUM;
+    
+            var createModel = Notes.model.model;
+            var createModelOptions = {
+                createApp: createApp,
+                createCache: createCache,
+                createEvents: createEvents,
+                createNote: createNote,
+                NOTE_STATUS_ENUM: NOTE_STATUS_ENUM,
+                createNotes: createNotes,
+                NOTES_STATUS_ENUM: NOTES_STATUS_ENUM,
+                requestBuilder: requestBuilder,
+                setTimeout: setTimeout
+            };
 
-        var setTimeout = window.setTimeout;
-
-        var createApp = Notes.model.app;
-        var createCache = Notes.model.cache;
-        var createEvents = Notes.model.events;
-        var createNote = Notes.model.note;
-        var NOTE_STATUS_ENUM = Notes.model.note.STATUS_ENUM;
-        var createNotes = Notes.model.notes;
-        var NOTES_STATUS_ENUM = Notes.model.notes.STATUS_ENUM;
-
-        var createModel = Notes.model.model;
-        var createModelOptions = {
-            createApp: createApp,
-            createCache: createCache,
-            createEvents: createEvents,
-            createNote: createNote,
-            NOTE_STATUS_ENUM: NOTE_STATUS_ENUM,
-            createNotes: createNotes,
-            NOTES_STATUS_ENUM: NOTES_STATUS_ENUM,
-            requestBuilder: requestBuilder,
-            setTimeout: setTimeout
+            testContext.model = createModel(createModelOptions);
+            return testContext;
         };
 
         var testOptions = {
             APP_STATUS_ENUM: Notes.model.app.STATUS_ENUM,
-            NOTES_STATUS_ENUM: NOTES_STATUS_ENUM
+            NOTE_STATUS_ENUM: Notes.model.note.STATUS_ENUM,
+            NOTES_STATUS_ENUM: Notes.model.notes.STATUS_ENUM
         };
 
         testSuite.start();
 
         var requestAndListenTest = testSuite.test("Request and listen", function () {
-            lastXMLHttpRequest = null;
-            var model = createModel(createModelOptions);
+            var testContext = setupNewTestContext();
+            var model = testContext.model;
             var NOTES_STATUS_ENUM = testOptions.NOTES_STATUS_ENUM;
 
             var statusEventIterator = model.listen("change Notes.Status");
@@ -86,7 +96,7 @@
                 offset: 0,
                 limit: 10
             };
-            lastXMLHttpRequest.load({
+            testContext.lastXMLHttpRequest.load({
                 responseStatus: 200,
                 responseText: JSON.stringify(collectionInResponseFormat)
             }, function afterLoad() {
@@ -108,8 +118,8 @@
         });
 
         var requestFailTest = testSuite.test("Handle fail request", function () {
-            lastXMLHttpRequest = null;
-            var model = createModel(createModelOptions);
+            var testContext = setupNewTestContext();
+            var model = testContext.model;
             var NOTES_STATUS_ENUM = testOptions.NOTES_STATUS_ENUM;
 
             // List is ready before error.
@@ -124,7 +134,7 @@
             // List is loading pending response.
             expect(statusEventIterator.next().options.newStatus)
                     .toEqual(NOTES_STATUS_ENUM.LOADING);
-            expect(lastXMLHttpRequest).toNotBeNull();
+            expect(testContext.lastXMLHttpRequest).toNotBeNull();
 
             // Respond with error.
             var errorResponse = {
@@ -132,7 +142,7 @@
                 code: 500,
                 message: "Some server error"
             };
-            lastXMLHttpRequest.load({
+            testContext.lastXMLHttpRequest.load({
                 responseStatus: 500,
                 responseText: JSON.stringify(errorResponse)
             }, function afterLoad() {
@@ -145,8 +155,9 @@
         });
         
         var requestNoteTest = testSuite.test("Request note X", function () {
-            lastXMLHttpRequest = null;
-            var model = createModel(createModelOptions);
+            var testContext = setupNewTestContext();
+            var model = testContext.model;
+            var NOTE_STATUS_ENUM = testOptions.NOTE_STATUS_ENUM;
 
             // Example use case:
             // Someone enters the app with bookmark to note X.
@@ -163,14 +174,14 @@
             });
             expect(pendingNote.getStatus()).toEqual(NOTE_STATUS_ENUM.LOADING);
 
-            expect(lastXMLHttpRequest).toNotBeNull();
+            expect(testContext.lastXMLHttpRequest).toNotBeNull();
             var noteX = {
                 type: "Note",
                 id: "x",
                 text: "some text",
                 date: (new Date("2019-01-01")).toISOString()
             };
-            lastXMLHttpRequest.load({
+            testContext.lastXMLHttpRequest.load({
                 responseStatus: 200,
                 responseText: JSON.stringify(noteX)
             }, function afterLoad() {
@@ -179,8 +190,9 @@
         });
         
         var cacheTest = testSuite.test("Cache", function () {
-            lastXMLHttpRequest = null;
-            var model = createModel(createModelOptions);
+            var testContext = setupNewTestContext();
+            var model = testContext.model;
+            var NOTE_STATUS_ENUM = testOptions.NOTE_STATUS_ENUM;
 
             // Example use case:
             // Imagine someone chooses to open note from list.
@@ -198,17 +210,17 @@
                 limit: 10
             };
             model.requestMoreNotes();
-            lastXMLHttpRequest.load({
+            testContext.lastXMLHttpRequest.load({
                 responseStatus: 200,
                 responseText: JSON.stringify(collectionInResponseFormat)
             }, function afterLoad() {
-                lastXMLHttpRequest = null; // Reset for next test.
+                testContext.lastXMLHttpRequest = null; // Reset for next test.
 
                 var requestedNote = model.requestNote(noteId, function (err, note) {
                     expect(err).toBeNull();
                     expect(note).toNotBeNull();
                 });
-                expect(lastXMLHttpRequest).toBeNull(); // No request, cached!
+                expect(testContext.lastXMLHttpRequest).toBeNull(); // No request, cached!
                 expect(requestedNote.getId()).toEqual(noteId); // Cached!
                 expect(requestedNote.getStatus()).toEqual(NOTE_STATUS_ENUM.READY);
                 cacheTest.success();
@@ -216,8 +228,9 @@
         });
 
         var noteNotFoundTest = testSuite.test("Note not found", function () {
-            lastXMLHttpRequest = null;
-            var model = createModel(createModelOptions);
+            var testContext = setupNewTestContext();
+            var model = testContext.model;
+            var NOTE_STATUS_ENUM = testOptions.NOTE_STATUS_ENUM;
 
             // Example use case:
             // Imagine someone chooses to open note from list.
@@ -231,7 +244,7 @@
                 code: 404,
                 message: "Resource 'notFound' could not be found."
             };
-            lastXMLHttpRequest.load({
+            testContext.lastXMLHttpRequest.load({
                 responseStatus: 404,
                 responseText: JSON.stringify(response)
             }, function afterLoad() {
@@ -241,8 +254,9 @@
         });
 
         var networkUnavailable = testSuite.test("Network unavailable", function () {
-            lastXMLHttpRequest = null;
-            var model = createModel(createModelOptions);
+            var testContext = setupNewTestContext();
+            var model = testContext.model;
+            var NOTE_STATUS_ENUM = testOptions.NOTE_STATUS_ENUM;
 
             // Example use case:
             // Imagine someone tries to open a new note from start while offline.
@@ -250,7 +264,7 @@
                 expect(err).toNotBeNull();
                 expect(note).toBeNull();
             });
-            lastXMLHttpRequest.error(new Error("Network unavailable"),
+            testContext.lastXMLHttpRequest.error(new Error("Network unavailable"),
                 function afterLoad() {
                     expect(requestedNote.getStatus()).toEqual(NOTE_STATUS_ENUM.FAILED_TO_LOAD);
                     networkUnavailable.success();
@@ -258,8 +272,9 @@
         });
 
         var createNoteTest = testSuite.test("Create", function () {
-            lastXMLHttpRequest = null;
-            var model = createModel(createModelOptions);
+            var testContext = setupNewTestContext();
+            var model = testContext.model;
+            var NOTE_STATUS_ENUM = testOptions.NOTE_STATUS_ENUM;
 
             var newNote = model.createNote("some initial text");
             expect(newNote.getClientId()).toNotBeNull();
@@ -271,7 +286,7 @@
                 type: "NoteCreated",
                 id: "1"
             };
-            lastXMLHttpRequest.load({
+            testContext.lastXMLHttpRequest.load({
                 responseStatus: 201,
                 responseText: JSON.stringify(createResponse)
             }, function afterLoad() {
@@ -285,8 +300,9 @@
         });
 
         var createNoteFailedTest = testSuite.test("Create offline", function () {
-            lastXMLHttpRequest = null;
-            var model = createModel(createModelOptions);
+            var testContext = setupNewTestContext();
+            var model = testContext.model;
+            var NOTE_STATUS_ENUM = testOptions.NOTE_STATUS_ENUM;
 
             var newNote = model.createNote("some initial text");
             var errorResponse = {
@@ -294,7 +310,7 @@
                 code: 500,
                 message: "Failed to save note with text 'some in...'."
             };
-            lastXMLHttpRequest.load({
+            testContext.lastXMLHttpRequest.load({
                 responseStatus: 500,
                 responseText: JSON.stringify(errorResponse)
             }, function afterLoad() {
@@ -304,18 +320,18 @@
         });
 
         var updateTest = testSuite.test("Update", function () {
-            lastXMLHttpRequest = null;
-            var model = createModel(createModelOptions);
+            var testContext = setupNewTestContext();
+            var model = testContext.model;
 
             // Create note first.
             var note = model.createNote("some initial text");
-            var createXmlHttpRequest = lastXMLHttpRequest;
-            lastXMLHttpRequest = null; // Request for next update.
+            var createXmlHttpRequest = testContext.lastXMLHttpRequest;
+            testContext.lastXMLHttpRequest = null; // Request for next update.
 
             // Update this note with new text.
             // ...before creation is confirmed by server ;)
             model.updateNote(note, "some new text");
-            var updateXmlHttpRequest = lastXMLHttpRequest;
+            var updateXmlHttpRequest = testContext.lastXMLHttpRequest;
             expect(updateXmlHttpRequest).toBeNull();
                 // No update request while not created!
 
@@ -330,7 +346,7 @@
                 responseText: JSON.stringify(createResponse)
             }, function afterLoad() {
                 // Update is automatically launched after created!
-                var updateXmlHttpRequest = lastXMLHttpRequest;
+                var updateXmlHttpRequest = testContext.lastXMLHttpRequest;
                 expect(updateXmlHttpRequest).toNotBeNull();
 
                 updateXmlHttpRequest.load({
@@ -342,7 +358,7 @@
                     // Update on existing note.
                     model.updateNote(note, "some new text 3");
 
-                    var updateXmlHttpRequest = lastXMLHttpRequest;
+                    var updateXmlHttpRequest = testContext.lastXMLHttpRequest;
                     expect(updateXmlHttpRequest).toNotBeNull();
 
                     updateTest.success();
@@ -350,7 +366,42 @@
             }); // End load for create.
         }); // End update test.
 
-        // Delete note X
+        var deleteTest = testSuite.test("Delete", function () {
+            var testContext = setupNewTestContext();
+            var model = testContext.model;
+
+            // Create note first.
+            var note = model.createNote("some initial text");
+            var createXmlHttpRequest = testContext.lastXMLHttpRequest;
+            testContext.lastXMLHttpRequest = null; // Reset for next delete.
+            expect(model.getNotes().getList()[0].getClientId()).toEqual(note.getClientId());
+
+            model.deleteNote(note);
+            expect(testContext.lastXMLHttpRequest).toBeNull(); // Wait for create to occur.
+            expect(model.getNotes().getList().length).toEqual(0);
+
+            var createResponse = {
+                type: "NoteCreated",
+                id: "1"
+            };
+            createXmlHttpRequest.load({
+                responseStatus: 201,
+                responseText: JSON.stringify(createResponse)
+            }, function afterLoad() {
+                // Delete is automatically sent after created!
+                var deleteXmlHttpRequest = testContext.lastXMLHttpRequest;
+                expect(deleteXmlHttpRequest).toNotBeNull();
+
+                deleteXmlHttpRequest.load({
+                    responseStatus: 200,
+                    responseText: JSON.stringify({
+                        type: "NoteDeleted"
+                    })
+                }, function afterDelete() {
+                    deleteTest.success();
+                }); // End load for delete.
+            }); // End load for create.
+        });
 
         testSuite.end();
 

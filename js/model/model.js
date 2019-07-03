@@ -185,6 +185,22 @@
 
         that.updateNote = function (note, newText) {
             note.setText(newText);
+            note.setIsSynchronized(false);
+
+            if (note.getId() === null ||
+                    note.getStatus() === NOTE_STATUS_ENUM.LOADING) {
+                return;
+            }
+
+            saveAnyPendingUpdate(note);
+        };
+
+        that.deleteNote = function (note) {
+            note.setIsDeleted(true);
+            note.setIsSynchronized(false);
+
+            var noteClientId = note.getClientId();
+            notes.delete(noteClientId);
 
             if (note.getId() === null ||
                     note.getStatus() === NOTE_STATUS_ENUM.LOADING) {
@@ -201,6 +217,20 @@
             }
 
             note.setIsSynchronized(true);
+
+            if (note.isDeleted()) {
+                requestBuilder.delete("/notes/" + note.getId())
+                .send(function (err) {
+                    if (err) {
+                        note.setIsSynchronized(false);
+                        note.setStatus(NOTE_STATUS_ENUM.FAILED_TO_SYNC);
+                        return;
+                    }
+
+                    note.setStatus(NOTE_STATUS_ENUM.READY);
+                });
+                return;
+            }
 
             var date = note.getDate();
             date = (date === null) ? null : date.toISOString();
