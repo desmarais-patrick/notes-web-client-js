@@ -268,13 +268,18 @@
             expect(newNote.getStatus()).toEqual(NOTE_STATUS_ENUM.LOADING);
 
             var createResponse = {
-                type: "NoteCreated"
+                type: "NoteCreated",
+                id: "1"
             };
             lastXMLHttpRequest.load({
                 responseStatus: 201,
                 responseText: JSON.stringify(createResponse)
             }, function afterLoad() {
+                expect(newNote.getId()).toEqual("1");
                 expect(newNote.getStatus()).toEqual(NOTE_STATUS_ENUM.READY);
+
+                expect(model.getNotes().getList()[0].getId()).toEqual("1");
+
                 createNoteTest.success();
             });
         });
@@ -295,6 +300,39 @@
             }, function afterLoad() {
                 expect(newNote.getStatus()).toEqual(NOTE_STATUS_ENUM.FAILED_TO_SYNC);
                 createNoteFailedTest.success();
+            });
+        });
+
+        var updateTest = testSuite.test("Update", function () {
+            lastXMLHttpRequest = null;
+            var model = createModel(createModelOptions);
+
+            // Create note.
+            var note = model.createNote("some initial text");
+            var createXmlHttpRequest = lastXMLHttpRequest;
+            lastXMLHttpRequest = null; // Request for next update.
+
+            // Update note with new text (before creation is confirmed).
+            model.updateNote(note, "some new text");
+            var updateXmlHttpRequest = lastXMLHttpRequest;
+            expect(updateXmlHttpRequest).toBeNull(); // No request while not created!
+
+            model.updateNote(note, "some new text 2");
+
+            var createResponse = {
+                type: "NoteCreated"
+            };
+            createXmlHttpRequest.load({
+                responseStatus: 201,
+                responseText: JSON.stringify(createResponse)
+            }, function afterLoad() {
+                var updateXmlHttpRequest = lastXMLHttpRequest; // Update after create!
+                expect(updateXmlHttpRequest).toNotBeNull();
+
+                model.update(note.getClientId(), "some new text 3");
+
+
+                updateTest.success();
             });
         });
 

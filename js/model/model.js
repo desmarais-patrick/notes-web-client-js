@@ -161,18 +161,20 @@
                 date: date,
                 status: NOTE_STATUS_ENUM.LOADING
             });
+            notes.insertOne(note);
 
             var body = JSON.stringify({
                 text: text,
                 date: date.toISOString()
             });
             requestBuilder.post("/notes", body)
-                .send(function (err) {
+                .send(function (err, response) {
                     if (err) {
                         note.setStatus(NOTE_STATUS_ENUM.FAILED_TO_SYNC);
                         return;
                     }
 
+                    note.setId(response.id);
                     note.setStatus(NOTE_STATUS_ENUM.READY);
                 });
 
