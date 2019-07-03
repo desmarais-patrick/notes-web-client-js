@@ -307,36 +307,49 @@
             lastXMLHttpRequest = null;
             var model = createModel(createModelOptions);
 
-            // Create note.
+            // Create note first.
             var note = model.createNote("some initial text");
             var createXmlHttpRequest = lastXMLHttpRequest;
             lastXMLHttpRequest = null; // Request for next update.
 
-            // Update note with new text (before creation is confirmed).
+            // Update this note with new text.
+            // ...before creation is confirmed by server ;)
             model.updateNote(note, "some new text");
             var updateXmlHttpRequest = lastXMLHttpRequest;
-            expect(updateXmlHttpRequest).toBeNull(); // No request while not created!
+            expect(updateXmlHttpRequest).toBeNull();
+                // No update request while not created!
 
             model.updateNote(note, "some new text 2");
 
             var createResponse = {
-                type: "NoteCreated"
+                type: "NoteCreated",
+                id: "1"
             };
             createXmlHttpRequest.load({
                 responseStatus: 201,
                 responseText: JSON.stringify(createResponse)
             }, function afterLoad() {
-                var updateXmlHttpRequest = lastXMLHttpRequest; // Update after create!
+                // Update is automatically launched after created!
+                var updateXmlHttpRequest = lastXMLHttpRequest;
                 expect(updateXmlHttpRequest).toNotBeNull();
 
-                model.update(note.getClientId(), "some new text 3");
+                updateXmlHttpRequest.load({
+                    responseStatus: 200,
+                    responseText: JSON.stringify({
+                        type: "NoteUpdated"
+                    })
+                }, function afterUpdate() {
+                    // Update on existing note.
+                    model.updateNote(note, "some new text 3");
 
+                    var updateXmlHttpRequest = lastXMLHttpRequest;
+                    expect(updateXmlHttpRequest).toNotBeNull();
 
-                updateTest.success();
-            });
-        });
+                    updateTest.success();
+                }); // End load for first update.
+            }); // End load for create.
+        }); // End update test.
 
-        // Update note X with newText
         // Delete note X
 
         testSuite.end();

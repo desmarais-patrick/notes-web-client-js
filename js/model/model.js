@@ -176,9 +176,50 @@
 
                     note.setId(response.id);
                     note.setStatus(NOTE_STATUS_ENUM.READY);
+
+                    saveAnyPendingUpdate(note);
                 });
 
             return note;
+        };
+
+        that.updateNote = function (note, newText) {
+            note.setText(newText);
+
+            if (note.getId() === null ||
+                    note.getStatus() === NOTE_STATUS_ENUM.LOADING) {
+                note.setIsSynchronized(false);
+                return;
+            }
+
+            saveAnyPendingUpdate(note);
+        };
+
+        var saveAnyPendingUpdate = function (note) {
+            if (note.isSynchronized()) {
+                return;
+            }
+
+            note.setIsSynchronized(true);
+
+            var date = note.getDate();
+            date = (date === null) ? null : date.toISOString();
+            var body = {
+                text: note.getText(),
+                date: date
+            };
+
+            requestBuilder.put("/notes/" + note.getId(), body)
+                .send(function (err) {
+                    if (err) {
+                        note.setIsSynchronized(false);
+                        note.setStatus(NOTE_STATUS_ENUM.FAILED_TO_SYNC);
+                        return;
+                    }
+
+                    note.setStatus(NOTE_STATUS_ENUM.READY);
+                    saveAnyPendingUpdate(note);
+                });
         };
 
         that.listen = function listen(topic) {

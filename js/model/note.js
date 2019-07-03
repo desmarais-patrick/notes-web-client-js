@@ -21,6 +21,7 @@
         var date = options.date || null;
         var time = options.date ? date.getTime() : null;
         var status = options.status || null;
+        var isSynchronized = true;
 
         var changeIdTopic = "change Notes[" + clientId + "].Id";
         var changeTextTopic = "change Notes[" + clientId + "].Text";
@@ -79,6 +80,13 @@
                 return (value === array[key]);
             });
             return (key !== null);
+        };
+
+        that.isSynchronized = function () {
+            return isSynchronized;
+        };
+        that.setIsSynchronized = function (newValue) {
+            isSynchronized = newValue;
         };
 
         that.compare = function (otherNote) {
