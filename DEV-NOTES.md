@@ -61,6 +61,7 @@
    (Some inspiration from GraphQL? Keep-Alive mechanism? Meteor live feature?)
  - Review how I should handle data corruption from back-end service.
    (To avoid front-end becoming unresponsive!)
+ - Create favicons specific to pages (ex. design system with ruler icon)
 
 ## Inspirations
 
