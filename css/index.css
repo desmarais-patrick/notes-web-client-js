@@ -1,8 +1,8 @@
 /************************************************************
   RESET
 
-  Many resets were manually forked from Bootstrap's reboot SCSS file.
-  Bootstrap is licensed MIT.
+  Many resets were manually copied from Bootstrap's
+  reboot.scss file. Bootstrap is licensed MIT. 😁
 
 ************************************************************/
 
@@ -129,24 +129,11 @@ small {
     font-weight: lighter;
 }
 
-/** COLORS **/
+/** GRID BREAKPOINTS
 
-/**
- Background: #FAFAFA (almost white)
- Text1: #333333 (dark grey)
- Text2: #666666 (light grey)
- Accent1: #FF5252 (red)
- DarkerAccent1: #D94545 (darker red)
- Accent2: #0E48AB
-**/
+     - Small is less than 360px.
+     - Medium is between 360px and 720px.
+     - Large is larger than 720px.
 
-/** GRID BREAKPOINTS **/
-
-/**
- xs: 0,
- sm: 576px,
- md: 768px,
- lg: 992px,
- xl: 1200px
  **/
 
