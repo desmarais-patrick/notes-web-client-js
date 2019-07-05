@@ -1,0 +1,22 @@
+/* Spacing */
+
+.container {
+    margin: 0 60px;
+}
+.spacer {
+    width: 100%;
+    height: 60px;
+}
+
+@media (min-width: 360px) {
+    .spacer {
+        height: 100px;
+    }
+}
+
+@media (min-width: 720px) {
+    .container {
+        margin: 0 100px;
+        max-width: 720px;
+    }
+}
