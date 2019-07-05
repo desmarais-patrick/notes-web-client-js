@@ -1,22 +1,60 @@
 /* Spacing */
 
 .container {
-    margin: 0 60px;
+    margin: 0 6rem;
 }
 .spacer {
     width: 100%;
-    height: 60px;
+    height: 6rem;
+}
+.spacer-small {
+    width: 100%;
+    height: 3rem;
 }
 
 @media (min-width: 360px) {
     .spacer {
-        height: 100px;
+        height: 9rem;
+    }
+    .spacer-small {
+        height: 4.5rem;
     }
 }
 
 @media (min-width: 720px) {
     .container {
-        margin: 0 100px;
+        margin: 0 auto;
+        padding: 0 9rem;
         max-width: 720px;
     }
+}
+
+/* Header */
+
+.design-system header h1 {
+    margin-bottom: 2.1rem;
+}
+
+.design-system header ul {
+    list-style: none;
+    border-left: .1rem dashed #D94545;
+    padding-left: .9rem;
+    margin: 0;
+}
+
+/* Sections */
+
+.design-system section h2 {
+    margin-bottom: 1.8rem;
+}
+
+.design-system section .component {
+    margin-bottom: 1.2rem;
+}
+
+.design-system section .component label {
+    color: #666666;
+    text-transform: uppercase;
+    font-size: .8rem;
+    line-height: 1;
 }
