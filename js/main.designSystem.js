@@ -12,5 +12,6 @@
     var main = function () {
         // Animations
         Notes.designSystem.setupFadeInAnimationExample();
+        Notes.designSystem.setupFadeOutAnimationExample();
     };
 })(Notes);
