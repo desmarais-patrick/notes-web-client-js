@@ -1,0 +1,15 @@
+.design-system section h2 {
+    margin-bottom: 1.8rem;
+}
+
+.design-system section .component,
+.design-system section .animation {
+    margin-bottom: 1.2rem;
+}
+
+.design-system section .component label {
+    color: #666666;
+    text-transform: uppercase;
+    font-size: .8rem;
+    line-height: 1;
+}

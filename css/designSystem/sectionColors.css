@@ -1,0 +1,29 @@
+.design-system section .component.component-color {
+    display: block;
+    float: left;
+    margin-right: 2rem;
+}
+
+.design-system section .component.component-color .color-square {
+    width: 9rem;
+    height: 9rem;
+    border: .05rem dotted #111111;
+}
+.design-system section .component.component-color.background .color-square {
+    background-color: #FAFAFA;
+}
+.design-system section .component.component-color.text-1 .color-square {
+    background-color: #333333;
+}
+.design-system section .component.component-color.text-2 .color-square {
+    background-color: #666666;
+}
+.design-system section .component.component-color.accent-1 .color-square {
+    background-color: #FF5252;
+}
+.design-system section .component.component-color.darker-accent-1 .color-square {
+    background-color: #D94545;
+}
+.design-system section .component.component-color.accent-2 .color-square {
+    background-color: #0E48AB;
+}

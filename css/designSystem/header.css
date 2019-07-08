@@ -1,0 +1,10 @@
+.design-system header h1 {
+    margin-bottom: 2.1rem;
+}
+
+.design-system header ul {
+    list-style: none;
+    border-left: .1rem dashed #D94545;
+    padding-left: .9rem;
+    margin: 0;
+}
