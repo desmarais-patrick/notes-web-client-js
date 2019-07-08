@@ -48,7 +48,8 @@
     margin-bottom: 1.8rem;
 }
 
-.design-system section .component {
+.design-system section .component,
+.design-system section .animation {
     margin-bottom: 1.2rem;
 }
 
@@ -87,6 +88,40 @@
 }
 .design-system section .component.component-color.accent-2 .color-square {
     background-color: #0E48AB;
+}
+
+.design-system section .animation p.animation-label {
+    margin-left: 1rem;
+}
+
+.design-system section .animation div.animation-demo {
+    float: left;
+
+    border: .1rem dotted #111111;
+    padding: 1rem;
+}
+
+.design-system section .animation div.animation-demo div.animation-description {
+    float: left;
+
+    margin-right: 2rem;
+}
+
+.design-system section .animation div.animation-demo div.animation-description p {
+    margin-bottom: 2rem;
+    line-height: 1.1;
+}
+
+.design-system section .animation div.animation-demo div.animation-sandbox {
+    float: left;
+}
+
+#animation-example-1 {
+    opacity: 0;
+}
+
+#animation-example-1.fade-in {
+    opacity: 1;
 }
 
 /* Utilities */
