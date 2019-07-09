@@ -11,7 +11,8 @@
     margin-bottom: 3rem;
 }
 
-.design-system section .component label {
+.design-system section .component label,
+.design-system section .animation label {
     color: #666666;
     text-transform: uppercase;
     font-size: .8rem;
