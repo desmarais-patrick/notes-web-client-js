@@ -1,0 +1,15 @@
+a, a.default {
+    color: #FF5252;
+    text-decoration: none;
+    background-color: transparent; /* Gray background on active links in IE 10 :s */
+}
+a:hover, a.hover {
+    text-decoration: underline;
+}
+a:active, a.active {
+    text-decoration: underline;
+    font-weight: bold;
+}
+a:visited, a.visited {
+    color: #B33939;
+}

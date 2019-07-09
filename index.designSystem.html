@@ -9,6 +9,8 @@
 
     <link href="css/index.css" rel="stylesheet">
     <link href="css/animations.css" rel="stylesheet">
+    <link href="css/fonts.css" rel="stylesheet">
+    <link href="css/links.css" rel="stylesheet">
 
     <link href="css/designSystem/index.css" rel="stylesheet">
     <link href="css/designSystem/footer.css" rel="stylesheet">
@@ -16,6 +18,7 @@
     <link href="css/designSystem/section.css" rel="stylesheet">
     <link href="css/designSystem/sectionColors.css" rel="stylesheet">
     <link href="css/designSystem/sectionAnimations.css" rel="stylesheet">
+    <link href="css/designSystem/sectionLogo.css" rel="stylesheet">
     <link href="css/designSystem/utilities.css" rel="stylesheet">
 
     <!-- Browser customization -->
@@ -39,6 +42,7 @@
                 <li><a href="#colors">Colors</a></li>
                 <li><a href="#animations">Animations</a></li>
                 <li><a href="#logo">Logo</a></li>
+                <li><a href="#links">Links</a></li>
             </ul>
         </header>
 
@@ -54,6 +58,10 @@
             <div class="component component-text-text">
                 <p>Welcome to the Notes App!</p>
                 <label>Text</label>
+            </div>
+            <div class="component component-text-footer footer">
+                <p>Copyright ⓒ 2019 Patrick Desmarais.</p>
+                <label>Footer</label>
             </div>
             <a href="#top">Return to top ↑</a>
         </section>
@@ -84,7 +92,7 @@
             </div>
             <div class="component component-color darker-accent-1">
                 <div class="color-square"></div>
-                <label>Darker Accent 1<br>#D94545</label>
+                <label>Darker Accent 1<br>#B33939</label>
             </div>
             <div class="component component-color accent-2">
                 <div class="color-square"></div>
@@ -155,17 +163,38 @@
             <h2>Logo</h2>
 
             <div class="component">
-                <label>Header</label>
-                <div>
+                <div class="logo-container">
                     <img src="img/logo.svg" alt="Header logo" />
                 </div>
+                <label> Header</label>
             </div>
 
             <div class="component">
-                <label>Footer</label>
-                <div>
+                <div class="logo-container">
                     <img src="img/logo-small.svg" alt="Footer logo" />
                 </div>
+                <label> Footer</label>
+            </div>
+
+            <a href="#top">Return to top ↑</a>
+        </section>
+    
+        <div class="spacer"></div>
+
+        <section id="links">
+            <h2>Links</h2>
+
+            <div class="component">
+                <ul>
+                    <li><a class="default" href="#links">About</a><br>
+                        <label>Default</label></li>
+                    <li><a class="hover" href="#links">About</a><br>
+                        <label>Hover</label></li>
+                    <li><a class="active" href="#links">About</a><br>
+                        <label>Active</label></li>
+                    <li><a class="visited" href="#links">About</a><br>
+                        <label>Visited</label></li>
+                </ul>
             </div>
 
             <a href="#top">Return to top ↑</a>

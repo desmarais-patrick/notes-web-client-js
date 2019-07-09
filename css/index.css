@@ -31,18 +31,6 @@ body {
     outline: 0 !important;
 } /** Remove focus outline on supported browsers. **/
 
-/* LINKS */
-
-a {
-    color: #FF5252;
-    text-decoration: none;
-    background-color: transparent; /* Gray background on active links in IE 10 :s */
-}
-a:hover {
-    color: #D94545;
-    text-decoration: underline;
-}
-
 /* IMAGES */
 
 img {
@@ -88,46 +76,6 @@ textarea {
   DEFAULTS
 ************************************************************/
 
-/** FONTS **/
-html {
-    font-size: 10px;
-}
-
-h1, h2, h3, p {
-    font-family: Helvetica, sans-serif;
-    margin-top: 0;
-    margin-bottom: 0;
-}
-
-.title {
-    font-size: 1.8rem;
-    font-weight: normal;
-}
-
-h1, .h1 {
-    font-size: 1.4rem;
-    font-weight: normal;
-}
-
-h2, .h2 {
-    font-size: 1.2rem;
-    font-weight: lighter;
-}
-
-p {
-    font-size: 1rem;
-    font-weight: normal;
-}
-
-button {
-    font-size: 1rem;
-    font-weight: bold;
-}
-
-small {
-    font-size: .9rem;
-    font-weight: lighter;
-}
 
 /** GRID BREAKPOINTS
 

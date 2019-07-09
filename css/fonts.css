@@ -1,0 +1,48 @@
+html {
+    font-size: 10px;
+}
+
+h1, h2, h3, p {
+    font-family: Helvetica, sans-serif;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.title {
+    font-size: 1.8rem;
+    font-weight: normal;
+}
+
+h1, .h1 {
+    font-size: 1.4rem;
+    font-weight: normal;
+}
+
+h2, .h2 {
+    font-size: 1.2rem;
+    font-weight: lighter;
+}
+
+p {
+    font-size: 1rem;
+    font-weight: normal;
+}
+
+a {
+    font-size: 1rem;
+}
+
+footer p, .footer p,
+footer a, .footer a {
+    font-size: .8rem;
+}
+
+button {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+small {
+    font-size: .9rem;
+    font-weight: lighter;
+}
