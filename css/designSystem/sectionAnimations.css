@@ -4,11 +4,11 @@
 }
 
 .design-system section .animation div.animation-demo {
-    float: left;
+    display: block;
 }
 
 .design-system section .animation div.animation-demo div.animation-description {
-    float: left;
+    display: inline-block;
     margin-right: 3rem;
     width: 12rem;
 }
@@ -19,7 +19,9 @@
 }
 
 .design-system section .animation div.animation-demo div.animation-sandbox {
-    float: left;
+    display: inline-block;
+    vertical-align: top;
+
     border: 1px dotted #111111;
 }
 

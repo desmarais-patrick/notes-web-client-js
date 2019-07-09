@@ -13,5 +13,6 @@
         // Animations
         Notes.designSystem.setupFadeInAnimationExample();
         Notes.designSystem.setupFadeOutAnimationExample();
+        Notes.designSystem.setupCrossFadeAnimationExample();
     };
 })(Notes);

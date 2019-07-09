@@ -36,6 +36,7 @@
             <ul>
                 <li><a href="#texts">Texts</a></li>
                 <li><a href="#colors">Colors</a></li>
+                <li><a href="#animations">Animations</a></li>
             </ul>
         </header>
 
@@ -96,7 +97,7 @@
             <h2>Animations</h2>
 
             <div class="animation">
-                <p class="animation-label">Fade in</p>
+                <p class="animation-label">Fade in and scale</p>
                 <div class="animation-demo">
                     <div class="animation-description">
                         <p>Example:<br>Logo appears</p>
@@ -111,7 +112,7 @@
             </div>
 
             <div class="animation">
-                <p class="animation-label">Fade out</p>
+                <p class="animation-label">Fade out and collapse</p>
                 <div class="animation-demo">
                     <div class="animation-description">
                         <p>Example:<br>List item disappears</p>
@@ -122,6 +123,25 @@
                             <div class="example-list-item item-1">Item 1</div>
                             <div class="example-list-item item-2">Item 2</div>
                             <div class="example-list-item item-3">Item 3</div>
+                        </div>
+                    </div>
+                    <div class="clear-left"></div>
+                </div>
+                <div class="clear-left"></div>
+            </div>
+
+            <div class="animation">
+                <p class="animation-label">Cross-fade</p>
+                <div class="animation-demo">
+                    <div class="animation-description">
+                        <p>Example:<br>Text updates</p>
+                        <button id="play-animation-example-3">Play</button>
+                    </div>
+                    <div class="animation-sandbox">
+                        <div id="animation-example-3" class="example-list">
+                            <div class="example-list-item item-1">Some text</div>
+                            <div class="example-list-item item-2">Some other text</div>
+                            <div class="example-list-item item-3">Yet some other text</div>
                         </div>
                     </div>
                     <div class="clear-left"></div>
@@ -139,6 +159,9 @@
 
     <!-- Scripts -->
     <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript" src="js/view/index.js"></script>
+    <script type="text/javascript" src="js/view/animations.js"></script>
+    <script type="text/javascript" src="js/view/utilities.js"></script>
 
     <script type="text/javascript" src="js/designSystem/index.js"></script>
     <script type="text/javascript" src="js/designSystem/sectionAnimations.js"></script>
