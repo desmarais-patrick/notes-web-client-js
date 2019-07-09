@@ -1,18 +1,16 @@
 .design-system section .animation p.animation-label {
-    margin-left: 1rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
 }
 
 .design-system section .animation div.animation-demo {
     float: left;
-
-    border: .1rem dotted #111111;
-    padding: 1rem;
 }
 
 .design-system section .animation div.animation-demo div.animation-description {
     float: left;
-
-    margin-right: 2rem;
+    margin-right: 3rem;
+    width: 12rem;
 }
 
 .design-system section .animation div.animation-demo div.animation-description p {
