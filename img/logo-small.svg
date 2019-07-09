@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.3 (57544) - http://www.bohemiancoding.com/sketch -->
+    <title>logo-small</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="design-system" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="ui-design-system" transform="translate(-150.000000, -676.000000)" fill-rule="nonzero">
+            <g id="logo" transform="translate(50.000000, 601.000000)">
+                <g id="logo-small" transform="translate(100.000000, 75.000000)">
+                    <rect id="background" stroke="#FAFAFA" fill="#FF5252" x="0.5" y="0.5" width="15" height="15" rx="2"></rect>
+                    <polygon id="center" fill="#FAFAFA" points="4.88888889 12.2222222 4.88888889 4.22222222 6.20149834 4.22222222 10.2700506 10.7081133 10.2700506 4.22222222 11.3333333 4.22222222 11.3333333 12.2222222 10.1008153 12.2222222 5.92002762 5.77156582 5.92002762 12.2222222"></polygon>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
