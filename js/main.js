@@ -18,9 +18,9 @@
         createCache: Notes.model.cache,
         createEvents: Notes.model.events,
         createNote: Notes.model.note,
-        NOTE_STATUS_ENUM: Notes.model.note.NOTE_STATUS_ENUM,
+        NOTE_STATUS_ENUM: Notes.model.note.STATUS_ENUM,
         createNotes: Notes.model.notes,
-        NOTES_STATUS_ENUM: Notes.model.notes.NOTES_STATUS_ENUM,
+        NOTES_STATUS_ENUM: Notes.model.notes.STATUS_ENUM,
         requestBuilder: requestBuilder,
         setTimeout: window.setTimeout
     };

@@ -20,7 +20,8 @@
     Notes.designSystem.setupFadeOutAnimationExample = function () {
         var playElement = document.getElementById("play-animation-example-2");
         var targetElement = document.getElementById("animation-example-2");
-        var item2Element = findChildNodeWithCssClass(targetElement, "item-2");
+        var item2Element = Notes.view.utilities.findChildNodeWithCssClass(
+            targetElement, "item-2");
 
         playElement.onclick = function () {
             toggleCssClass(item2Element, "fade-out-and-collapse");
@@ -33,7 +34,9 @@
     Notes.designSystem.setupCrossFadeAnimationExample = function () {
         var playElement = document.getElementById("play-animation-example-3");
         var targetElement = document.getElementById("animation-example-3");
-        var item2Element = findChildNodeWithCssClass(targetElement, "item-2");
+        var item2Element = Notes.view.utilities.findChildNodeWithCssClass(
+            targetElement, "item-2");
+
         var item2OldText;
         playElement.onclick = function () {
             if (hasCssClass(targetElement, "play")) {
@@ -45,19 +48,5 @@
             toggleCssClass(targetElement, "play");
             toggleBetweenTexts(playElement, "Play", "Reset");
         };
-    };
-
-    var findChildNodeWithCssClass = function (parentElement, cssClass) {
-        var nodeList = parentElement.childNodes;
-        var node;
-
-        for (var i = 0; i < nodeList.length; i++) {
-            node = nodeList[i];
-            if (node.className && hasCssClass(node, cssClass)) {
-                return node;
-            }
-        }
-
-        return null;
     };
 })(Notes);

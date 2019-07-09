@@ -206,6 +206,35 @@
     
         <div class="spacer"></div>
 
+        <section id="applicationStatus">
+            <h2>Application Status</h2>
+
+            <div class="component">
+                <div id="example-app-status-initial" class="app-status">
+                    <p class="app-status-text">Welcome!</p>
+                </div>
+                <label>Initial</label>
+            </div>
+
+            <div class="component">
+                <div id="example-app-status-working" class="app-status">
+                    <p class="app-status-text">Welcome!</p>
+                </div>
+                <label>Working</label>
+            </div>
+
+            <div class="component">
+                <div id="example-app-status-ready" class="app-status">
+                    <p class="app-status-text">Welcome!</p>
+                </div>
+                <label>Ready</label>
+            </div>
+
+            <a href="#top">Return to top ↑</a>
+        </section>
+    
+        <div class="spacer"></div>
+
         <footer>
             <p>- Design system for the Notes App -</p>
         </footer>
@@ -213,12 +242,28 @@
 
     <!-- Scripts -->
     <script type="text/javascript" src="js/index.js"></script>
+    
+    <script type="text/javascript" src="js/model/index.js"></script>
+    <script type="text/javascript" src="js/model/app.js"></script>
+    <script type="text/javascript" src="js/model/cache.js"></script>
+    <script type="text/javascript" src="js/model/events.js"></script>
+    <script type="text/javascript" src="js/model/model.js"></script>
+    <script type="text/javascript" src="js/model/note.js"></script>
+    <script type="text/javascript" src="js/model/notes.js"></script>
+
+    <script type="text/javascript" src="js/viewModel/index.js"></script>
+    <script type="text/javascript" src="js/viewModel/viewModelFactory.js"></script>
+    <script type="text/javascript" src="js/viewModel/applicationStatus.js"></script>
+
     <script type="text/javascript" src="js/view/index.js"></script>
     <script type="text/javascript" src="js/view/animations.js"></script>
+    <script type="text/javascript" src="js/view/applicationStatus.js"></script>
     <script type="text/javascript" src="js/view/utilities.js"></script>
+    <script type="text/javascript" src="js/view/viewFactory.js"></script>
 
     <script type="text/javascript" src="js/designSystem/index.js"></script>
     <script type="text/javascript" src="js/designSystem/sectionAnimations.js"></script>
+    <script type="text/javascript" src="js/designSystem/sectionApplicationStatus.js"></script>
     <script type="text/javascript" src="js/main.designSystem.js"></script>
 </body>
 </html>

@@ -1,6 +1,24 @@
 "use strict";
 
 (function (Notes) {
+    // HTML traversal
+    var findChildNodeWithCssClass = function (parentElement, cssClass) {
+        var nodeList = parentElement.childNodes;
+        var node;
+
+        for (var i = 0; i < nodeList.length; i++) {
+            node = nodeList[i];
+            if (node.className && hasCssClass(node, cssClass)) {
+                return node;
+            }
+        }
+
+        return null;
+    };
+    var findDocumentNodeWithId = function (id) {
+        return document.getElementById(id);
+    };
+
     // Css classes
     var SPACE = " ";
 
@@ -45,10 +63,14 @@
     };
 
     Notes.view.utilities = {
+        findChildNodeWithCssClass: findChildNodeWithCssClass,
+        findDocumentNodeWithId: findDocumentNodeWithId,
+
         addCssClass: addCssClass,
         hasCssClass: hasCssClass,
         removeCssClass: removeCssClass,
-        toggleBetweenTexts: toggleBetweenTexts,
         toggleCssClass: toggleCssClass,
+
+        toggleBetweenTexts: toggleBetweenTexts,
     };
 })(Notes);
