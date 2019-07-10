@@ -1,0 +1,70 @@
+/* Active or not blocks */
+#breakpoints .active-or-not .small,
+#breakpoints .active-or-not .medium,
+#breakpoints .active-or-not .large {
+    display: inline-block;
+    height: 4.5rem;
+    width: 6rem;
+    padding: 1rem;
+
+    border: 1px dotted #111111;
+    background-color: transparent;
+
+    font-size: .8rem;
+    color: #FAFAFA;
+    text-align: center;
+}
+
+#breakpoints .active-or-not .small {
+    background-color: #FF5252;
+}
+
+@media (min-width: 360px) {
+    #breakpoints .active-or-not .small {
+        background-color: transparent;
+    }
+    #breakpoints .active-or-not .medium {
+        background-color: #FF5252;
+    }
+}
+
+@media (min-width: 720px) {
+    #breakpoints .active-or-not .medium {
+        background-color: transparent;
+    }
+    #breakpoints .active-or-not .large {
+        background-color: #FF5252;
+    }
+}
+
+/* Scale blocks */
+#breakpoints .scale .small,
+#breakpoints .scale .medium,
+#breakpoints .scale .large,
+#breakpoints .scale .label {
+    display: inline-block;
+    width: 6rem;
+    font-size: .8rem;
+    vertical-align: top;
+}
+
+#breakpoints .scale .min,
+#breakpoints .scale .max {
+    display: block;
+}
+#breakpoints .scale .min {
+    float: left;
+    text-align: left;
+}
+#breakpoints .scale .max {
+    float: right;
+    text-align: right;
+}
+
+/* Legend blocks */
+#breakpoints .legend .small,
+#breakpoints .legend .medium,
+#breakpoints .legend .large {
+    display: inline-block;
+    width: 6rem;
+}

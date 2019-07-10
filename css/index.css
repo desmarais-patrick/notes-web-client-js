@@ -71,17 +71,3 @@ textarea {
     overflow: auto; /* Default vertical scrollbar in IE. :s */
     resize: vertical;
 }
-
-/************************************************************
-  DEFAULTS
-************************************************************/
-
-
-/** GRID BREAKPOINTS
-
-     - Small is less than 360px.
-     - Medium is between 360px and 720px.
-     - Large is larger than 720px.
-
- **/
-
