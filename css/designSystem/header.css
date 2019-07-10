@@ -2,8 +2,9 @@
     margin-bottom: 3rem;
 }
 
-.design-system header h1 {
+.design-system header p {
     margin-bottom: 2.1rem;
+    color: #666666;
 }
 
 .design-system header ul {
