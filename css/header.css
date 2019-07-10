@@ -1,0 +1,102 @@
+.header {
+    margin-bottom: 2rem;
+}
+
+.header .header-first-part {
+    margin-bottom: 2rem;
+}
+
+.header .logo-container {
+    display: inline-block;
+    height: 3rem;
+    margin-right: .5rem;
+    vertical-align: middle;
+}
+.header .logo-container .logo {
+    width: 3rem;
+    height: 3rem;
+    vertical-align: middle;
+}
+
+.header .title-container {
+    display: inline-block;
+    height: 3rem;
+    vertical-align: middle;
+}
+.header .title-container .title {
+    line-height: 3rem;
+    vertical-align: middle;
+}
+
+.header ul {
+    list-style: none;
+    border-right: .1rem dashed #D94545;
+    padding-right: .9rem;
+    margin: 0;
+    text-align: right;
+}
+
+.header ul li.last-page-link {
+    margin-bottom: 2rem;
+}
+
+.header ul li a {
+    display: inline-block;
+    padding: .5rem;
+}
+
+@media (min-width: 360px) {
+    .header .logo-container {
+        height: 4rem;
+        margin-right: 1.6rem;
+    }
+    .header .logo-container .logo {
+        width: 4rem;
+        height: 4rem;
+    }
+
+    .header ul {
+        border-right: none;
+        border-left: .1rem dashed #D94545;
+        padding-right: 0;
+        padding-left: 0;
+        margin-left: 3.8rem;
+        text-align: left;
+    }
+
+    .header ul li {
+        padding-left: 1.5rem;
+    }
+}
+
+.alpha-release-container {
+    display: block;
+    float: right;
+    padding-top: .7rem;
+}
+.alpha-release {
+    padding: .3rem;
+
+    border: 1px dotted #B33939;
+    border-radius: 3px;
+
+    text-transform: uppercase;
+    font-size: .9rem;
+    color: #B33939;
+    line-height: 1.2rem;
+}
+.alpha-release-extra-label {
+    display: none;
+}
+
+@media (min-width: 360px) {
+    .alpha-release-container {
+        padding-top: 1.1rem;
+    }
+}
+
+@media (min-width: 720px) {
+    .alpha-release-extra-label {
+        display: inline;
+    }
+}

@@ -48,6 +48,13 @@
     vertical-align: top;
 }
 
+@media (max-width: 359px) {
+    /* Label doesn't fit when small scale. */
+    #breakpoints .scale .label {
+        display: none;
+    }
+}
+
 #breakpoints .scale .min,
 #breakpoints .scale .max {
     display: block;

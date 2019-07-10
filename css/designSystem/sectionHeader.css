@@ -1,0 +1,8 @@
+#header .component {
+    border-width: 1px;
+    border-style: dotted;
+    border-color: transparent;
+}
+#header .component:hover {
+    border-color: #111111;
+}

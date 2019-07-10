@@ -10,6 +10,7 @@
     <link href="css/index.css" rel="stylesheet">
     <link href="css/animations.css" rel="stylesheet">
     <link href="css/fonts.css" rel="stylesheet">
+    <link href="css/header.css" rel="stylesheet">
     <link href="css/links.css" rel="stylesheet">
 
     <link href="css/designSystem/index.css" rel="stylesheet">
@@ -20,6 +21,7 @@
     <link href="css/designSystem/sectionColors.css" rel="stylesheet">
     <link href="css/designSystem/sectionAnimations.css" rel="stylesheet">
     <link href="css/designSystem/sectionLogo.css" rel="stylesheet">
+    <link href="css/designSystem/sectionHeader.css" rel="stylesheet">
     <link href="css/designSystem/utilities.css" rel="stylesheet">
 
     <!-- Browser customization -->
@@ -46,6 +48,8 @@
                 <li><a href="#animations">Animations</a></li>
                 <li><a href="#logo">Logo</a></li>
                 <li><a href="#links">Links</a></li>
+                <li><a href="#header">Header</a></li>
+                <li><a href="#applicationStatus">Application status</a></li>
             </ul>
         </header>
 
@@ -62,7 +66,7 @@
                         <div class="max">720</div>
                     </div>
                     <div class="large"></div>
-                    <div class="label">widths (px)</div>
+                    <div class="label">width (px)</div>
                 </div>
                 <div class="active-or-not">
                     <div class="small">Active resolution</div>
@@ -92,7 +96,7 @@
             </div>
             <div class="component component-text-footer footer">
                 <p>Copyright ⓒ 2019 Patrick Desmarais.</p>
-                <label>Footer</label>
+                <label>Footer text</label>
             </div>
             <a href="#top">Return to top ↑</a>
         </section>
@@ -114,8 +118,6 @@
                 <div class="color-square"></div>
                 <label>Text 2<br>#666666</label>
             </div>
-
-            <div class="clear-left"></div>
 
             <div class="component component-color accent-1">
                 <div class="color-square"></div>
@@ -216,20 +218,67 @@
             <h2>Links</h2>
 
             <div class="component">
-                <a class="default" href="#links">About</a><br>
+                <strong>Default</strong>
+                <br>
+                <br>
+                <a class="default" href="#links">New note ↓</a><br>
                 <label>Default</label>
-            </div>
-            <div class="component">
-                <a class="hover" href="#links">About</a><br>
+                <br>
+                <a class="hover" href="#links">New note ↓</a><br>
                 <label>Hover</label>
-            </div>
-            <div class="component">
-                <a class="active" href="#links">About</a><br>
+                <br>
+                <a class="active" href="#links">New note ↓</a><br>
                 <label>Active</label>
+                <br>
+                <a class="visited" href="#links">New note ↓</a><br>
+                <label>Visited</label>
             </div>
             <div class="component">
-                <a class="visited" href="#links">About</a><br>
+                <strong>Secondary</strong>
+                <br>
+                <br>
+                <a class="secondary" href="#links">About this project ⇱</a><br>
+                <label>Default</label>
+                <br>
+                <a class="secondary hover" href="#links">About this project ⇱</a><br>
+                <label>Hover</label>
+                <br>
+                <a class="secondary active" href="#links">About this project ⇱</a><br>
+                <label>Active</label>
+                <br>
+                <a class="secondary visited" href="#links">About this project ⇱</a><br>
                 <label>Visited</label>
+            </div>
+
+            <a href="#top">Return to top ↑</a>
+        </section>
+    
+        <div class="spacer"></div>
+
+        <section id="header">
+            <h2>Header</h2>
+
+            <div class="component">
+                <div id="headerExample" class="header">
+                    <div class="header-first-part">
+                        <div class="logo-container">
+                            <img class="logo" src="img/logo.svg" alt="Logo" />
+                        </div>
+                        <div class="title-container">
+                            <h1 class="title">Notes</h1>
+                        </div>
+                        <div class="alpha-release-container">
+                            <div class="alpha-release">Alpha<span class="alpha-release-extra-label"> version</span></div>
+                        </div>
+                    </div>
+                    <div class="header-second-part">
+                        <ul class="links">
+                            <li><a href="#editor">New note ↓</a></li>
+                            <li class="last-page-link"><a href="#editor">Notes ↓</a></li>
+                            <li><a class="secondary" href="https://github.com/desmarais-patrick/notes">About this project ⇱</a></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
 
             <a href="#top">Return to top ↑</a>

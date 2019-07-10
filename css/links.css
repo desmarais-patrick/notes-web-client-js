@@ -8,10 +8,22 @@ a:hover, a.hover {
     text-decoration: underline;
 }
 a:active, a.active {
-    color: #B33939;
+    color: #FF5252;
     text-decoration: underline;
-    font-weight: bold;
 }
 a:visited, a.visited {
+    color: #B33939;
+}
+
+a.secondary, a.secondary {
     color: #0E48AB;
+}
+a.secondary:hover, a.secondary.hover {
+    color: #072354;
+}
+a.secondary:active, a.secondary.active {
+    color: #0E48AB;
+}
+a.secondary:visited, a.secondary.visited {
+    color: #072354;
 }

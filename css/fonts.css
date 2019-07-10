@@ -1,19 +1,15 @@
-html {
+html, body {
     font-size: 10px;
 }
 
-h1, h2, h3, p {
+body {
     font-family: Helvetica, sans-serif;
-    margin-top: 0;
-    margin-bottom: 0;
-}
-
-.title {
-    font-size: 1.8rem;
     font-weight: normal;
+    line-height: 1.5;
+    color: #333333;
 }
 
-h1, .h1 {
+h1, .h1, .title {
     font-size: 1.4rem;
     font-weight: normal;
 }
