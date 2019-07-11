@@ -2,11 +2,21 @@ html, body {
     font-size: 10px;
 }
 
+@media (min-width: 720px) {
+    html, body {
+        font-size: 12px;
+    }
+}
+
 body {
     font-family: Helvetica, sans-serif;
     font-weight: normal;
     line-height: 1.5;
     color: #333333;
+}
+
+.secondary-text {
+    color: #666666;
 }
 
 h1, .h1, .title {
@@ -36,6 +46,7 @@ footer a, .footer a {
 button {
     font-size: 1rem;
     font-weight: bold;
+    color: #333333;
 }
 
 small {
