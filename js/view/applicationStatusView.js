@@ -1,7 +1,7 @@
 "use strict";
 
 (function (Notes) {
-    Notes.view.applicationStatus = function (options) {
+    Notes.view.applicationStatusView = function (options) {
         var that = {};
 
         var viewModel = options.viewModel;

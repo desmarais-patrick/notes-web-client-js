@@ -1,7 +1,7 @@
 "use strict";
 
 (function (Notes) {
-    Notes.viewModel.applicationStatus = function (options) {
+    Notes.viewModel.applicationStatusViewModel = function (options) {
         var that = {};
 
         var setInterval = options.setInterval;

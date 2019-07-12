@@ -63,7 +63,8 @@
         return Notes.viewModel.viewModelFactory({
             setInterval: window.setInterval,
             clearInterval: window.clearInterval,
-            createApplicationStatusViewModel: Notes.viewModel.applicationStatus,
+            createApplicationStatusViewModel:
+                Notes.viewModel.applicationStatusViewModel,
             APP_STATUS_ENUM: Notes.model.app.STATUS_ENUM,
             model: model,
         });
@@ -71,7 +72,7 @@
 
     var createViewFactory = function () {
         return Notes.view.viewFactory({
-            createApplicationStatusView: Notes.view.applicationStatus
+            createApplicationStatusView: Notes.view.applicationStatusView
         });
     };
 })(Notes);
