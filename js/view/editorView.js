@@ -57,6 +57,16 @@
             viewModel: viewModel
         });
 
+        // TODO Prepare listeners to changes on note in order to trigger 
+        //      cross-view animations.
+
+        // TODO Review how to handle the status of the editor and sub-views.
+        //      Should we use a state pattern in the view model?
+        //         => Disable/enable button
+        //         => Display/hide date
+        //         => Display/hide error (ex. max-length)
+        //         => In transition to new/another note
+
         that.render = function () {
             topDeleteActionView.render();
             topNewActionView.render();
