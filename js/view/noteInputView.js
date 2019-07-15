@@ -1,7 +1,7 @@
 "use strict";
 
 (function (Notes) {
-    Notes.view.textInputView = function () {
+    Notes.view.noteInputView = function (options) {
         var that = {};
 
         var rootNode = options.rootNode;

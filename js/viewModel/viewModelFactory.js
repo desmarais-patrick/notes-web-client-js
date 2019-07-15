@@ -39,6 +39,7 @@
                         model: model
                     };
                     viewModel = createEditorViewModel(viewModelOptions);
+                    break;
                 default:
                     throw new Error(
                         "ViewModelFactory: Missing case for view model: " +

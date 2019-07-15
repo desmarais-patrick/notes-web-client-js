@@ -1,23 +1,31 @@
 "use strict";
 
 (function (Notes) {
-    // TODO Try to inject utilities instead of directly addressing them.
-    var crossFadeText = function (element, newText) {
-        Notes.view.utilities.addCssClass(element, "fade-out");
+    var FADE_OUT_CSS_CLASS = "fade-out";
+    var FADE_IN_CSS_CLASS = "fade-in";
+    var FADE_TIMING_MS = 400;
 
-        // TODO Replace with animations events instead of timeout.
-        setTimeout(function () {
-            element.textContent = newText;
-            Notes.view.utilities.addCssClass(element, "fade-in");
-            Notes.view.utilities.removeCssClass(element, "fade-out");
+    Notes.view.animations = function (options) {
+        var that = {};
 
+        var viewUtilities = options.viewUtilities;
+        var setTimeout = options.setTimeout;
+
+        that.crossFadeText = function (element, newText) {
+            viewUtilities.css.addClass(element, FADE_OUT_CSS_CLASS);
+
+            // TODO Replace with animations events instead of timeout.
             setTimeout(function () {
-                Notes.view.utilities.removeCssClass(element, "fade-in");
-            }, 400);
-        }, 400);
-    };
+                viewUtilities.text.set(element, newText);
+                viewUtilities.css.addClass(element, FADE_IN_CSS_CLASS);
+                viewUtilities.css.removeClass(element, FADE_OUT_CSS_CLASS);
 
-    Notes.view.animations = {
-        crossFadeText: crossFadeText
+                setTimeout(function () {
+                    viewUtilities.css.removeClass(element, FADE_IN_CSS_CLASS);
+                }, FADE_TIMING_MS);
+            }, FADE_TIMING_MS);
+        };
+
+        return that;
     };
 })(Notes);

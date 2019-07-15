@@ -8,16 +8,22 @@
         var rootNode = options.rootNode;
         var viewUtilities = options.viewUtilities;
 
-        var messageNode = viewUtilities.findChildNodeWithCssClass(rootNode,
+        var messageNode = viewUtilities.traversal.findWithCssClass(rootNode,
             "app-status-text");
         
         that.render = function () {
-            messageNode.textContent = viewModel.getText();
+            var statusText = viewModel.getText();
+            updateStatusText(statusText);
+
+            viewModel.onAppStatusChange(updateStatusText);
         }
-        viewModel.onAppStatusChange(that.render);
+
+        var updateStatusText = function (newText) {
+            viewUtilities.text.set(messageNode, newText);
+        };
         
         that.destroy = function () {
-            viewModel.offAppStatusChange(that.render);
+            viewModel.offAppStatusChange(updateStatusText);
         };
 
         return that;

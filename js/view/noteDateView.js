@@ -1,7 +1,7 @@
 "use strict";
 
 (function (Notes) {
-    Notes.view.dateView = function () {
+    Notes.view.noteDateView = function (options) {
         var that = {};
 
         var rootNode = options.rootNode;

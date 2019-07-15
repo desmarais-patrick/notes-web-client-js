@@ -4,55 +4,55 @@
     Notes.view.editorView = function (options) {
         var that = {};
 
-        var utilities = options.utilities;
+        var utils = options.viewUtilities;
         var rootNode = options.rootNode;
 
         var viewModel = options.viewModel;
         var viewFactory = options.viewFactory;
 
-        var topDeleteRootNode = utilities.findChildNodeWithCssSelector(rootNode,
+        var topDeleteRootNode = utils.traversal.findWithCssSelector(rootNode,
             ".editor-actions-top .editor-actions-delete");
         var topDeleteActionView = viewFactory.create("DeleteNoteAction", {
             rootNode: topDeleteRootNode,
             viewModel: viewModel
         });
-        var bottomDeleteRootNode = utilities.findChildNodeWithCssSelector(
+        var bottomDeleteRootNode = utils.traversal.findWithCssSelector(
             rootNode, ".editor-actions-bottom .editor-actions-delete");
         var bottomDeleteActionView = viewFactory.create("DeleteNoteAction", {
             rootNode: bottomDeleteRootNode,
             viewModel: viewModel
         });
 
-        var topNewRootNode = utilities.findChildNodeWithCssSelector(rootNode, 
+        var topNewRootNode = utils.traversal.findWithCssSelector(rootNode, 
             ".editor-actions-top .editor-actions-new");
-        var topNewActionView = viewFactory("NewNoteAction", {
+        var topNewActionView = viewFactory.create("NewNoteAction", {
             rootNode: topNewRootNode,
             viewModel: viewModel
         });
-        var bottomNewRootNode = utilities.findChildNodeWithCssSelector(rootNode, 
+        var bottomNewRootNode = utils.traversal.findWithCssSelector(rootNode, 
             ".editor-actions-bottom .editor-actions-new");
-        var bottomNewActionView = viewFactory("NewNoteAction", {
+        var bottomNewActionView = viewFactory.create("NewNoteAction", {
             rootNode: bottomNewRootNode,
             viewModel: viewModel
         });
 
-        var dateRootNode = utilities.findChildNodeWithCssSelector(rootNode,
+        var dateRootNode = utils.traversal.findWithCssSelector(rootNode,
             ".editor-date");
-        var dateView = options.viewFactory("NoteDate", {
+        var dateView = viewFactory.create("NoteDate", {
             rootNode: dateRootNode,
             viewModel: viewModel
         });
 
-        var statusRootNode = utilities.findChildNodeWithCssSelector(rootNode,
+        var statusRootNode = utils.traversal.findWithCssSelector(rootNode,
             ".editor-status");
-        var statusView = utilities.viewFactory("NoteStatus", {
+        var statusView = viewFactory.create("NoteStatus", {
             rootNode: statusRootNode,
             viewModel: viewModel
         });
 
-        var inputRootNode = utilities.findChildNodeWithCssSelector(rootNode,
+        var inputRootNode = utils.traversal.findWithCssSelector(rootNode,
             ".editor-input");
-        var inputView = utilities.viewFactory("NoteInput", {
+        var inputView = viewFactory.create("NoteInput", {
             rootNode: inputRootNode,
             viewModel: viewModel
         });

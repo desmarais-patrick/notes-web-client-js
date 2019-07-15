@@ -1,6 +1,8 @@
 "use strict";
 
 (function (Notes) {
+    var REFRESH_TIMING_MS = 400;
+
     Notes.viewModel.applicationStatusViewModel = function (options) {
         var that = {};
 
@@ -19,13 +21,17 @@
 
         var intervalId = setInterval(function () {
             if (appStatusEventIterator.hasNext()) {
-                appStatusEventIterator.next();
-                appStatusListener && appStatusListener();
+                var event = appStatusEventIterator.next();
+                if (appStatusListener !== null) {
+                    var text = formatStatusText(event.options.newStatus);
+                    appStatusListener(text);
+                }
             }
-        }, 400);
+        }, REFRESH_TIMING_MS);
 
         that.destroy = function () {
             clearInterval(intervalId);
+            appStatusListener = null;
         };
 
         var INITIAL_TEXT = "Welcome!";
@@ -35,7 +41,10 @@
         that.getText = function () {
             var app = model.getApp();
             var appStatus = app.getStatus();
+            return formatStatusText(appStatus);
+        };
 
+        var formatStatusText = function (appStatus) {
             if (APP_STATUS_ENUM.WORKING === appStatus) {
                 return WORKING_TEXT;
             } else if (APP_STATUS_ENUM.READY === appStatus) {

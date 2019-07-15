@@ -1,7 +1,7 @@
 "use strict";
 
 (function (Notes) {
-    Notes.view.noteStatusView = function () {
+    Notes.view.noteStatusView = function (options) {
         var that = {};
 
         var rootNode = options.rootNode;

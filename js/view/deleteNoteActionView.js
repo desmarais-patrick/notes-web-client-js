@@ -1,7 +1,7 @@
 "use strict";
 
 (function (Notes) {
-    Notes.view.deleteNoteActionView = function () {
+    Notes.view.deleteNoteActionView = function (options) {
         var that = {};
 
         var rootNode = options.rootNode;

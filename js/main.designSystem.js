@@ -10,40 +10,25 @@
     };
 
     var main = function () {
-        // Animations
-        Notes.designSystem.setupFadeInAnimationExample();
-        Notes.designSystem.setupFadeOutAnimationExample();
-        Notes.designSystem.setupCrossFadeAnimationExample();
+        var designSystemOptions = {
+            createAnimations: createAnimations,
+            createDateUtilities: Notes.utilities.dateUtilities,
+            createModel: createModel,
+            createViewModelFactory: createViewModelFactory,
+            createViewFactory: createViewFactory,
+            createViewUtilities: createViewUtilities,
+        };
 
-        // Application status
-        var appStatusInitialOptions = createAppStatusOptions(
-            "example-app-status-initial");
-        Notes.designSystem.setupApplicationStatusInitialExample(
-            appStatusInitialOptions);
-        
-        var appStatusWorkingOptions = createAppStatusOptions(
-            "example-app-status-working");
-        Notes.designSystem.setupApplicationStatusWorkingExample(
-            appStatusWorkingOptions);
-    
-        var appStatusReadyOptions = createAppStatusOptions(
-            "example-app-status-ready");
-        Notes.designSystem.setupApplicationStatusReadyExample(
-            appStatusReadyOptions);
+        Notes.designSystem.setupAnimationSection(designSystemOptions);
+        Notes.designSystem.setupApplicationStatusSection(designSystemOptions);
+        Notes.designSystem.setupEditorSection(designSystemOptions);
     };
 
-    var createAppStatusOptions = function (nodeId) {
-        var model = createModel();
-        var dateUtilities = Notes.utilities.dateUtilities();
-        var viewModelFactory = createViewModelFactory(model, dateUtilities);
-        var viewFactory = createViewFactory();
-        return {
-            viewFactory: viewFactory,
-            viewModelFactory: viewModelFactory,
-            model: model,
-            nodeId: nodeId,
-            viewUtilities: Notes.view.utilities
-        };
+    var createAnimations = function (viewUtilities) {
+        return Notes.view.animations({
+            setTimeout: window.setTimeout,
+            viewUtilities: viewUtilities,
+        });
     };
 
     var createModel = function () {
@@ -76,7 +61,18 @@
     var createViewFactory = function () {
         return Notes.view.viewFactory({
             createApplicationStatusView: Notes.view.applicationStatusView,
+            createDeleteNoteActionView: Notes.view.deleteNoteActionView,
+            createEditorView: Notes.view.editorView,
+            createNewNoteActionView: Notes.view.newNoteActionView,
             createNoteDateView: Notes.view.noteDateView,
+            createNoteInputView: Notes.view.noteInputView,
+            createNoteStatusView: Notes.view.noteStatusView,
         });
     };
+
+    var createViewUtilities = function () {
+        return Notes.utilities.viewUtilities({
+            document: window.document,
+        });
+    }
 })(Notes);
