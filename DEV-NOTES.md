@@ -62,6 +62,8 @@
  - Review how I should handle data corruption from back-end service.
    (To avoid front-end becoming unresponsive!)
  - Create favicons specific to pages (ex. design system with ruler icon)
+ - Transform utilities using wrappers around Date and document nodes.
+   This will provide a cleaner interface.
 
 ## Inspirations
 
