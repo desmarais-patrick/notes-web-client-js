@@ -27,7 +27,7 @@
         var viewModelFactory = options.viewModelFactory;
         var viewModel = viewModelFactory.create("ApplicationStatus");
 
-        var utilities = options.utilities;
+        var viewUtilities = options.viewUtilities;
         var nodeId = options.nodeId;
         var rootNode = utilities.findDocumentNodeWithId(nodeId);
 
@@ -35,7 +35,7 @@
         var view = viewFactory.create("ApplicationStatus", {
             viewModel: viewModel,
             rootNode: rootNode,
-            utilities: utilities
+            viewUtilities: viewUtilities
         });
         
         return view;

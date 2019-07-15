@@ -6,17 +6,20 @@
 
         var viewModel = options.viewModel;
         var rootNode = options.rootNode;
-        var utils = options.utilities;
+        var viewUtilities = options.viewUtilities;
 
-        var messageNode = utils.findChildNodeWithCssClass(rootNode,
+        var messageNode = viewUtilities.findChildNodeWithCssClass(rootNode,
             "app-status-text");
         
         that.render = function () {
             messageNode.textContent = viewModel.getText();
         }
-
         viewModel.onAppStatusChange(that.render);
         
+        that.destroy = function () {
+            viewModel.offAppStatusChange(that.render);
+        };
+
         return that;
     };
 })(Notes);

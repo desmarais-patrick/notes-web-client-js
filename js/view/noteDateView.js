@@ -7,15 +7,16 @@
         var rootNode = options.rootNode;
         var viewModel = options.viewModel;
 
-        // Add listener to note's id since date doesn't change after created.
-
         that.render = function () {
-            // Display based on whether it's a note that was created (has a date, non-null).
-            // Use viewModel's format.
+            viewModel.onDateChange(updateDateText);
+        };
+
+        var updateDateText = function (newDateText) {
+            rootNode.textContent = newDateText;
         };
 
         that.destroy = function () {
-            // Nothing special to do.
+            viewModel.offDateChange(updateDateText);
         };
 
         return that;

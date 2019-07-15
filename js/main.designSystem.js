@@ -34,14 +34,15 @@
 
     var createAppStatusOptions = function (nodeId) {
         var model = createModel();
-        var viewModelFactory = createViewModelFactory(model);
+        var dateUtilities = Notes.utilities.dateUtilities();
+        var viewModelFactory = createViewModelFactory(model, dateUtilities);
         var viewFactory = createViewFactory();
         return {
             viewFactory: viewFactory,
             viewModelFactory: viewModelFactory,
             model: model,
             nodeId: nodeId,
-            utilities: Notes.view.utilities
+            viewUtilities: Notes.view.utilities
         };
     };
 
@@ -59,20 +60,23 @@
         });
     };
 
-    var createViewModelFactory = function (model) {
+    var createViewModelFactory = function (model, dateUtilities) {
         return Notes.viewModel.viewModelFactory({
             setInterval: window.setInterval,
             clearInterval: window.clearInterval,
             createApplicationStatusViewModel:
                 Notes.viewModel.applicationStatusViewModel,
             APP_STATUS_ENUM: Notes.model.app.STATUS_ENUM,
+            createEditorViewModel: Notes.viewModel.editorViewModel,
             model: model,
+            dateUtilities: dateUtilities,
         });
     };
 
     var createViewFactory = function () {
         return Notes.view.viewFactory({
-            createApplicationStatusView: Notes.view.applicationStatusView
+            createApplicationStatusView: Notes.view.applicationStatusView,
+            createNoteDateView: Notes.view.noteDateView,
         });
     };
 })(Notes);
