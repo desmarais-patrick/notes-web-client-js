@@ -4,69 +4,62 @@
     Notes.designSystem.setupApplicationStatusSection = function (
         createAppOptions) {
 
-        var createAppStatusOptions = function (nodeId) {
-            var appOptions = createAppOptions();
-            return {
-                viewFactory: appOptions.viewFactory,
-                viewModelFactory: appOptions.viewModelFactory,
-                model: appOptions.model,
-                nodeId: nodeId,
-                viewUtilities: appOptions.viewUtilities
-            };
-        };
+        var appOptions;
+        var exampleRootNode;
 
-        var appStatusInitialOptions = createAppStatusOptions(
-            "example-app-status-initial");
-        setupApplicationStatusInitialExample(appStatusInitialOptions);
+        appOptions = createAppOptions();
+        exampleRootNode = appOptions.viewUtilities.traversal
+            .findWithId("example-app-status-initial");
+        setupInitialExample(appOptions, exampleRootNode);
 
-        var appStatusWorkingOptions = createAppStatusOptions(
-            "example-app-status-working");
-        setupApplicationStatusWorkingExample(appStatusWorkingOptions);
-    
-        var appStatusReadyOptions = createAppStatusOptions(
-            "example-app-status-ready");
-        setupApplicationStatusReadyExample(appStatusReadyOptions);
+        appOptions = createAppOptions();
+        exampleRootNode = appOptions.viewUtilities.traversal
+            .findWithId("example-app-status-working");
+        setupWorkingExample(appOptions, exampleRootNode);
+
+        appOptions = createAppOptions();
+        exampleRootNode = appOptions.viewUtilities.traversal
+            .findWithId("example-app-status-ready");
+        setupReadyExample(appOptions, exampleRootNode);
     };
 
-    var setupApplicationStatusInitialExample = function (options) {
-        var view = setupApplicationStatusView(options);
+    var setupInitialExample = function (appOptions, rootNode) {
+        var viewModel = appOptions.viewModelFactory.create("ApplicationStatus");
+        var view = appOptions.viewFactory.create("ApplicationStatus", {
+            viewModel: viewModel,
+            rootNode: rootNode,
+        });
         view.render();
+
+        // Leave initial.
     };
 
-    var setupApplicationStatusWorkingExample = function (options) {
-        var view = setupApplicationStatusView(options);
+    var setupWorkingExample = function (appOptions, rootNode) {
+        var viewModel = appOptions.viewModelFactory.create("ApplicationStatus");
+        var view = appOptions.viewFactory.create("ApplicationStatus", {
+            viewModel: viewModel,
+            rootNode: rootNode,
+        });
         view.render();
 
-        var model = options.model;
+        // Update application status to: working.
+        var model = appOptions.model;
         var app = model.getApp();
         app.setStatus(Notes.model.app.STATUS_ENUM.WORKING);
     };
 
-    var setupApplicationStatusReadyExample = function (options) {
-        var view = setupApplicationStatusView(options);
+    var setupReadyExample = function (appOptions, rootNode) {
+        var viewModel = appOptions.viewModelFactory.create("ApplicationStatus");
+        var view = appOptions.viewFactory.create("ApplicationStatus", {
+            viewModel: viewModel,
+            rootNode: rootNode,
+        });
         view.render();
         
-        var model = options.model;
+        // Update application status to: ready.
+        var model = appOptions.model;
         var app = model.getApp();
         app.setStatus(Notes.model.app.STATUS_ENUM.WORKING);
         app.setStatus(Notes.model.app.STATUS_ENUM.READY);
-    };
-
-    var setupApplicationStatusView = function (options) {
-        var viewModelFactory = options.viewModelFactory;
-        var viewModel = viewModelFactory.create("ApplicationStatus");
-
-        var viewUtilities = options.viewUtilities;
-        var nodeId = options.nodeId;
-        var rootNode = viewUtilities.traversal.findWithId(nodeId);
-
-        var viewFactory = options.viewFactory;
-        var view = viewFactory.create("ApplicationStatus", {
-            viewModel: viewModel,
-            rootNode: rootNode,
-            viewUtilities: viewUtilities
-        });
-        
-        return view;
     };
 })(Notes);

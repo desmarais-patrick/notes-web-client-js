@@ -4,6 +4,7 @@
     Notes.view.applicationStatusView = function (options) {
         var that = {};
 
+        var animations = options.animations;
         var viewModel = options.viewModel;
         var rootNode = options.rootNode;
         var viewUtilities = options.viewUtilities;
@@ -19,7 +20,7 @@
         }
 
         var updateStatusText = function (newText) {
-            viewUtilities.text.set(messageNode, newText);
+            animations.crossFadeText(messageNode, newText);
         };
         
         that.destroy = function () {
