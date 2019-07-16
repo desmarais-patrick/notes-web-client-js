@@ -51,8 +51,8 @@
         };
 
         // Initialization
-        that.setNote = function (noteId) {
-            var note = model.getNote(noteId);
+        that.setNote = function (noteClientId) {
+            var note = model.getNoteByClientId(noteClientId);
             currentNote = note;
 
             // Date setup.

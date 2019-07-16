@@ -4,46 +4,36 @@
     Notes.test.mocks.requestBuilderMock = function () {
         var that = {};
 
-        var nextResponse = null;
-        that.setNextResponse = function (response) {
-            nextResponse = response;
-        };
-
-        that.delete = function (path) {
-            var response = nextResponse;
-            nextResponse = null;
-            return requestMock(response);
-        };
+        // DELETE
+        that.delete = null;
     
-        that.get = function (path) {
-            var response = nextResponse;
-            nextResponse = null;
-            return requestMock(response);
-        };
+        // GET
+        that.get = null;
 
-        var nextPostResponse = null;
+        // POST
+        that.post = null;
         that.setNextPostResponseAsNoteCreatedWithId = function (id) {
-            nextPostResponse = {
-                type: "NoteCreated",
-                id: id
+            that.post = function () {
+                return requestMock(null, {
+                    type: "NoteCreated",
+                    id: id
+                });
             };
         };
-        that.post = function (path, body) {
-            var response = nextPostResponse;
-            nextPostResponse = null;
-            return requestMock(response);
+        that.setNextPostResponseAsOfflineError = function () {
+            that.post = function () {
+                return requestMock(new Error("[RequestBuilderMock] Offline!"),
+                    null);
+            };
         };
 
-        that.put = function (path, body) {
-            var response = nextResponse;
-            nextResponse = null;
-            return requestMock(response);
-        };
+        // PUT
+        that.put = null;
 
         return that;
     };
 
-    var requestMock = function (response) {
+    var requestMock = function (error, response) {
         var that = {};
 
         that.addQueryParameter = function () {
@@ -51,7 +41,6 @@
         };
         that.send = function (callback) {
             setTimeout(function () {
-                var error = null;
                 callback(error, response || sampleResponse);
             }, 0);
         };

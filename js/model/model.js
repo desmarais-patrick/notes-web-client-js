@@ -81,11 +81,15 @@
         };
 
         that.getNote = function (id) {
-            return cache.get(id);
+            return cache.getById(id);
+        };
+
+        that.getNoteByClientId = function (clientId) {
+            return cache.getByClientId(clientId);
         };
 
         that.requestNote = function (id, optionalCallback) {
-            var note = cache.get(id);
+            var note = cache.getById(id);
             if (note !== null) {
                 if (optionalCallback) {
                     setTimeout(function () {
@@ -147,6 +151,7 @@
                 date: date,
                 status: NOTE_STATUS_ENUM.LOADING
             });
+            cache.save(note);
             notes.insertOne(note);
 
             var body = JSON.stringify({
