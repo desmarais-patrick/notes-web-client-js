@@ -4,6 +4,8 @@
     Notes.view.viewFactory = function (options) {
         var that = {};
 
+        var animations = options.animations;
+
         var createApplicationStatusView = options.createApplicationStatusView;
         var createDeleteNoteActionView = options.createDeleteNoteActionView;
         var createEditorView = options.createEditorView;
@@ -15,30 +17,37 @@
         that.create = function (name, options) {
             var view = null;
 
+            var factoryOptions = {
+                animations: animations
+            };
+            for (var property in options) {
+                factoryOptions[property] = options[property];
+            }
+
             switch (name) {
                 case "ApplicationStatus":
-                    view = createApplicationStatusView(options);
+                    view = createApplicationStatusView(factoryOptions);
                     break;
                 case "DeleteNoteAction":
-                    view = createDeleteNoteActionView(options);
+                    view = createDeleteNoteActionView(factoryOptions);
                     break;
                 case "Editor":
-                    view = createEditorView(options);
+                    view = createEditorView(factoryOptions);
                     break;
                 case "NewNoteAction":
-                    view = createNewNoteActionView(options);
+                    view = createNewNoteActionView(factoryOptions);
                     break;
                 case "NoteDate":
-                    view = createNoteDateView(options);
+                    view = createNoteDateView(factoryOptions);
                     break;
                 case "NoteInput":
-                    view = createNoteInputView(options);
+                    view = createNoteInputView(factoryOptions);
                     break;
                 case "NoteStatus":
-                    view = createNoteStatusView(options);
+                    view = createNoteStatusView(factoryOptions);
                     break;
                 default:
-                    throw new Error("ViewFactory: Missing case for view: " +
+                    throw new Error("[ViewFactory] Missing case for view: " +
                         name);
             }
 

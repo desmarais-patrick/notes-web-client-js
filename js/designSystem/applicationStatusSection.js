@@ -5,12 +5,14 @@
         designSystemOptions) {
 
         var createAppStatusOptions = function (nodeId) {
-            var model = designSystemOptions.createModel();
+            var requestBuilder = designSystemOptions.createRequestBuilderMock();
+            var model = designSystemOptions.createModel(requestBuilder);
             var dateUtilities = designSystemOptions.createDateUtilities();
             var viewModelFactory = designSystemOptions.createViewModelFactory(
                 model, dateUtilities);
-            var viewFactory = designSystemOptions.createViewFactory();
             var viewUtilities = designSystemOptions.createViewUtilities();
+            var animations = designSystemOptions.createAnimations(viewUtilities);
+            var viewFactory = designSystemOptions.createViewFactory(animations);
             return {
                 viewFactory: viewFactory,
                 viewModelFactory: viewModelFactory,

@@ -11,6 +11,7 @@
 
     var main = function () {
         var designSystemOptions = {
+            createRequestBuilderMock: Notes.test.mocks.requestBuilderMock,
             createAnimations: createAnimations,
             createDateUtilities: Notes.utilities.dateUtilities,
             createModel: createModel,
@@ -31,7 +32,7 @@
         });
     };
 
-    var createModel = function () {
+    var createModel = function (requestBuilder) {
         return Notes.model.model({
             createApp: Notes.model.app,
             createCache: Notes.model.cache,
@@ -40,7 +41,7 @@
             NOTE_STATUS_ENUM: Notes.model.note.STATUS_ENUM,
             createNotes: Notes.model.notes,
             NOTES_STATUS_ENUM: Notes.model.notes.STATUS_ENUM,
-            requestBuilder: null,
+            requestBuilder: requestBuilder,
             setTimeout: window.setTimeout
         });
     };
@@ -58,8 +59,9 @@
         });
     };
 
-    var createViewFactory = function () {
+    var createViewFactory = function (animations) {
         return Notes.view.viewFactory({
+            animations: animations,
             createApplicationStatusView: Notes.view.applicationStatusView,
             createDeleteNoteActionView: Notes.view.deleteNoteActionView,
             createEditorView: Notes.view.editorView,

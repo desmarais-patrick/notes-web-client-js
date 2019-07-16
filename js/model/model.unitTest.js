@@ -294,6 +294,7 @@
                 expect(newNote.getStatus()).toEqual(NOTE_STATUS_ENUM.READY);
 
                 expect(model.getNotes().getList()[0].getId()).toEqual("1");
+                expect(model.getNote(1)).toNotBeNull();
 
                 createNoteTest.success();
             });

@@ -80,6 +80,10 @@
             return newNotes;
         };
 
+        that.getNote = function (id) {
+            return cache.get(id);
+        };
+
         that.requestNote = function (id, optionalCallback) {
             var note = cache.get(id);
             if (note !== null) {
@@ -134,7 +138,7 @@
             note.setDate(date);
         };
 
-        that.createNote = function (text) {
+        that.createNote = function (text, optionalCallback) {
             var date = new Date();
             var note = createNote({
                 events: events,
@@ -153,11 +157,19 @@
                 .send(function (err, response) {
                     if (err) {
                         note.setStatus(NOTE_STATUS_ENUM.FAILED_TO_SYNC);
+                        if (optionalCallback) {
+                            optionalCallback(err, null);
+                        }
                         return;
                     }
 
                     note.setId(response.id);
                     note.setStatus(NOTE_STATUS_ENUM.READY);
+                    cache.save(note);
+
+                    if (optionalCallback) {
+                        optionalCallback(null, note);
+                    }
 
                     saveAnyPendingUpdate(note);
                 });

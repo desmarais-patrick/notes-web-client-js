@@ -4,6 +4,8 @@
     Notes.view.noteDateView = function (options) {
         var that = {};
 
+        var animations = options.animations;
+
         var rootNode = options.rootNode;
         var viewModel = options.viewModel;
 
@@ -12,7 +14,7 @@
         };
 
         var updateDateText = function (newDateText) {
-            rootNode.textContent = newDateText;
+            animations.crossFadeText(rootNode, newDateText);
         };
 
         that.destroy = function () {

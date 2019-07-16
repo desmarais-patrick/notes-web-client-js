@@ -51,7 +51,8 @@
         };
 
         // Initialization
-        that.setEditorNote = function (note) {
+        that.setNote = function (noteId) {
+            var note = model.getNote(noteId);
             currentNote = note;
 
             // Date setup.
@@ -61,7 +62,7 @@
             if (statusCheckIntervalId !== null) {
                 clearInterval(statusCheckIntervalId);
             }
-            statusChangeEventIterator = model.listen("change Note[" + currentNote.getClientID() + "].Status");
+            statusChangeEventIterator = model.listen("change Note[" + currentNote.getClientId() + "].Status");
             setInterval(function () {
                 if (statusChangeEventIterator.hasNext()) {
                     var event = statusChangeEventIterator.next();
