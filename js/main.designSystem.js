@@ -47,6 +47,7 @@
             createApplicationStatusViewModel:
                 Notes.viewModel.applicationStatusViewModel,
             APP_STATUS_ENUM: Notes.model.app.STATUS_ENUM,
+            NOTE_STATUS_ENUM: Notes.model.note.STATUS_ENUM,
             createEditorViewModel: Notes.viewModel.editorViewModel,
             model: model,
             dateUtilities: dateUtilities,
