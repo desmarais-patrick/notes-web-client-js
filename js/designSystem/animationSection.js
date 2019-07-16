@@ -1,12 +1,12 @@
 "use strict";
 
 (function (Notes) {
-    Notes.designSystem.setupAnimationSection = function (designSystemOptions) {
-        var viewUtilities = designSystemOptions.createViewUtilities();
-        var animations = designSystemOptions.createAnimations(viewUtilities);
+    Notes.designSystem.setupAnimationSection = function (createAppOptions) {
+        var appOptions = createAppOptions();
+        var viewUtilities = appOptions.viewUtilities;
         setupFadeInAnimationExample(viewUtilities);
         setupFadeOutAnimationExample(viewUtilities);
-        setupCrossFadeAnimationExample(viewUtilities, animations);
+        setupCrossFadeAnimationExample(viewUtilities, appOptions.animations);
     };
 
     var setupFadeInAnimationExample = function (utils) {

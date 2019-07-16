@@ -5,6 +5,7 @@
         var that = {};
 
         var animations = options.animations;
+        var viewUtilities = options.viewUtilities;
 
         var createApplicationStatusView = options.createApplicationStatusView;
         var createDeleteNoteActionView = options.createDeleteNoteActionView;
@@ -18,7 +19,9 @@
             var view = null;
 
             var factoryOptions = {
-                animations: animations
+                animations: animations,
+                viewFactory: that,
+                viewUtilities: viewUtilities
             };
             for (var property in options) {
                 factoryOptions[property] = options[property];

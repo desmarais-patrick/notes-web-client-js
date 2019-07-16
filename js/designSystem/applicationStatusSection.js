@@ -2,23 +2,16 @@
 
 (function (Notes) {
     Notes.designSystem.setupApplicationStatusSection = function (
-        designSystemOptions) {
+        createAppOptions) {
 
         var createAppStatusOptions = function (nodeId) {
-            var requestBuilder = designSystemOptions.createRequestBuilderMock();
-            var model = designSystemOptions.createModel(requestBuilder);
-            var dateUtilities = designSystemOptions.createDateUtilities();
-            var viewModelFactory = designSystemOptions.createViewModelFactory(
-                model, dateUtilities);
-            var viewUtilities = designSystemOptions.createViewUtilities();
-            var animations = designSystemOptions.createAnimations(viewUtilities);
-            var viewFactory = designSystemOptions.createViewFactory(animations);
+            var appOptions = createAppOptions();
             return {
-                viewFactory: viewFactory,
-                viewModelFactory: viewModelFactory,
-                model: model,
+                viewFactory: appOptions.viewFactory,
+                viewModelFactory: appOptions.viewModelFactory,
+                model: appOptions.model,
                 nodeId: nodeId,
-                viewUtilities: viewUtilities
+                viewUtilities: appOptions.viewUtilities
             };
         };
 

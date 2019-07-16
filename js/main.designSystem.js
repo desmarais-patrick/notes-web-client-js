@@ -10,30 +10,15 @@
     };
 
     var main = function () {
-        var designSystemOptions = {
-            createRequestBuilderMock: Notes.test.mocks.requestBuilderMock,
-            createAnimations: createAnimations,
-            createDateUtilities: Notes.utilities.dateUtilities,
-            createModel: createModel,
-            createViewModelFactory: createViewModelFactory,
-            createViewFactory: createViewFactory,
-            createViewUtilities: createViewUtilities,
-        };
-
-        Notes.designSystem.setupAnimationSection(designSystemOptions);
-        Notes.designSystem.setupApplicationStatusSection(designSystemOptions);
-        Notes.designSystem.setupEditorSection(designSystemOptions);
+        Notes.designSystem.setupAnimationSection(createAppOptions);
+        Notes.designSystem.setupApplicationStatusSection(createAppOptions);
+        Notes.designSystem.setupEditorSection(createAppOptions);
     };
 
-    var createAnimations = function (viewUtilities) {
-        return Notes.view.animations({
-            setTimeout: window.setTimeout,
-            viewUtilities: viewUtilities,
-        });
-    };
+    var createAppOptions = function () {
+        var requestBuilderMock = Notes.test.mocks.requestBuilderMock();
 
-    var createModel = function (requestBuilder) {
-        return Notes.model.model({
+        var model = Notes.model.model({
             createApp: Notes.model.app,
             createCache: Notes.model.cache,
             createEvents: Notes.model.events,
@@ -41,13 +26,22 @@
             NOTE_STATUS_ENUM: Notes.model.note.STATUS_ENUM,
             createNotes: Notes.model.notes,
             NOTES_STATUS_ENUM: Notes.model.notes.STATUS_ENUM,
-            requestBuilder: requestBuilder,
+            requestBuilder: requestBuilderMock,
             setTimeout: window.setTimeout
         });
-    };
 
-    var createViewModelFactory = function (model, dateUtilities) {
-        return Notes.viewModel.viewModelFactory({
+        var dateUtilities = Notes.utilities.dateUtilities();
+
+        var viewUtilities = Notes.utilities.viewUtilities({
+            document: window.document,
+        });
+
+        var animations = Notes.view.animations({
+            setTimeout: window.setTimeout,
+            viewUtilities: viewUtilities,
+        });
+
+        var viewModelFactory = Notes.viewModel.viewModelFactory({
             setInterval: window.setInterval,
             clearInterval: window.clearInterval,
             createApplicationStatusViewModel:
@@ -57,10 +51,8 @@
             model: model,
             dateUtilities: dateUtilities,
         });
-    };
 
-    var createViewFactory = function (animations) {
-        return Notes.view.viewFactory({
+        var viewFactory = Notes.view.viewFactory({
             animations: animations,
             createApplicationStatusView: Notes.view.applicationStatusView,
             createDeleteNoteActionView: Notes.view.deleteNoteActionView,
@@ -69,12 +61,17 @@
             createNoteDateView: Notes.view.noteDateView,
             createNoteInputView: Notes.view.noteInputView,
             createNoteStatusView: Notes.view.noteStatusView,
+            viewUtilities: viewUtilities,
         });
-    };
 
-    var createViewUtilities = function () {
-        return Notes.utilities.viewUtilities({
-            document: window.document,
-        });
-    }
+        return {
+            animations: animations,
+            dateUtilities: dateUtilities,
+            model: model,
+            requestBuilderMock: requestBuilderMock,
+            viewFactory: viewFactory,
+            viewModelFactory: viewModelFactory,
+            viewUtilities: viewUtilities,
+        };
+    };
 })(Notes);
