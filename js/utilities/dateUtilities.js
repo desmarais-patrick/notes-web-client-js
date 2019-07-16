@@ -11,17 +11,17 @@
                 return "";
             }
 
-            var year = date.getUTCFullYear();
-            var monthIndex = date.getUTCMonth() + 1;
+            var year = date.getFullYear();
+            var monthIndex = date.getMonth() + 1;
             var month = padNumberWithFrontZero(monthIndex);
-            var dayOfMonth = padNumberWithFrontZero(date.getUTCDate());
+            var dayOfMonth = padNumberWithFrontZero(date.getDate());
             var datePart = [year, month, dayOfMonth].join("-");
 
-            var hours = date.getUTCHours() % 12;
-            var minutes = padNumberWithFrontZero(date.getUTCMinutes());
-            var timePart = [hours, minutes].join(":");
+            var hours = date.getHours();
+            var minutes = padNumberWithFrontZero(date.getMinutes());
+            var timePart = [hours % 12, minutes].join(":");
 
-            var dayPart = date.getUTCHours() >= 12 ? "PM" : "AM";
+            var dayPart = hours >= 12 ? "PM" : "AM";
 
             return [datePart, timePart, dayPart].join(" ");
         };
