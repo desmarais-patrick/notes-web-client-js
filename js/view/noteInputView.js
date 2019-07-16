@@ -1,25 +1,33 @@
 "use strict";
 
 (function (Notes) {
+    var TEXTAREA_CSS_CLASS = "editor-input-textarea";
+
     Notes.view.noteInputView = function (options) {
         var that = {};
+
+        var animations = options.animations;
+        var traversal = options.viewUtilities.traversal;
 
         var rootNode = options.rootNode;
         var viewModel = options.viewModel;
 
-        // Listen to any note id changes, since this is view driving texts.
-        // When note id changes, empty text input with new text (empty or not).
-
-        // TODO How do you know if note's text is latest, 
-        //      or what's in this view.
+        var textareaElement = traversal.findWithCssClass(rootNode,
+            TEXTAREA_CSS_CLASS);
 
         that.render = function () {
-            // onchange (or oninput) update model
-            // add throttle to save every 5 or 10 seconds
+            viewModel.onNoteChange(setInputText);
+        };
+
+        var setInputText = function (newNote) {
+            var newText = (newNote === null) ? "" : newNote.getText();
+            animations.crossFade(textareaElement, function () {
+                textareaElement.value = newText;
+            });
         };
 
         that.destroy = function () {
-            // offchange (or offinput)
+            viewModel.offNoteChange(setInputText);
         };
 
         return that;

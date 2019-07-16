@@ -103,6 +103,30 @@
             return statusText;
         };
 
+        // General note changes.
+        var noteChangeListeners = [];
+
+        that.onNoteChange = function (newListenerCallback) {
+            noteChangeListeners.push(newListenerCallback);
+        };
+
+        that.offNoteChange = function (listenerCallback) {
+            var index = noteChangeListeners.indexOf(listenerCallback);
+
+            if (index === -1) {
+                throw new Error("[EditorViewModel] Programmatical error!" + 
+                    " This note change listener has never been registered.");
+            }
+
+            noteChangeListeners.splice(index, 1);
+        };
+
+        that.notifyNoteChange = function (newNote) {
+            noteChangeListeners.forEach(function (listener) {
+                listener(newNote);
+            });
+        };
+
         // Initialization
         that.setNote = function (noteClientId) {
             var note = model.getNoteByClientId(noteClientId);
@@ -127,6 +151,9 @@
             }, 300);
             var status = currentNote.getStatus();
             this.notifyStatusChange(status);
+
+            // Note setup.
+            that.notifyNoteChange(currentNote);
         };
 
         that.clearEditor = function () {
@@ -146,6 +173,9 @@
                 clearInterval(statusCheckIntervalId);
             }
             this.notifyStatusChange(null);
+
+            // Note cleanup.
+            this.notifyNoteChange(null);
         };
 
         return that;

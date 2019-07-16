@@ -12,11 +12,17 @@
         var setTimeout = options.setTimeout;
 
         that.crossFadeText = function (element, newText) {
+            this.crossFade(element, function () {
+                viewUtilities.text.set(element, newText);
+            });
+        };
+
+        that.crossFade = function (element, middleOperation) {
             viewUtilities.css.addClass(element, FADE_OUT_CSS_CLASS);
 
             // TODO Replace with animations events instead of timeout.
             setTimeout(function () {
-                viewUtilities.text.set(element, newText);
+                middleOperation();
                 viewUtilities.css.addClass(element, FADE_IN_CSS_CLASS);
                 viewUtilities.css.removeClass(element, FADE_OUT_CSS_CLASS);
 
