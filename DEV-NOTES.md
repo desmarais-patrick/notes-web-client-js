@@ -66,6 +66,8 @@
    This will provide a cleaner interface.
  - Stop trying to contact server when offline.
    Listen when online again to re-enable.
+ - Review view hierarchies and how to clean `EditorViewModel` (?).
+   (i) Event listeners similar to `addEventListener` with names.
 
 ## Inspirations
 
