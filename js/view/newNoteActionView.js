@@ -4,21 +4,21 @@
     Notes.view.newNoteActionView = function (options) {
         var that = {};
 
+        var viewUtilities = options.viewUtilities;
+
         var rootNode = options.rootNode;
         var viewModel = options.viewModel;
 
         that.render = function () {
-            // add onclick listener
-            // disable button if already a new, empty note: new-ability.
+            viewUtilities.button.onClick(rootNode, onClicked);
         };
 
-        var onClick = function () {
-            // tell viewModel to start a new note
-            // disable and wait for feedback to re-enable.
+        var onClicked = function () {
+            viewModel.saveAndClear();
         };
 
         that.destroy = function () {
-            // remove onclick listener
+            viewUtilities.button.offClick(rootNode, onClicked);
         };
 
         return that;

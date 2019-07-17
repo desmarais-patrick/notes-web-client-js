@@ -78,10 +78,10 @@
 
         viewUtilities.button = {};
 
-        viewUtilities.button.registerClick = function (element, callback) {
+        viewUtilities.button.onClick = function (element, callback) {
             element.addEventListener("click", callback);
         };
-        viewUtilities.button.unregisterClick = function (element, callback) {
+        viewUtilities.button.offClick = function (element, callback) {
             element.removeEventListener("click", callback);
         };
 

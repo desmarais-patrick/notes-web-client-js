@@ -4,22 +4,21 @@
     Notes.view.deleteNoteActionView = function (options) {
         var that = {};
 
+        var viewUtilities = options.viewUtilities;
+
         var rootNode = options.rootNode;
         var viewModel = options.viewModel;
 
         that.render = function () {
-            // onclick listener to button.
-            // disable button based upon delete-ability: non-null, non-empty note.
+            viewUtilities.button.onClick(rootNode, onClicked);
         };
 
-        var onClick = function () {
-            // Schedule delete in a few seconds.
-            // Display a new note.
-            // Add undo to delete, or confirmation.
+        var onClicked = function () {
+            viewModel.deleteAndClear();
         };
 
         that.destroy = function () {
-            // offclick listener to button.
+            viewUtilities.button.offClick(rootNode, onClicked);
         };
 
         return that;

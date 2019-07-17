@@ -28,6 +28,10 @@
         };
 
         var onNoteReplaced = function (newNote) {
+            // Save any throttled updates.
+            savePendingUpdates();
+
+            // Display new text.
             var newText = (newNote === null) ? "" : newNote.getText();
             animations.crossFade(textareaElement, function () {
                 viewUtilities.textarea.setValue(textareaElement, newText);
@@ -38,7 +42,7 @@
         var saveThrottleTimeoutId = null;
         var onValueChanged = function () {
             if (saveThrottleTimeoutId !== null) {
-                // Pending save scheduled already.
+                // Pending updated already scheduled.
                 return;
             }
 
@@ -66,12 +70,17 @@
         that.destroy = function () {
             viewModel.offReplaceNote(onNoteReplaced);
 
+            savePendingUpdates();
+            viewUtilities.textarea.offValueChange(textareaElement,
+                onValueChanged);
+        };
+
+        var savePendingUpdates = function () {
             if (saveThrottleTimeoutId !== null) {
                 clearTimeout(saveThrottleTimeoutId);
                 saveText();
+                saveThrottleTimeoutId = null;
             }
-            viewUtilities.textarea.offValueChange(textareaElement,
-                onValueChanged);
         };
 
         return that;

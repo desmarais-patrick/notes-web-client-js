@@ -1,6 +1,8 @@
 "use strict";
 
 (function (Notes) {
+    var STATUS_CHECK_INTERVAL_MS = 300;
+
     Notes.viewModel.editorViewModel = function (options) {
         var that = {};
 
@@ -127,7 +129,7 @@
             });
         };
 
-        // Text.
+        // Mutation.
         that.saveText = function (newText) {
             if (currentNote === null) {
                 var newNote = model.createNote(newText);
@@ -135,6 +137,26 @@
             } else {
                 model.updateNote(currentNote, newText);
             }
+        };
+
+        that.saveAndClear = function () {
+            if (currentNote === null) {
+                // Nothing to save and already cleared, ignore.
+                return;
+            }
+
+            // Save is already handled by input.
+            this.clearEditor();
+        };
+
+        that.deleteAndClear = function () {
+            if (currentNote === null) {
+                // Nothing to delete and already cleared, ignore.
+                return;
+            }
+
+            model.deleteNote(currentNote);
+            this.clearEditor();
         };
 
         // Initialization
@@ -158,12 +180,12 @@
             var clientId = currentNote.getClientId();
             var eventName = "change Notes[" + clientId + "].Status";
             statusChangeEventIterator = model.listen(eventName);
-            setInterval(function () {
+            statusCheckIntervalId = setInterval(function () {
                 if (statusChangeEventIterator.hasNext()) {
                     var event = statusChangeEventIterator.next();
                     that.notifyStatusChange(event.options.newStatus);
                 }
-            }, 300);
+            }, STATUS_CHECK_INTERVAL_MS);
             var status = currentNote.getStatus();
             that.notifyStatusChange(status);
         };
@@ -180,14 +202,14 @@
             this.notifyDateChange(null);
 
             // Status hook cleanup.
-            statusChangeEventIterator = null;
             if (statusCheckIntervalId !== null) {
                 clearInterval(statusCheckIntervalId);
             }
+            statusChangeEventIterator = null;
             this.notifyStatusChange(null);
 
             // Note cleanup.
-            this.notifyNoteChange(null);
+            this.notifyNoteReplaced(null);
         };
 
         return that;
