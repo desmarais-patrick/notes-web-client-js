@@ -22,12 +22,12 @@
             rootNode, TEXTAREA_CSS_CLASS);
 
         that.render = function () {
-            viewModel.onNoteChange(onNoteChanged);
+            viewModel.onReplaceNote(onNoteReplaced);
             viewUtilities.textarea.onValueChange(textareaElement,
                 onValueChanged);
         };
 
-        var onNoteChanged = function (newNote) {
+        var onNoteReplaced = function (newNote) {
             var newText = (newNote === null) ? "" : newNote.getText();
             animations.crossFade(textareaElement, function () {
                 viewUtilities.textarea.setValue(textareaElement, newText);
@@ -64,7 +64,7 @@
         };
 
         that.destroy = function () {
-            viewModel.offNoteChange(onNoteChanged);
+            viewModel.offReplaceNote(onNoteReplaced);
 
             if (saveThrottleTimeoutId !== null) {
                 clearTimeout(saveThrottleTimeoutId);

@@ -64,6 +64,8 @@
  - Create favicons specific to pages (ex. design system with ruler icon)
  - Transform utilities using wrappers around Date and document nodes.
    This will provide a cleaner interface.
+ - Stop trying to contact server when offline.
+   Listen when online again to re-enable.
 
 ## Inspirations
 

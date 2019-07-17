@@ -29,6 +29,12 @@
 
         // PUT
         that.put = null;
+        that.setNextPutResponseAsOfflineError = function () {
+            that.put = function () {
+                return requestMock(new Error("[RequestBuilderMock] Offline!"),
+                    null);
+            };
+        };
 
         return that;
     };

@@ -104,37 +104,52 @@
         };
 
         // General note changes.
-        var noteChangeListeners = [];
+        var noteReplacedListeners = [];
 
-        that.onNoteChange = function (newListenerCallback) {
-            noteChangeListeners.push(newListenerCallback);
+        that.onReplaceNote = function (newListenerCallback) {
+            noteReplacedListeners.push(newListenerCallback);
         };
 
-        that.offNoteChange = function (listenerCallback) {
-            var index = noteChangeListeners.indexOf(listenerCallback);
+        that.offReplaceNote = function (listenerCallback) {
+            var index = noteReplacedListeners.indexOf(listenerCallback);
 
             if (index === -1) {
                 throw new Error("[EditorViewModel] Programmatical error!" + 
                     " This note change listener has never been registered.");
             }
 
-            noteChangeListeners.splice(index, 1);
+            noteReplacedListeners.splice(index, 1);
         };
 
-        that.notifyNoteChange = function (newNote) {
-            noteChangeListeners.forEach(function (listener) {
+        that.notifyNoteReplaced = function (newNote) {
+            noteReplacedListeners.forEach(function (listener) {
                 listener(newNote);
             });
+        };
+
+        // Text.
+        that.saveText = function (newText) {
+            if (currentNote === null) {
+                var newNote = model.createNote(newText);
+                setCurrentNote(newNote);
+            } else {
+                model.updateNote(currentNote, newText);
+            }
         };
 
         // Initialization
         that.setNote = function (noteClientId) {
             var note = model.getNoteByClientId(noteClientId);
+            setCurrentNote(note);
+            that.notifyNoteReplaced(currentNote);
+        };
+
+        var setCurrentNote = function (note) {
             currentNote = note;
 
             // Date setup.
             var date = currentNote.getDate();
-            this.notifyDateChange(date);
+            that.notifyDateChange(date);
 
             // Status hook setup.
             if (statusCheckIntervalId !== null) {
@@ -150,10 +165,7 @@
                 }
             }, 300);
             var status = currentNote.getStatus();
-            this.notifyStatusChange(status);
-
-            // Note setup.
-            that.notifyNoteChange(currentNote);
+            that.notifyStatusChange(status);
         };
 
         that.clearEditor = function () {

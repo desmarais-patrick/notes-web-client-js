@@ -31,6 +31,8 @@
         view.render();
 
         // Leave empty.
+        appOptions.requestBuilderMock
+            .setNextPostResponseAsOfflineError();
     };
 
     var setupOneSentenceExample = function (appOptions, exampleRootNode) {
@@ -49,6 +51,9 @@
             "TED talk, Shawn Achor, Happiness");
         var noteClientId = note.getClientId();
         viewModel.setNote(noteClientId);
+
+        appOptions.requestBuilderMock
+            .setNextPutResponseAsOfflineError();
     };
 
     var setupManySentencesExample = function (appOptions, exampleRootNode) {
@@ -63,6 +68,8 @@
         // Create note that will be displayed in editor.
         appOptions.requestBuilderMock
             .setNextPostResponseAsOfflineError();
+        appOptions.requestBuilderMock
+            .setNextPutResponseAsOfflineError();
         var note = appOptions.model.createNote(
             "Fit for Life\n" +
             "By Harvey Diamond\n" +
