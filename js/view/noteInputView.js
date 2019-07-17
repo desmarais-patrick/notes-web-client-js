@@ -1,7 +1,9 @@
 "use strict";
 
 (function (Notes) {
+    var INPUT_OVERFLOWS_CSS_CLASS = "input-overflows";
     var TEXTAREA_CSS_CLASS = "editor-input-textarea";
+
     var SAVE_THROTTLE_DELAY_MS = 2000;
 
     Notes.view.noteInputView = function (options) {
@@ -29,6 +31,7 @@
             var newText = (newNote === null) ? "" : newNote.getText();
             animations.crossFade(textareaElement, function () {
                 viewUtilities.textarea.setValue(textareaElement, newText);
+                applyStyleForScrollBar();
             });
         };
 
@@ -43,10 +46,21 @@
                 saveText();
                 saveThrottleTimeoutId = null;
             }, SAVE_THROTTLE_DELAY_MS);
+            applyStyleForScrollBar();
         };
         var saveText = function () {
             var newText = viewUtilities.textarea.getValue(textareaElement);
             viewModel.saveText(newText);
+        };
+
+        var applyStyleForScrollBar = function () {
+            if (viewUtilities.textarea.hasScrollBar(textareaElement)) {
+                viewUtilities.css.addClassOnce(textareaElement,
+                    INPUT_OVERFLOWS_CSS_CLASS);
+            } else {
+                viewUtilities.css.removeClass(textareaElement,
+                    INPUT_OVERFLOWS_CSS_CLASS);
+            }
         };
 
         that.destroy = function () {

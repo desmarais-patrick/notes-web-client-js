@@ -117,12 +117,18 @@
 
 @media (min-width: 360px) {
     .editor .editor-container .editor-input textarea {
-        height: 20rem;
+        height: 20.5rem;
     }
 }
 
 @media (min-width: 720px) {
     .editor .editor-container .editor-input textarea {
-        height: 30rem;
+        height: 30.5rem;
     }
+}
+
+.editor .editor-container .editor-input textarea.input-overflows {
+    border-bottom: .1rem dotted #666666;
+    border-radius: .5rem;
+    padding-bottom: .5rem;
 }

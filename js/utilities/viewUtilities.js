@@ -42,6 +42,12 @@
         viewUtilities.css.addClass = function (element, cssClass) {
             element.className += (SPACE + cssClass);
         };
+        viewUtilities.css.addClassOnce = function (element, cssClass) {
+            if (this.hasClass(element, cssClass)) {
+                return;
+            }
+            this.addClass(element, cssClass);
+        };
 
         viewUtilities.css.hasClass = function (element, cssClass) {
             var cssClasses = element.className.split(SPACE);
@@ -109,6 +115,9 @@
         };
         viewUtilities.textarea.offValueChange = function (element, callback) {
             element.removeEventListener("input", callback);
+        };
+        viewUtilities.textarea.hasScrollBar = function (element) {
+            return (element.scrollHeight > element.clientHeight);
         };
 
         return viewUtilities;
