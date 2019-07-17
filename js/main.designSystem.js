@@ -54,7 +54,12 @@
         });
 
         var viewFactory = Notes.view.viewFactory({
+            setTimeout: window.setTimeout,
+            clearTimeout: window.clearTimeout,
+
             animations: animations,
+            viewUtilities: viewUtilities,
+
             createApplicationStatusView: Notes.view.applicationStatusView,
             createDeleteNoteActionView: Notes.view.deleteNoteActionView,
             createEditorView: Notes.view.editorView,
@@ -62,7 +67,6 @@
             createNoteDateView: Notes.view.noteDateView,
             createNoteInputView: Notes.view.noteInputView,
             createNoteStatusView: Notes.view.noteStatusView,
-            viewUtilities: viewUtilities,
         });
 
         return {

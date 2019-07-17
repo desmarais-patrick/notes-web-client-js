@@ -4,6 +4,9 @@
     Notes.view.viewFactory = function (options) {
         var that = {};
 
+        var setTimeout = options.setTimeout;
+        var clearTimeout = options.clearTimeout;
+
         var animations = options.animations;
         var viewUtilities = options.viewUtilities;
 
@@ -19,6 +22,9 @@
             var view = null;
 
             var factoryOptions = {
+                setTimeout: setTimeout,
+                clearTimeout: clearTimeout,
+
                 animations: animations,
                 viewFactory: that,
                 viewUtilities: viewUtilities

@@ -70,6 +70,15 @@
             }
         };
 
+        viewUtilities.button = {};
+
+        viewUtilities.button.registerClick = function (element, callback) {
+            element.addEventListener("click", callback);
+        };
+        viewUtilities.button.unregisterClick = function (element, callback) {
+            element.removeEventListener("click", callback);
+        };
+
         viewUtilities.text = {};
 
         viewUtilities.text.toggleBetween = function (element, text1, text2) {
@@ -87,10 +96,19 @@
             element.textContent = newText;
         };
 
-        viewUtilities.event = {};
+        viewUtilities.textarea = {};
 
-        viewUtilities.event.registerClick = function (element, callback) {
-            element.addEventListener("click", callback);
+        viewUtilities.textarea.getValue = function (element) {
+            return element.value;
+        };
+        viewUtilities.textarea.setValue = function (element, newValue) {
+            element.value = newValue;
+        };
+        viewUtilities.textarea.onValueChange = function (element, callback) {
+            element.addEventListener("input", callback);
+        };
+        viewUtilities.textarea.offValueChange = function (element, callback) {
+            element.removeEventListener("input", callback);
         };
 
         return viewUtilities;

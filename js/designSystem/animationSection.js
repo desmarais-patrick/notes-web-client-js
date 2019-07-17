@@ -14,7 +14,7 @@
             "play-animation-example-1");
         var targetElement = utils.traversal.findWithId("animation-example-1");
 
-        utils.event.registerClick(playElement, function () {
+        utils.button.registerClick(playElement, function () {
             utils.css.toggleClass(targetElement, "fade-in-and-scale");
 
             utils.css.toggleClass(targetElement, "play");
@@ -28,7 +28,7 @@
         var item2Element = utils.traversal.findWithCssClass(targetElement,
             "item-2");
 
-        utils.event.registerClick(playElement, function () {
+        utils.button.registerClick(playElement, function () {
             utils.css.toggleClass(item2Element, "fade-out-and-collapse");
 
             utils.css.toggleClass(targetElement, "play");
@@ -43,7 +43,7 @@
             "item-2");
 
         var item2InitialText = utils.text.get(item2Element);
-        utils.event.registerClick(playElement, function () {
+        utils.button.registerClick(playElement, function () {
             if (utils.css.hasClass(targetElement, "play")) {
                 animations.crossFadeText(item2Element, item2InitialText);
             } else {
