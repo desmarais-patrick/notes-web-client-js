@@ -212,3 +212,25 @@ Hence, the `OPTIONS` method validates if this is allowed when CORS'ing. 😛
 I implemented this call as well.
 The live tests revealed quite interested topic.
 Having control over the API server helped resolve this issue today. 😃
+
+🤔 **Q5** How to prevent "oops" losses when deleting?
+
+Experimenting with styles for the delete button, a few scenarios came to mind:
+
+ - Someone starts writing and hits delete. Then starts a new note. ✓
+ - Someone has written some text. Then accidently presses delete button. 😬
+ - Someone opens a note, then hits delete on purpose.
+   Then starts a new note or opens another one. ✓
+
+I experimented with a few options:
+
+ - Confirmation pop-up. (Maybe annoying, but safe)
+ - Second-click confirmation near button. (Closer, semi-safe/double-clicks)
+ - Color-shade change after first click.
+   (Maybe visually appealing: "weapons loaded! Fire?")
+
+Testing a few examples with styles, no solution seemed satisfactory.
+At least, not from all points of view: development, UX and UI design...
+I chose to reduce the size of the button's hit zone.
+It's maybe the worst UX option, but it reduces some risk of a mis-click. 😊
+
