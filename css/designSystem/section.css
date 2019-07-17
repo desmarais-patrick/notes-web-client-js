@@ -12,10 +12,16 @@
 }
 
 .design-system section .component > label,
+.design-system section .component-state > label,
 .design-system section .animation > label,
 .design-system section .component.component-resolution label {
     color: #666666;
     text-transform: uppercase;
     font-size: .8rem;
     line-height: 1;
+}
+
+.design-system section .component-state,
+.design-system section .component-title {
+    margin-bottom: 1rem;
 }

@@ -18,25 +18,8 @@
     }
 }
 
-.editor .editor-actions button {
-    padding: .75rem 1rem;
-    font-weight: normal;
-    font-size: 1rem;
-    line-height: 1rem;
-}
-
-.editor .editor-actions button.editor-actions-delete {
-    border: none;
-    text-decoration: underline;
-    background-color: transparent;
-    margin-right: 1rem;
-}
-
-.editor .editor-actions button.editor-actions-new {
-    border: 1px solid #666666;
-    border-radius: .2rem;
-    box-shadow: 1px 1px 1px #666666;
-    background-color: #fafafa;
+.editor .editor-actions .editor-actions-delete {
+    margin-right: 2rem;
 }
 
 /* Editor container */
@@ -44,7 +27,7 @@
 .editor .editor-container {
     border: 1px solid #666666;
     border-radius: 2px;
-    box-shadow: 1px 1px 1px #666666;
+    box-shadow: .1rem .1rem .1rem #999999;
 
     margin-bottom: 1rem;
     padding-right: 1rem;

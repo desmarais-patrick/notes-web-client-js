@@ -13,6 +13,7 @@
     <link href="css/fonts.css" rel="stylesheet">
     <link href="css/header.css" rel="stylesheet">
     <link href="css/links.css" rel="stylesheet">
+    <link href="css/buttons.css" rel="stylesheet">
 
     <link href="css/designSystem/index.css" rel="stylesheet">
     <link href="css/designSystem/footer.css" rel="stylesheet">
@@ -49,6 +50,7 @@
                 <li><a href="#animations">Animations</a></li>
                 <li><a href="#logo">Logo</a></li>
                 <li><a href="#links">Links</a></li>
+                <li><a href="#buttons">Buttons</a></li>
                 <li><a href="#header">Header</a></li>
                 <li><a href="#applicationStatus">Application status</a></li>
                 <li><a href="#editor">Editor</a></li>
@@ -220,36 +222,87 @@
             <h2>Links</h2>
 
             <div class="component">
-                <strong>Default</strong>
-                <br>
-                <br>
-                <a class="default" href="#links">New note ↓</a><br>
-                <label>Default</label>
-                <br>
-                <a class="hover" href="#links">New note ↓</a><br>
-                <label>Hover</label>
-                <br>
-                <a class="active" href="#links">New note ↓</a><br>
-                <label>Active</label>
-                <br>
-                <a class="visited" href="#links">New note ↓</a><br>
-                <label>Visited</label>
+                <p class="component-title"><strong>Default</strong></p>
+                <div class="component-state">
+                    <a class="default" href="#links">New note ↓</a><br>
+                    <label>Default</label>
+                </div>
+                <div class="component-state">
+                    <a class="hover" href="#links">New note ↓</a><br>
+                    <label>Hover</label>
+                </div>
+                <div class="component-state">
+                    <a class="active" href="#links">New note ↓</a><br>
+                    <label>Active</label>
+                </div>
+                <div class="component-state">
+                    <a class="visited" href="#links">New note ↓</a><br>
+                    <label>Visited</label>
+                </div>
             </div>
             <div class="component">
-                <strong>Secondary</strong>
-                <br>
-                <br>
-                <a class="secondary" href="#links">About this project ⇱</a><br>
-                <label>Default</label>
-                <br>
-                <a class="secondary hover" href="#links">About this project ⇱</a><br>
-                <label>Hover</label>
-                <br>
-                <a class="secondary active" href="#links">About this project ⇱</a><br>
-                <label>Active</label>
-                <br>
-                <a class="secondary visited" href="#links">About this project ⇱</a><br>
-                <label>Visited</label>
+                <p class="component-title"><strong>Secondary</strong></p>
+                <div class="component-state">
+                    <a class="secondary" href="#links">About this project ⇱</a><br>
+                    <label>Default</label>
+                </div>
+                <div class="component-state">
+                    <a class="secondary hover" href="#links">About this project ⇱</a><br>
+                    <label>Hover</label>
+                </div>
+                <div class="component-state">
+                    <a class="secondary active" href="#links">About this project ⇱</a><br>
+                    <label>Active</label>
+                </div>
+                <div class="component-state">
+                    <a class="secondary visited" href="#links">About this project ⇱</a><br>
+                    <label>Visited</label>
+                </div>
+            </div>
+
+            <a href="#top">Return to top ↑</a>
+        </section>
+    
+        <div class="spacer"></div>
+
+        <section id="buttons">
+            <h2>Buttons</h2>
+
+            <div class="component">
+                <p class="component-title"><strong>Default</strong></p>
+                <div class="component-state">
+                    <button class="button-default"
+                        type="button">New</button><br>
+                    <label>Default</label>
+                </div>
+                <div class="component-state">
+                    <button class="button-default button-hover"
+                            type="button">New</button><br>
+                    <label>Hover</label>
+                </div>
+                <div class="component-state">
+                    <button class="button-default button-active"
+                            type="button">New</button><br>
+                    <label>Active</label>
+                </div>
+            </div>
+            <div class="component">
+                <p class="component-title"><strong>Weak</strong></p>
+                <div class="component-state">
+                    <button class="button-weak"
+                            type="button">Delete</button><br>
+                    <label>Default</label>
+                </div>
+                <div class="component-state">
+                    <button class="button-weak button-hover"
+                            type="button">Delete</button><br>
+                    <label>Hover</label>
+                </div>
+                <div class="component-state">
+                    <button class="button-weak button-active"
+                            type="button">Delete</button><br>
+                    <label>Active</label>
+                </div>
             </div>
 
             <a href="#top">Return to top ↑</a>
@@ -324,9 +377,11 @@
                 <div id="initial-editor-example" class="editor">
                     <div class="editor-actions editor-actions-top">
                         <button type="button"
-                                class="editor-actions-delete">Delete</button>
+                                class="button-weak editor-actions-delete"
+                                >Delete</button>
                         <button type="button"
-                                class="editor-actions-new">New</button>
+                                class="button-default editor-actions-new"
+                                >New</button>
                     </div>
                     <div class="editor-container">
                         <div class="editor-inner-container">
@@ -344,8 +399,12 @@
                         </div>
                     </div>
                     <div class="editor-actions editor-actions-bottom">
-                        <button type="button" class="editor-actions-delete">Delete</button>
-                        <button type="button" class="editor-actions-new">New</button>
+                        <button type="button"
+                                class="button-weak editor-actions-delete"
+                                >Delete</button>
+                        <button type="button"
+                                class="button-default editor-actions-new"
+                                >New</button>
                     </div>
                 </div>
                 <label>Initial</label>
@@ -357,9 +416,11 @@
                 <div id="editor-example-one-sentence" class="editor">
                     <div class="editor-actions editor-actions-top">
                         <button type="button"
-                                class="editor-actions-delete">Delete</button>
+                                class="button-weak editor-actions-delete"
+                                >Delete</button>
                         <button type="button"
-                                class="editor-actions-new">New</button>
+                                class="button-default editor-actions-new"
+                                >New</button>
                     </div>
                     <div class="editor-container">
                         <div class="editor-inner-container">
@@ -377,8 +438,12 @@
                         </div>
                     </div>
                     <div class="editor-actions editor-actions-bottom">
-                        <button type="button" class="editor-actions-delete">Delete</button>
-                        <button type="button" class="editor-actions-new">New</button>
+                        <button type="button"
+                                class="button-weak editor-actions-delete"
+                                >Delete</button>
+                        <button type="button"
+                                class="button-default editor-actions-new"
+                                >New</button>
                     </div>
                 </div>
                 <label>One sentence</label>
@@ -390,9 +455,11 @@
                 <div id="editor-example-many-sentences" class="editor">
                     <div class="editor-actions editor-actions-top">
                         <button type="button"
-                                class="editor-actions-delete">Delete</button>
+                                class="button-weak editor-actions-delete"
+                                >Delete</button>
                         <button type="button"
-                                class="editor-actions-new">New</button>
+                                class="button-default editor-actions-new"
+                                >New</button>
                     </div>
                     <div class="editor-container">
                         <div class="editor-inner-container">
@@ -410,8 +477,12 @@
                         </div>
                     </div>
                     <div class="editor-actions editor-actions-bottom">
-                        <button type="button" class="editor-actions-delete">Delete</button>
-                        <button type="button" class="editor-actions-new">New</button>
+                        <button type="button"
+                                class="button-weak editor-actions-delete"
+                                >Delete</button>
+                        <button type="button"
+                                class="button-default editor-actions-new"
+                                >New</button>
                     </div>
                 </div>
                 <label>Many sentences</label>
