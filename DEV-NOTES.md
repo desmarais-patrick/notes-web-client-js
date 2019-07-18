@@ -68,6 +68,7 @@
    Listen when online again to re-enable.
  - Review view hierarchies and how to clean `EditorViewModel` (?).
    (i) Event listeners similar to `addEventListener` with names.
+ - Add "unsaved changes" notice when note is not synchronized.
 
 ## Inspirations
 
