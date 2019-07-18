@@ -57,15 +57,8 @@
             viewModel: viewModel
         });
 
-        // TODO Prepare listeners to changes on note in order to trigger 
-        //      cross-view animations.
-
-        // TODO Review how to handle the status of the editor and sub-views.
-        //      Should we use a state pattern in the view model?
-        //         => Disable/enable button
-        //         => Display/hide date
-        //         => Display/hide error (ex. max-length)
-        //         => In transition to new/another note
+        var editorContainerNode = utils.traversal.findWithCssClass(rootNode, 
+            "editor-container");
 
         that.render = function () {
             topDeleteActionView.render();
@@ -75,6 +68,12 @@
             inputView.render();
             bottomDeleteActionView.render();
             bottomNewActionView.render();
+
+            utils.div.onClick(editorContainerNode, onEditorClicked);
+        };
+
+        var onEditorClicked = function () {
+            inputView.focus();
         };
 
         that.destroy = function () {
@@ -85,6 +84,8 @@
             inputView.destroy();
             bottomDeleteActionView.destroy();
             bottomDeleteActionView.destroy();
+
+            utils.div.offClick(editorContainerNode, onEditorClicked);
         };
 
         return that;

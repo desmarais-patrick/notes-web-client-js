@@ -77,11 +77,14 @@
         };
 
         viewUtilities.button = {};
+        viewUtilities.div = {};
 
-        viewUtilities.button.onClick = function (element, callback) {
+        viewUtilities.button.onClick =
+        viewUtilities.div.onClick = function (element, callback) {
             element.addEventListener("click", callback);
         };
-        viewUtilities.button.offClick = function (element, callback) {
+        viewUtilities.button.offClick =
+        viewUtilities.div.offClick = function (element, callback) {
             element.removeEventListener("click", callback);
         };
 

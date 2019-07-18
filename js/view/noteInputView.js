@@ -67,6 +67,10 @@
             }
         };
 
+        that.focus = function () {
+            textareaElement.focus();
+        };
+
         that.destroy = function () {
             viewModel.offReplaceNote(onNoteReplaced);
 
