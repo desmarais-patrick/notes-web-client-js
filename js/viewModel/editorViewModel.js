@@ -11,43 +11,13 @@
 
         var NOTE_STATUS_ENUM = options.NOTE_STATUS_ENUM;
 
-        var dateUtilities = options.dateUtilities;
         var model = options.model;
 
         var currentNote = null;
 
-        // Date
-        var dateChangeListeners = [];
-
-        that.getDateText = function () {
-            if (currentNote === null) {
-                return "";
-            }
-             
-            var date = currentNote.getDate();
-            return dateUtilities.format(date);
-        };
-
-        that.onDateChange = function (newListenerCallback) {
-            dateChangeListeners.push(newListenerCallback);
-        };
-
-        that.offDateChange = function (listenerCallback) {
-            var index = dateChangeListeners.indexOf(listenerCallback);
-
-            if (index === -1) {
-                throw new Error("[EditorViewModel] Programmatical error!" + 
-                    " This date change listener has never been registered.");
-            }
-
-            dateChangeListeners.splice(index, 1);
-        };
-
-        that.notifyDateChange = function (newDate) {
-            var formattedDateText = dateUtilities.format(newDate);
-            dateChangeListeners.forEach(function (listener) {
-                listener(formattedDateText);
-            });
+        var dateViewModel = options.viewModelFactory.create("NoteDate");
+        that.getDateViewModel = function () {
+            return dateViewModel;
         };
 
         // Status
@@ -145,7 +115,7 @@
                 return;
             }
 
-            // Save is already handled by input.
+            // Save is already driven by autosave in inputView.
             this.clearEditor();
         };
 
@@ -168,10 +138,7 @@
 
         var setCurrentNote = function (note) {
             currentNote = note;
-
-            // Date setup.
-            var date = currentNote.getDate();
-            that.notifyDateChange(date);
+            dateViewModel.onNoteChanged(currentNote);
 
             // Status hook setup.
             if (statusCheckIntervalId !== null) {
@@ -197,9 +164,7 @@
             }
 
             currentNote = null;
-
-            // Date cleanup.
-            this.notifyDateChange(null);
+            dateViewModel.onNoteChanged(null);
 
             // Status hook cleanup.
             if (statusCheckIntervalId !== null) {

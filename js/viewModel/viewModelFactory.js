@@ -16,40 +16,37 @@
         var createApplicationStatusViewModel =
             options.createApplicationStatusViewModel;
         var createEditorViewModel = options.createEditorViewModel;
+        var createListItemViewModel = options.createListItemViewModel;
+        var createNoteDateViewModel = options.createNoteDateViewModel;
+
+        var viewModelOptions = {
+            setInterval: setInterval,
+            clearInterval: clearInterval,
+    
+            dateUtilities: dateUtilities,
+    
+            model: model,
+            APP_STATUS_ENUM: APP_STATUS_ENUM,
+            NOTE_STATUS_ENUM: NOTE_STATUS_ENUM,
+
+            viewModelFactory: that,
+        };
 
         that.create = function (name) {
-            var viewModelOptions = null;
-            var viewModel = null;
-
             switch (name) {
                 case "ApplicationStatus":
-                    viewModelOptions = {
-                        setInterval: setInterval,
-                        clearInterval: clearInterval,
-                        model: model,
-                        APP_STATUS_ENUM: APP_STATUS_ENUM
-                    };
-                    viewModel = createApplicationStatusViewModel(
-                        viewModelOptions);
-                    break;
+                    return createApplicationStatusViewModel(viewModelOptions);
                 case "Editor":
-                    viewModelOptions = {
-                        setInterval: setInterval,
-                        clearInterval: clearInterval,
-                        dateUtilities: dateUtilities,
-                        model: model,
-                        NOTE_STATUS_ENUM: NOTE_STATUS_ENUM
-                    };
-                    viewModel = createEditorViewModel(viewModelOptions);
-                    break;
+                    return createEditorViewModel(viewModelOptions);
+                case "ListItem":
+                    return createListItemViewModel(viewModelOptions);
+                case "NoteDate":
+                    return createNoteDateViewModel(viewModelOptions);
                 default:
                     throw new Error(
                         "ViewModelFactory: Missing case for view model: " +
                             name);
-                    break;
             }
-
-            return viewModel;
         };
 
         return that;

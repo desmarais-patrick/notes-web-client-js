@@ -10,7 +10,7 @@
         var viewModel = options.viewModel;
 
         that.render = function () {
-            viewModel.onDateChange(updateDateText);
+            viewModel.onChange(updateDateText);
         };
 
         var updateDateText = function (newDateText) {
@@ -18,7 +18,7 @@
         };
 
         that.destroy = function () {
-            viewModel.offDateChange(updateDateText);
+            viewModel.offChange(updateDateText);
         };
 
         return that;

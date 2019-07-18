@@ -44,13 +44,18 @@
         var viewModelFactory = Notes.viewModel.viewModelFactory({
             setInterval: window.setInterval,
             clearInterval: window.clearInterval,
-            createApplicationStatusViewModel:
-                Notes.viewModel.applicationStatusViewModel,
+
+            dateUtilities: dateUtilities,
+            
+            model: model,
             APP_STATUS_ENUM: Notes.model.app.STATUS_ENUM,
             NOTE_STATUS_ENUM: Notes.model.note.STATUS_ENUM,
+
+            createApplicationStatusViewModel:
+                Notes.viewModel.applicationStatusViewModel,
             createEditorViewModel: Notes.viewModel.editorViewModel,
-            model: model,
-            dateUtilities: dateUtilities,
+            createListItemViewModel: Notes.viewModel.listItemViewModel,
+            createNoteDateViewModel: Notes.viewModel.noteDateViewModel,
         });
 
         var viewFactory = Notes.view.viewFactory({
