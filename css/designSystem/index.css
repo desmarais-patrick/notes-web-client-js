@@ -11,6 +11,12 @@
 }
 
 @media (min-width: 360px) {
+    .design-system .container {
+        margin: 0 auto;
+        padding: 0 4rem;
+        max-width: 500px;
+    }
+
     .design-system .spacer {
         height: 9rem;
     }
