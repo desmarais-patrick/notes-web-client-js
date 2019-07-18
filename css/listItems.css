@@ -1,4 +1,126 @@
 .list-item {
+    height: 4.5rem;
+    width: 100%;
+
+    margin-bottom: .75rem;
+}
+
+.list-item.list-item-selected {
+    height: 8.5rem;
+
+    animation-name: list-item-selection;
+    animation-duration: 400ms;
+    animation-timing-function: ease-out;
+    animation-delay: 0ms;
+    animation-direction: normal;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    animation-play-state: running;
+}
+
+@keyframes list-item-selection {
+    from {
+        height: 4.5rem;
+    }
+
+    to {
+        height: 8.5rem;
+    }
+}
+
+.list-item-content {
+    display: inline-block;
+    vertical-align: middle;
+
+    width: 100%;
+    padding: .5rem 1rem;
+    
     border: .1rem solid #666666;
     border-radius: .2rem;
+    box-shadow: 0 .1rem .1rem #CCCCCC;
+    background: linear-gradient(0deg, #CCCCCC, transparent) 0 3rem no-repeat;
+
+    cursor: pointer;
+}
+
+.list-item-content:hover,
+.list-item-content.list-item-content-hover {
+    box-shadow: 0 .1rem .2rem #333333;
+    background: linear-gradient(0deg, #999999, transparent) 0 3rem no-repeat;
+}
+
+.list-item-selected .list-item-content,
+.list-item-selected .list-item-content:hover,
+.list-item-selected .list-item-content.list-item-content-hover {
+    background: #CCCCCC;
+    box-shadow: inset 0 0 .3rem #666666;
+    margin-bottom: .75rem;
+}
+
+.list-item-selected .list-item-content:hover,
+.list-item-selected .list-item-content.list-item-content-hover {
+    box-shadow: inset 0 0 .5rem #333333;
+}
+
+.list-item-content-starting-text {
+    height: 1.5rem;
+    width: 100%;
+    
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-break: break-all;
+    
+    color: #333333;
+}
+
+.list-item-content-date {
+    display: inline-block;
+    vertical-align: top;
+
+    height: 1.5rem;
+    width: 60%;
+    overflow: hidden;
+
+    color: #666666;
+}
+
+.list-item-content-lines-count {
+    display: inline-block;
+    vertical-align: top;
+
+    height: 1.5rem;
+    width: 40%;
+    overflow: hidden;
+    
+    color: #666666;
+    text-align: right;
+}
+
+.list-item-actions {
+    visibility: hidden;
+    opacity: 0;
+}
+
+.list-item-selected .list-item-actions {
+    visibility: visible;
+
+    animation-name: fade-in;
+    animation-duration: 400ms;
+    animation-timing-function: ease-out;
+    animation-delay: 100ms;
+    animation-direction: normal;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    animation-play-state: running;
+}
+
+.list-item-actions,
+.list-item-action {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.list-item-action {
+    margin-right: .75rem;
 }
