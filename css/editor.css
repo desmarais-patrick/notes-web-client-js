@@ -25,12 +25,25 @@
 /* Editor container */
 
 .editor .editor-container {
-    border: 1px solid #666666;
-    border-radius: 2px;
-    box-shadow: .1rem .1rem .1rem #999999;
+    border: .1rem solid #666666;
+    border-radius: .2rem;
+    box-shadow: 0 .1rem .1rem #999999;
+    background: linear-gradient(0deg, #CCCCCC, transparent) 0 18rem no-repeat;
 
     margin-bottom: 1rem;
     padding-right: 1rem;
+}
+
+@media (min-width: 360px) {
+    .editor .editor-container {
+        background: linear-gradient(0deg, #CCCCCC, transparent) 0 24rem no-repeat;
+    }
+}
+
+@media (min-width: 720px) {
+    .editor .editor-container {
+        background: linear-gradient(0deg, #CCCCCC, transparent) 0 35rem no-repeat;
+    }
 }
 
 .editor .editor-container .editor-inner-container {
