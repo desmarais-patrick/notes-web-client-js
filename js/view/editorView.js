@@ -46,9 +46,10 @@
 
         var statusRootNode = utils.traversal.findWithCssSelector(rootNode,
             ".editor-status");
+        var statusViewModel = viewModel.getStatusViewModel();
         var statusView = viewFactory.create("NoteStatus", {
             rootNode: statusRootNode,
-            viewModel: viewModel
+            viewModel: statusViewModel
         });
 
         var inputRootNode = utils.traversal.findWithCssSelector(rootNode,

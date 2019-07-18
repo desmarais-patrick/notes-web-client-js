@@ -10,7 +10,7 @@
         var viewModel = options.viewModel;
 
         that.render = function () {
-            viewModel.onStatusChange(updateStatusText);
+            viewModel.onChange(updateStatusText);
         };
 
         var updateStatusText = function (newStatusText) {
@@ -18,7 +18,7 @@
         };
 
         that.destroy = function () {
-            viewModel.offStatusChange(updateStatusText);
+            viewModel.offChange(updateStatusText);
         };
 
         return that;

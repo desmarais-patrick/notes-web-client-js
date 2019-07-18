@@ -56,6 +56,7 @@
             createEditorViewModel: Notes.viewModel.editorViewModel,
             createListItemViewModel: Notes.viewModel.listItemViewModel,
             createNoteDateViewModel: Notes.viewModel.noteDateViewModel,
+            createNoteStatusViewModel: Notes.viewModel.noteStatusViewModel,
         });
 
         var viewFactory = Notes.view.viewFactory({

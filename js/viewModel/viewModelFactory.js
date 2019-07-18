@@ -18,6 +18,7 @@
         var createEditorViewModel = options.createEditorViewModel;
         var createListItemViewModel = options.createListItemViewModel;
         var createNoteDateViewModel = options.createNoteDateViewModel;
+        var createNoteStatusViewModel = options.createNoteStatusViewModel;
 
         var viewModelOptions = {
             setInterval: setInterval,
@@ -42,6 +43,8 @@
                     return createListItemViewModel(viewModelOptions);
                 case "NoteDate":
                     return createNoteDateViewModel(viewModelOptions);
+                case "NoteStatus":
+                    return createNoteStatusViewModel(viewModelOptions);
                 default:
                     throw new Error(
                         "ViewModelFactory: Missing case for view model: " +
