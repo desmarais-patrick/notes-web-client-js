@@ -6,6 +6,13 @@
 
         // DELETE
         that.delete = null;
+        that.setNextDeleteResponseAsOfflineError = function () {
+            that.delete = function () {
+                return requestMock(new Error("[RequestBuilderMock] Offline!"),
+                    null);
+            };
+            return that;
+        };
     
         // GET
         that.get = null;
@@ -19,12 +26,14 @@
                     id: id
                 });
             };
+            return that;
         };
         that.setNextPostResponseAsOfflineError = function () {
             that.post = function () {
                 return requestMock(new Error("[RequestBuilderMock] Offline!"),
                     null);
             };
+            return that;
         };
 
         // PUT
@@ -34,6 +43,7 @@
                 return requestMock(new Error("[RequestBuilderMock] Offline!"),
                     null);
             };
+            return that;
         };
 
         return that;

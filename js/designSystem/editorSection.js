@@ -53,7 +53,8 @@
         viewModel.setNote(noteClientId);
 
         appOptions.requestBuilderMock
-            .setNextPutResponseAsOfflineError();
+            .setNextPutResponseAsOfflineError()
+            .setNextDeleteResponseAsOfflineError();
     };
 
     var setupManySentencesExample = function (appOptions, exampleRootNode) {
@@ -67,9 +68,9 @@
 
         // Create note that will be displayed in editor.
         appOptions.requestBuilderMock
-            .setNextPostResponseAsOfflineError();
-        appOptions.requestBuilderMock
-            .setNextPutResponseAsOfflineError();
+            .setNextPostResponseAsOfflineError()
+            .setNextPutResponseAsOfflineError()
+            .setNextDeleteResponseAsOfflineError();
         var note = appOptions.model.createNote(
             "Fit for Life\n" +
             "By Harvey Diamond\n" +
