@@ -21,28 +21,32 @@
         var textareaElement = viewUtilities.traversal.findWithCssClass(
             rootNode, TEXTAREA_CSS_CLASS);
 
+        var saveThrottleTimeoutId = null;
+
         that.render = function () {
-            viewModel.onReplaceNote(onNoteReplaced);
+            viewModel.onBeforeNoteChange(onBeforeNoteChanged);
+            viewModel.onAfterNoteChange(onAfterNoteChanged);
+
             viewUtilities.textarea.onValueChange(textareaElement,
                 onValueChanged);
         };
 
-        var onNoteReplaced = function (newNote) {
-            // Save any throttled updates.
-            savePendingUpdates();
+        var onBeforeNoteChanged = function () {
+            submitPendingUpdates();
+        };
 
-            // Display new text.
-            var newText = (newNote === null) ? "" : newNote.getText();
+        var onAfterNoteChanged = function (newText) {
+            // Replace with new text.
+            var text = (newText === null) ? "" : newText;
             animations.crossFade(textareaElement, function () {
-                viewUtilities.textarea.setValue(textareaElement, newText);
+                viewUtilities.textarea.setValue(textareaElement, text);
                 applyStyleForScrollBar();
             });
         };
 
-        var saveThrottleTimeoutId = null;
         var onValueChanged = function () {
             if (saveThrottleTimeoutId !== null) {
-                // Pending updated already scheduled.
+                // Pending update already scheduled.
                 return;
             }
 
@@ -51,10 +55,6 @@
                 saveThrottleTimeoutId = null;
             }, SAVE_THROTTLE_DELAY_MS);
             applyStyleForScrollBar();
-        };
-        var saveText = function () {
-            var newText = viewUtilities.textarea.getValue(textareaElement);
-            viewModel.saveText(newText);
         };
 
         var applyStyleForScrollBar = function () {
@@ -72,19 +72,25 @@
         };
 
         that.destroy = function () {
-            viewModel.offReplaceNote(onNoteReplaced);
+            viewModel.offBeforeNoteChange(onBeforeNoteChanged);
+            viewModel.offAfterNoteChange(onAfterNoteChanged);
 
-            savePendingUpdates();
+            submitPendingUpdates();
             viewUtilities.textarea.offValueChange(textareaElement,
                 onValueChanged);
         };
 
-        var savePendingUpdates = function () {
+        var submitPendingUpdates = function () {
             if (saveThrottleTimeoutId !== null) {
                 clearTimeout(saveThrottleTimeoutId);
                 saveText();
                 saveThrottleTimeoutId = null;
             }
+        };
+
+        var saveText = function () {
+            var newText = viewUtilities.textarea.getValue(textareaElement);
+            viewModel.saveInputText(newText);
         };
 
         return that;

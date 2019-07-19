@@ -52,13 +52,15 @@
             changeListeners.splice(index, 1);
         };
 
-        that.onNoteChanged = function (newNote) {
+        that.setNoteClientId = function (newNoteClientId) {
             stopListeningForModelEvents();
 
-            if (newNote === null) {
+            if (newNoteClientId === null) {
                 status = null;
             } else {
-                startListeningForModelEvents(newNote);
+                startListeningForModelEvents(newNoteClientId);
+
+                var newNote = model.getNoteByClientId(newNoteClientId);
                 status = newNote.getStatus();
             }
          
@@ -72,8 +74,7 @@
             statusChangeEventIterator = null;
         };
 
-        var startListeningForModelEvents = function (note) {
-            var clientId = note.getClientId();
+        var startListeningForModelEvents = function (clientId) {
             var eventName = "change Notes[" + clientId + "].Status";
             statusChangeEventIterator = model.listen(eventName);
             statusCheckIntervalId = setInterval(function () {

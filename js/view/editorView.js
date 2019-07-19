@@ -54,9 +54,10 @@
 
         var inputRootNode = utils.traversal.findWithCssSelector(rootNode,
             ".editor-input");
+        var inputViewModel = viewModel.getInputViewModel();
         var inputView = viewFactory.create("NoteInput", {
             rootNode: inputRootNode,
-            viewModel: viewModel
+            viewModel: inputViewModel
         });
 
         var editorContainerNode = utils.traversal.findWithCssClass(rootNode, 

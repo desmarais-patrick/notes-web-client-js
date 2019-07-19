@@ -6,6 +6,8 @@
 
         var dateUtilities = options.dateUtilities;
 
+        var model = options.model;
+
         var changeListeners = [];
         var date = null;
 
@@ -35,9 +37,14 @@
         // Only used by parent view model when note changes.
         // This is instead of adding a listener to a note's date property,
         // since it only changes when the note is set.
-        that.onNoteChanged = function (newNote) {
-            var newDate = (newNote === null) ? null : newNote.getDate();
-            date = newDate;
+        that.setNoteClientId = function (newNoteClientId) {
+            if (newNoteClientId === null) {
+                date = null;
+            } else {
+                var newNote = model.getNoteByClientId(newNoteClientId);
+                date = newNote.getDate();
+            }
+
             notifyChange();
         };
 

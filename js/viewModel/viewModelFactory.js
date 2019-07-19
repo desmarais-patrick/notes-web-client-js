@@ -18,6 +18,7 @@
         var createEditorViewModel = options.createEditorViewModel;
         var createListItemViewModel = options.createListItemViewModel;
         var createNoteDateViewModel = options.createNoteDateViewModel;
+        var createNoteInputViewModel = options.createNoteInputViewModel;
         var createNoteStatusViewModel = options.createNoteStatusViewModel;
 
         var viewModelOptions = {
@@ -43,6 +44,8 @@
                     return createListItemViewModel(viewModelOptions);
                 case "NoteDate":
                     return createNoteDateViewModel(viewModelOptions);
+                case "NoteInput":
+                    return createNoteInputViewModel(viewModelOptions);
                 case "NoteStatus":
                     return createNoteStatusViewModel(viewModelOptions);
                 default:

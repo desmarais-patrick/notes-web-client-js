@@ -14,7 +14,7 @@
         };
 
         var onClicked = function () {
-            viewModel.saveAndClear();
+            viewModel.startNewNote();
         };
 
         that.destroy = function () {

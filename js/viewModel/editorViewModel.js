@@ -8,7 +8,7 @@
 
         var model = options.model;
 
-        var currentNote = null;
+        var noteClientId = null;
 
         var dateViewModel = options.viewModelFactory.create("NoteDate");
         that.getDateViewModel = function () {
@@ -20,82 +20,43 @@
             return statusViewModel;
         };
 
-        var noteReplacedListeners = [];
-
-        that.onReplaceNote = function (newListenerCallback) {
-            noteReplacedListeners.push(newListenerCallback);
+        var noteInputViewModel = options.viewModelFactory.create("NoteInput");
+        that.getInputViewModel = function () {
+            return noteInputViewModel;
         };
 
-        that.offReplaceNote = function (listenerCallback) {
-            var index = noteReplacedListeners.indexOf(listenerCallback);
-
-            if (index === -1) {
-                throw new Error("[EditorViewModel] Programmatical error!" + 
-                    " This note change listener has never been registered.");
-            }
-
-            noteReplacedListeners.splice(index, 1);
+        var onNoteCreatedByInput = function (newNoteClientId) {
+            noteClientId = newNoteClientId;
+            dateViewModel.setNoteClientId(newNoteClientId);
+            statusViewModel.setNoteClientId(newNoteClientId);
         };
+        noteInputViewModel.onNoteCreation(onNoteCreatedByInput);
 
-        that.saveAndClear = function () {
-            if (currentNote === null) {
-                // Nothing to save and already cleared, ignore.
+        that.startNewNote = function () {
+            if (noteClientId === null) {
+                // No change.
                 return;
             }
 
-            // Save is already driven by autosave in inputView.
-            this.clearEditor();
+            that.setNote(null);
         };
 
-        that.deleteAndClear = function () {
-            if (currentNote === null) {
-                // Nothing to delete and already cleared, ignore.
+        that.deleteNote = function () {
+            if (noteClientId === null) {
                 return;
             }
 
-            model.deleteNote(currentNote);
-            this.clearEditor();
-        };
-
-        that.clearEditor = function () {
-            if (currentNote === null) {
-                // Nothing to clear.
-                return;
-            }
-
-            currentNote = null;
-            dateViewModel.onNoteChanged(null);
-            statusViewModel.onNoteChanged(null);
-
-            // Note cleanup.
-            this.notifyNoteReplaced(null);
-        };
-
-        that.saveText = function (newText) {
-            if (currentNote === null) {
-                var newNote = model.createNote(newText);
-                setCurrentNote(newNote);
-            } else {
-                model.updateNote(currentNote, newText);
-            }
-        };
-
-        that.setNote = function (noteClientId) {
             var note = model.getNoteByClientId(noteClientId);
-            setCurrentNote(note);
-            that.notifyNoteReplaced(currentNote);
+            model.deleteNote(note);
+
+            that.setNote(null);
         };
 
-        var setCurrentNote = function (note) {
-            currentNote = note;
-            dateViewModel.onNoteChanged(note);
-            statusViewModel.onNoteChanged(note);
-        };
-
-        that.notifyNoteReplaced = function (newNote) {
-            noteReplacedListeners.forEach(function (listener) {
-                listener(newNote);
-            });
+        that.setNote = function (newNoteClientId) {
+            noteClientId = newNoteClientId;
+            dateViewModel.setNoteClientId(newNoteClientId);
+            statusViewModel.setNoteClientId(newNoteClientId);
+            noteInputViewModel.setNoteClientId(newNoteClientId);
         };
 
         return that;

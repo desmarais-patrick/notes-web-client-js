@@ -56,6 +56,7 @@
             createEditorViewModel: Notes.viewModel.editorViewModel,
             createListItemViewModel: Notes.viewModel.listItemViewModel,
             createNoteDateViewModel: Notes.viewModel.noteDateViewModel,
+            createNoteInputViewModel: Notes.viewModel.noteInputViewModel,
             createNoteStatusViewModel: Notes.viewModel.noteStatusViewModel,
         });
 
