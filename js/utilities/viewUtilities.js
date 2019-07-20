@@ -25,15 +25,44 @@
                     return node;
                 }
             }
-    
-            return null;
+
+            throw new Error("Unable to find with CSS class " + 
+                "'" + cssClass + "' within element " + 
+                htmlNodeToString(parentElement));
         };
 
         viewUtilities.traversal.findWithCssSelector = function (parentElement,
             cssSelector) {
 
-            return parentElement.querySelector(cssSelector);
+            var node = parentElement.querySelector(cssSelector);
+
+            if (node === null) {
+                throw new Error("Unable to find with CSS selector " +
+                    "'" + cssSelector + "'" +
+                    " within element " + htmlNodeToString(parentElement));
+            }
+
+            return node;
         };
+
+        // For nice display when degugging with errors.
+        var htmlNodeToString = function (htmlNode) {
+            var tag = htmlNode.tagName;
+            var id = htmlNode.id;
+            var className = htmlNode.className;
+
+            var str = tag;
+
+            if (id.length > 0) {
+                str += ("#" + id);
+            }
+
+            if (className.length > 0) {
+                str += ("." + className.replace(/\s/g, "."));
+            }
+
+            return str;
+        }
 
         viewUtilities.css = {};
 
