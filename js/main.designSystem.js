@@ -69,6 +69,7 @@
 
             createApplicationStatusView: Notes.view.applicationStatusView,
             createDeleteNoteActionView: Notes.view.deleteNoteActionView,
+            createEditNoteActionView: Notes.view.editNoteActionView,
             createEditorView: Notes.view.editorView,
             createNewNoteActionView: Notes.view.newNoteActionView,
             createNoteDateView: Notes.view.noteDateView,

@@ -13,6 +13,7 @@
         var createApplicationStatusView = options.createApplicationStatusView;
         var createDeleteNoteActionView = options.createDeleteNoteActionView;
         var createEditorView = options.createEditorView;
+        var createEditNoteActionView = options.createEditNoteActionView;
         var createNewNoteActionView = options.createNewNoteActionView;
         var createNoteDateView = options.createNoteDateView;
         var createNoteInputView = options.createNoteInputView;
@@ -39,6 +40,9 @@
                     break;
                 case "DeleteNoteAction":
                     view = createDeleteNoteActionView(factoryOptions);
+                    break;
+                case "EditNoteAction":
+                    view = createEditNoteActionView(factoryOptions);
                     break;
                 case "Editor":
                     view = createEditorView(factoryOptions);
