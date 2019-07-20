@@ -51,9 +51,11 @@
             APP_STATUS_ENUM: Notes.model.app.STATUS_ENUM,
             NOTE_STATUS_ENUM: Notes.model.note.STATUS_ENUM,
 
+            createAppViewModel: Notes.viewModel.appViewModel,
             createApplicationStatusViewModel:
                 Notes.viewModel.applicationStatusViewModel,
             createEditorViewModel: Notes.viewModel.editorViewModel,
+            createListViewModel: Notes.viewModel.listViewModel,
             createListItemViewModel: Notes.viewModel.listItemViewModel,
             createNoteDateViewModel: Notes.viewModel.noteDateViewModel,
             createNoteInputViewModel: Notes.viewModel.noteInputViewModel,
@@ -67,10 +69,12 @@
             animations: animations,
             viewUtilities: viewUtilities,
 
+            createAppView: Notes.view.appView,
             createApplicationStatusView: Notes.view.applicationStatusView,
             createDeleteNoteActionView: Notes.view.deleteNoteActionView,
             createEditNoteActionView: Notes.view.editNoteActionView,
             createEditorView: Notes.view.editorView,
+            createListView: Notes.view.listView,
             createNewNoteActionView: Notes.view.newNoteActionView,
             createNoteDateView: Notes.view.noteDateView,
             createNoteInputView: Notes.view.noteInputView,

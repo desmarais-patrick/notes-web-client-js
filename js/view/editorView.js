@@ -75,6 +75,11 @@
             utils.div.onClick(editorContainerNode, onEditorClicked);
         };
 
+        // TODO Test with a button in the design system.
+        that.focus = function () {
+            onEditorClicked();
+        };
+
         var onEditorClicked = function () {
             inputView.focus();
         };

@@ -5,14 +5,31 @@
         var that = {};
 
         var viewUtilities = options.viewUtilities;
+        var viewFactory = options.viewFactory;
 
         var rootNode = options.rootNode;
         var viewModel = options.viewModel;
+
+        var editRootNode = viewUtilities.traversal.findWithCssSelector(
+            rootNode, "list-item-edit-action button");
+        var editView = viewFactory.create("EditNoteAction", {
+            rootNode: editRootNode,
+            viewModel: viewModel
+        });
+
+        var deleteRootNode = viewUtilities.traversal.findWithCssSelector(
+            rootNode, "list-item-delete-action button");
+        var deleteView = viewFactory.create("DeleteNoteAction", {
+            rootNode: deleteRootNode,
+            viewModel: viewModel
+        });
 
         // Create the inner div elements to support sub-views.
         // Create the sub views.
 
         that.render = function () {
+            editView.render();
+            deleteView.render();
             // Display text start.
             // Display date.
             // Display lines count.
@@ -22,9 +39,6 @@
             // Listen to any changes in the viewModel.
         };
 
-        var onDelete = function () {
-            // Bubble up this event for list to remove element with a nice animation.
-        };
         var onEdit = function () {
             // Bubble up this event for app to scroll to editor.
         };
@@ -43,6 +57,8 @@
         };
 
         that.destroy = function () {
+            editView.destroy();
+            deleteView.destroy();
             // Stop listening to changes in viewModel.
             // Unregister click.
             // Destroy all sub-views.

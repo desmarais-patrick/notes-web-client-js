@@ -3,6 +3,7 @@
 (function (Notes) {
     Notes.utilities.viewUtilities = function (options) {
         var document = options.document;
+        var window = options.window;
 
         var viewUtilities = {};
 
@@ -115,6 +116,18 @@
         viewUtilities.button.offClick =
         viewUtilities.div.offClick = function (element, callback) {
             element.removeEventListener("click", callback);
+        };
+
+        viewUtilities.scroll = {};
+
+        viewUtilities.scroll.toNode = function (node, onScrollEnd) {
+            var offset = node.offsetTop;
+
+            // TODO Better smooth scrolling.
+            setTimeout(function () {
+                window.scrollTo(offset);
+                onScrollEnd();
+            }, 100);
         };
 
         viewUtilities.text = {};

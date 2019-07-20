@@ -13,9 +13,11 @@
         var APP_STATUS_ENUM = options.APP_STATUS_ENUM;
         var NOTE_STATUS_ENUM = options.NOTE_STATUS_ENUM;
 
+        var createAppViewModel = options.createAppViewModel;
         var createApplicationStatusViewModel =
             options.createApplicationStatusViewModel;
         var createEditorViewModel = options.createEditorViewModel;
+        var createListViewModel = options.createListViewModel;
         var createListItemViewModel = options.createListItemViewModel;
         var createNoteDateViewModel = options.createNoteDateViewModel;
         var createNoteInputViewModel = options.createNoteInputViewModel;
@@ -36,10 +38,14 @@
 
         that.create = function (name) {
             switch (name) {
+                case "App":
+                    return createAppViewModel(viewModelOptions);
                 case "ApplicationStatus":
                     return createApplicationStatusViewModel(viewModelOptions);
                 case "Editor":
                     return createEditorViewModel(viewModelOptions);
+                case "List":
+                    return createListViewModel(viewModelOptions);
                 case "ListItem":
                     return createListItemViewModel(viewModelOptions);
                 case "NoteDate":

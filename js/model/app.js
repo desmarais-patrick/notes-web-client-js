@@ -13,8 +13,15 @@
 
         var events = options.events;
 
+        var editorNoteClientId = null;
+
         var defaultStatus = STATUS_ENUM.UNKNOWN;
         var status = options.status || defaultStatus;
+
+        that.getEditorNoteClientId = function () {
+            return editorNoteClientId;
+        };
+        that.set
 
         that.getStatus = function () {
             return status;

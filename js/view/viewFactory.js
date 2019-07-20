@@ -10,6 +10,7 @@
         var animations = options.animations;
         var viewUtilities = options.viewUtilities;
 
+        var createAppView = options.createAppView;
         var createApplicationStatusView = options.createApplicationStatusView;
         var createDeleteNoteActionView = options.createDeleteNoteActionView;
         var createEditorView = options.createEditorView;
@@ -35,6 +36,9 @@
             }
 
             switch (name) {
+                case "App":
+                    view = createAppView(factoryOptions);
+                    break;
                 case "ApplicationStatus":
                     view = createApplicationStatusView(factoryOptions);
                     break;
@@ -46,6 +50,9 @@
                     break;
                 case "Editor":
                     view = createEditorView(factoryOptions);
+                    break;
+                case "List":
+                    view = createListView(factoryOptions);
                     break;
                 case "NewNoteAction":
                     view = createNewNoteActionView(factoryOptions);

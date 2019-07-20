@@ -32,6 +32,8 @@
         };
         noteInputViewModel.onNoteCreation(onNoteCreatedByInput);
 
+        // TODO Listen to IsDeleted on note to clear editor when deleted.
+
         that.startNewNote = function () {
             if (noteClientId === null) {
                 // No change.
