@@ -119,8 +119,8 @@
                     listItemViewModel = viewModelFactory.create("ListItem");
                     listItemViewModel.setNoteClientId(clientId);
                     listItemViewModel.onEditNote(relayEditNote);
-                    listItemViewModel.onSelectNote(onNoteSelected);
-                    listItemViewModel.onUnselectNote(onNoteUnselected);
+                    listItemViewModel.onNoteSelected(onNoteSelected);
+                    listItemViewModel.onNoteUnselected(onNoteUnselected);
                 } else {
                     // Re-order note.
                     currentNoteClientIdsCopy.splice(index, 1);
@@ -135,8 +135,8 @@
                 // Delete note.
                 var index = noteClientIds.indexOf(clientId);
                 var listItemViewModel = listItemViewModels[index];
-                listItemViewModel.offUnselectNote(onNoteUnselected);
-                listItemViewModel.offSelectNote(onNoteSelected);
+                listItemViewModel.offNoteUnselected(onNoteUnselected);
+                listItemViewModel.offNoteSelected(onNoteSelected);
                 listItemViewModel.offEditNote(relayEditNote);
                 listItemViewModel.setNoteClientId(null);
 

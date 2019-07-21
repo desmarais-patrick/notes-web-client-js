@@ -26,7 +26,7 @@
 
         var listRootNode = viewUtilities.traversal.findWithCssSelector(
             rootNode, ".list");
-        var listView = viewFactory.create("List", {
+        var listView = viewFactory.create("NoteList", {
             rootNode: listRootNode,
             viewModel: viewModel.getListViewModel()
         });

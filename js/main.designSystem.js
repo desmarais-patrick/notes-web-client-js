@@ -74,11 +74,12 @@
             createDeleteNoteActionView: Notes.view.deleteNoteActionView,
             createEditNoteActionView: Notes.view.editNoteActionView,
             createEditorView: Notes.view.editorView,
-            createListView: Notes.view.listView,
             createNewNoteActionView: Notes.view.newNoteActionView,
             createNoteDateView: Notes.view.noteDateView,
             createNoteInputView: Notes.view.noteInputView,
-            createNoteStatusView: Notes.view.noteStatusView,
+            createNoteListItemView: Notes.view.noteListItemView,
+            createNoteListView: Notes.view.noteListView,
+            createNoteStatusTextView: Notes.view.noteStatusTextView,
         });
 
         return {

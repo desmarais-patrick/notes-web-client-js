@@ -1,15 +1,8 @@
 "use strict";
 
 (function (Notes) {
-    var STATUS_CHECK_INTERVAL_MS = 300;
-
     Notes.viewModel.listItemViewModel = function (options) {
         var that = {};
-
-        var setInterval = options.setInterval;
-        var clearInterval = options.clearInterval;
-
-        var NOTE_STATUS_ENUM = options.NOTE_STATUS_ENUM;
 
         var noteClientId = null;
 
@@ -30,41 +23,95 @@
             return linesCountViewModel;
         };
 
+        var statusViewModel = options.viewModelFactory.create("NoteStatus");
+        that.getStatusViewModel = function () {
+            return statusViewModel;
+        };
+
         that.setNote = function (newNoteClientId) {
             noteClientId = newNoteClientId;
             dateViewModel.setNoteClientId(noteClientId);
             textStartViewModel.setNoteClientId(noteClientId);
             linesCountViewModel.setNoteClientId(noteClientId);
+            statusViewModel.setNoteClientId(newNoteClientId);
         };
 
-        // onNoteSelected
-        // offNoteSelected
-
-        // onNoteUnselected
-        // offNoteUnselected
-
-        that.select = function () {
-            // notifyNoteSelected
+        that.onNoteSelected = function (listenerCallback) {
+            addListenerCallback("NoteSelected", listenerCallback);
         };
-        that.unSelect = function () {
-            // notifyNoteUnselected
+        that.offNoteSelected = function (listenerCallback) {
+            removeListenerCallback("NoteSelected", listenerCallback);
+        };
+        that.noteSelected = function () {
+            notifyListeners("NoteSelected", noteClientId);
         };
 
-        // onDeleteNote
-        // offDeleteNote
+        that.onNoteUnselected = function (listenerCallback) {
+            addListenerCallback("NoteUnselected", listenerCallback);
+        };
+        that.offNoteUnselected = function (listenerCallback) {
+            removeListenerCallback("NoteUnselected", listenerCallback);
+        };
+        that.noteUnselected = function () {
+            notifyListeners("NoteUnselected", noteClientId);
+        };
 
+        that.onDeleteNote = function (listenerCallback) {
+            addListenerCallback("DeleteNote", listenerCallback);
+        };
+        that.offDeleteNote = function (listenerCallback) {
+            removeListenerCallback("DeleteNote", listenerCallback);
+        };
         that.deleteNote = function () {
             var note = model.getNoteByClientId(noteClientId);
             model.deleteNote(note);
 
-            // notifyNoteDeleted.
+            notifyListeners("DeleteNote", noteClientId);
         };
 
-        // onEditNote
-        // offEditNote
-
+        that.onEditNote = function (listenerCallback) {
+            addListenerCallback("EditNote", listenerCallback);
+        };
+        that.offEditNote = function (listenerCallback) {
+            removeListenerCallback("EditNote", listenerCallback);
+        };
         that.editNote = function () {
-            // notifyEditNote. // Bubble up edit request.
+            notifyListeners("EditNote", noteClientId);
+        };
+
+        var listeners = {
+            "DeleteNote": [],
+            "EditNote": [],
+            "NoteSelected": [],
+            "NoteUnselected": []
+        };
+
+        var addListenerCallback = function (name, callback) {
+            var callbacks = listeners[name];
+            if (callbacks.indexOf(callback) !== -1) {
+                throw new Error("[ListItemViewModel] Listener already " + 
+                    "registered for " + name);
+            }
+            callbacks.push(callback);
+        };
+
+        var removeListenerCallback = function (name, callback) {
+            var callbacks = listeners[name];
+            var index = callbacks.indexOf(callback);
+
+            if (index === -1) {
+                throw new Error("[ListItemViewMode] Listener not registered" +
+                    " for " + name);
+            }
+
+            callbacks.splice(index, 1);
+        };
+
+        var notifyListeners = function (name, valueToPassOn) {
+            var callbacks = listeners[name];
+            callbacks.forEach(function (callback) {
+                callback(valueToPassOn);
+            });
         };
 
         return that;

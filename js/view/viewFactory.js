@@ -18,11 +18,11 @@
         var createNewNoteActionView = options.createNewNoteActionView;
         var createNoteDateView = options.createNoteDateView;
         var createNoteInputView = options.createNoteInputView;
-        var createNoteStatusView = options.createNoteStatusView;
+        var createNoteListItemView = options.createNoteListItemView;
+        var createNoteListView = options.createNoteListView;
+        var createNoteStatusTextView = options.createNoteStatusTextView;
 
         that.create = function (name, options) {
-            var view = null;
-
             var factoryOptions = {
                 setTimeout: setTimeout,
                 clearTimeout: clearTimeout,
@@ -37,41 +37,31 @@
 
             switch (name) {
                 case "App":
-                    view = createAppView(factoryOptions);
-                    break;
+                    return createAppView(factoryOptions);
                 case "ApplicationStatus":
-                    view = createApplicationStatusView(factoryOptions);
-                    break;
+                    return createApplicationStatusView(factoryOptions);
                 case "DeleteNoteAction":
-                    view = createDeleteNoteActionView(factoryOptions);
-                    break;
+                    return createDeleteNoteActionView(factoryOptions);
                 case "EditNoteAction":
-                    view = createEditNoteActionView(factoryOptions);
-                    break;
+                    return createEditNoteActionView(factoryOptions);
                 case "Editor":
-                    view = createEditorView(factoryOptions);
-                    break;
-                case "List":
-                    view = createListView(factoryOptions);
-                    break;
+                    return createEditorView(factoryOptions);
                 case "NewNoteAction":
-                    view = createNewNoteActionView(factoryOptions);
-                    break;
+                    return createNewNoteActionView(factoryOptions);
                 case "NoteDate":
-                    view = createNoteDateView(factoryOptions);
-                    break;
+                    return createNoteDateView(factoryOptions);
                 case "NoteInput":
-                    view = createNoteInputView(factoryOptions);
-                    break;
-                case "NoteStatus":
-                    view = createNoteStatusView(factoryOptions);
-                    break;
+                    return createNoteInputView(factoryOptions);
+                case "NoteList":
+                    return createNoteListView(factoryOptions);
+                case "NoteListItem":
+                    return createNoteListItemView(factoryOptions);
+                case "NoteStatusText":
+                    return createNoteStatusTextView(factoryOptions);
                 default:
                     throw new Error("[ViewFactory] Missing case for view: " +
                         name);
             }
-
-            return view;
         };
 
         return that;

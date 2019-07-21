@@ -1,7 +1,7 @@
 "use strict";
 
 (function (Notes) {
-    Notes.view.noteStatusView = function (options) {
+    Notes.view.noteStatusTextView = function (options) {
         var that = {};
 
         var animations = options.animations;
@@ -13,7 +13,8 @@
             viewModel.onChange(updateStatusText);
         };
 
-        var updateStatusText = function (newStatusText) {
+        var updateStatusText = function (newStatus) {
+            var newStatusText = newStatus.text;
             animations.crossFadeText(rootNode, newStatusText);
         };
 

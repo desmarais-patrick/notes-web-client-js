@@ -8,9 +8,9 @@
 
         var model = options.model;
 
-        var setInterval = options.setInterval;
-        var clearInterval = options.clearInterval;
-        var statusCheckIntervalId = null;
+        var setTimeout = options.setTimeout;
+        var clearTimeout = options.clearTimeout;
+        var statusCheckTimeoutId = null;
 
         var statusChangeEventIterator = null;
         var changeListeners = [];
@@ -23,18 +23,39 @@
                 return "";
             }
 
-            var statusText;
+            var statusText = "Unknown";
             if (status === NOTE_STATUS_ENUM.READY) {
                 statusText = "Autosaved ✓";
             } else if (status === NOTE_STATUS_ENUM.LOADING) {
                 statusText = "Saving...";
             } else if (status === NOTE_STATUS_ENUM.FAILED_TO_SYNC) {
                 statusText = "Failed to sync :(";
-            } else {
+            } else if (status === NOTE_STATUS_ENUM.FAILED_TO_LOAD) {
                 statusText = "Failed to load note :s";
             }
 
             return statusText;
+        };
+
+        that.getStatus = function () {
+            var statusObj = {};
+
+            statusObj.text = that.getStatusText();
+
+            statusObj.isReady = function () {
+                return (status === NOTE_STATUS_ENUM.READY);
+            };
+            statusObj.isLoading = function () {
+                return (status === NOTE_STATUS_ENUM.LOADING);
+            };
+            statusObj.isFailedToSync = function () {
+                return (status === NOTE_STATUS_ENUM.FAILED_TO_SYNC);
+            };
+            statusObj.isFailedToLoad = function () {
+                return (status === NOTE_STATUS_ENUM.FAILED_TO_LOAD);
+            };
+
+            return statusObj;
         };
 
         that.onChange = function (newListenerCallback) {
@@ -68,8 +89,8 @@
         };
 
         var stopListeningForModelEvents = function () {
-            if (statusCheckIntervalId !== null) {
-                clearInterval(statusCheckIntervalId);
+            if (statusCheckTimeoutId !== null) {
+                clearTimeout(statusCheckTimeoutId);
             }
             statusChangeEventIterator = null;
         };
@@ -77,19 +98,24 @@
         var startListeningForModelEvents = function (clientId) {
             var eventName = "change Notes[" + clientId + "].Status";
             statusChangeEventIterator = model.listen(eventName);
-            statusCheckIntervalId = setInterval(function () {
+            listenToModelEvents(eventName);
+        };
+
+        var listenToModelEvents = function (eventName) {
+            statusCheckTimeoutId = setTimeout(function () {
                 if (statusChangeEventIterator.hasNext()) {
                     var event = statusChangeEventIterator.next();
                     status = event.options.newStatus;
                     notifyChange();
                 }
+                listenToModelEvents(eventName);
             }, STATUS_CHECK_INTERVAL_MS);
         };
 
         var notifyChange = function () {
-            var newText = that.getStatusText();
+            var status = that.getStatus();
             changeListeners.forEach(function (listener) {
-                listener(newText);
+                listener(status);
             });
         };
 
