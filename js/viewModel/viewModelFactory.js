@@ -4,8 +4,8 @@
     Notes.viewModel.viewModelFactory = function (options) {
         var that = {};
 
-        var setInterval = options.setInterval;
-        var clearInterval = options.clearInterval;
+        var setTimeout = options.setTimeout;
+        var clearTimeout = options.clearTimeout;
 
         var dateUtilities = options.dateUtilities;
 
@@ -17,15 +17,15 @@
         var createApplicationStatusViewModel =
             options.createApplicationStatusViewModel;
         var createEditorViewModel = options.createEditorViewModel;
-        var createListViewModel = options.createListViewModel;
-        var createListItemViewModel = options.createListItemViewModel;
         var createNoteDateViewModel = options.createNoteDateViewModel;
         var createNoteInputViewModel = options.createNoteInputViewModel;
+        var createNoteListItemViewModel = options.createNoteListItemViewModel;
+        var createNoteListViewModel = options.createNoteListViewModel;
         var createNoteStatusViewModel = options.createNoteStatusViewModel;
 
         var viewModelOptions = {
-            setInterval: setInterval,
-            clearInterval: clearInterval,
+            setTimeout: setTimeout,
+            clearTimeout: clearTimeout,
     
             dateUtilities: dateUtilities,
     
@@ -44,14 +44,14 @@
                     return createApplicationStatusViewModel(viewModelOptions);
                 case "Editor":
                     return createEditorViewModel(viewModelOptions);
-                case "List":
-                    return createListViewModel(viewModelOptions);
-                case "ListItem":
-                    return createListItemViewModel(viewModelOptions);
                 case "NoteDate":
                     return createNoteDateViewModel(viewModelOptions);
                 case "NoteInput":
                     return createNoteInputViewModel(viewModelOptions);
+                case "NoteList":
+                    return createNoteListViewModel(viewModelOptions);
+                case "NoteListItem":
+                    return createNoteListItemViewModel(viewModelOptions);
                 case "NoteStatus":
                     return createNoteStatusViewModel(viewModelOptions);
                 default:

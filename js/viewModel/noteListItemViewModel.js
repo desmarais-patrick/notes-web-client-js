@@ -1,7 +1,7 @@
 "use strict";
 
 (function (Notes) {
-    Notes.viewModel.listItemViewModel = function (options) {
+    Notes.viewModel.noteListItemViewModel = function (options) {
         var that = {};
 
         var noteClientId = null;

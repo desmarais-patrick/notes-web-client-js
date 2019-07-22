@@ -42,8 +42,8 @@
         });
 
         var viewModelFactory = Notes.viewModel.viewModelFactory({
-            setInterval: window.setInterval,
-            clearInterval: window.clearInterval,
+            setTimeout: window.setTimeout,
+            clearTimeout: window.clearTimeout,
 
             dateUtilities: dateUtilities,
             
@@ -55,10 +55,10 @@
             createApplicationStatusViewModel:
                 Notes.viewModel.applicationStatusViewModel,
             createEditorViewModel: Notes.viewModel.editorViewModel,
-            createListViewModel: Notes.viewModel.listViewModel,
-            createListItemViewModel: Notes.viewModel.listItemViewModel,
             createNoteDateViewModel: Notes.viewModel.noteDateViewModel,
             createNoteInputViewModel: Notes.viewModel.noteInputViewModel,
+            createNoteListItemViewModel: Notes.viewModel.noteListItemViewModel,
+            createNoteListViewModel: Notes.viewModel.noteListViewModel,
             createNoteStatusViewModel: Notes.viewModel.noteStatusViewModel,
         });
 

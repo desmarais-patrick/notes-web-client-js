@@ -6,32 +6,45 @@
     Notes.viewModel.applicationStatusViewModel = function (options) {
         var that = {};
 
-        var setInterval = options.setInterval;
-        var clearInterval = options.clearInterval;
+        var setTimeout = options.setTimeout;
+        var clearTimeout = options.clearTimeout;
 
         var model = options.model;
         var APP_STATUS_ENUM = options.APP_STATUS_ENUM;
 
-        var appStatusEventIterator = model.listen("change App.Status");
-        var appStatusListener = null;
-
-        that.onAppStatusChange = function (callback) {
-            appStatusListener = callback;
+        var appStatusListenerCallback = null;
+        that.setAppStatusChangeListener = function (callback) {
+            appStatusListenerCallback = callback;
         };
 
-        var intervalId = setInterval(function () {
-            if (appStatusEventIterator.hasNext()) {
-                var event = appStatusEventIterator.next();
-                if (appStatusListener !== null) {
-                    var text = formatStatusText(event.options.newStatus);
-                    appStatusListener(text);
+        var appStatusEventIterator = model.listen("change App.Status");
+        var appStatusCheckTimeoutId = null;
+        var listenToModelEvents = function () {
+            appStatusCheckTimeoutId = setTimeout(function () {
+                if (appStatusEventIterator.hasNext()) {
+                    var event = appStatusEventIterator.next();
+                    notifyAppStatusListener(event.options.newStatus);
                 }
-            }
-        }, REFRESH_TIMING_MS);
+                listenToModelEvents();
+            }, REFRESH_TIMING_MS);
+        };
+
+        listenToModelEvents();
 
         that.destroy = function () {
-            clearInterval(intervalId);
-            appStatusListener = null;
+            stopListeningToModelEvents();
+        };
+
+        var notifyAppStatusListener = function (newStatus) {
+            if (appStatusListenerCallback !== null) {
+                var text = formatStatusText(newStatus);
+                appStatusListenerCallback(text);
+            }
+        };
+
+        var stopListeningToModelEvents = function () {
+            clearTimeout(appStatusCheckTimeoutId);
+            appStatusListenerCallback = null;
         };
 
         var INITIAL_TEXT = "Welcome!";

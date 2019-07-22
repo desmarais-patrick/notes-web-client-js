@@ -5,7 +5,7 @@
 
     // TODO Add to design system.
     // TODO Add unit tests for list logic.
-    Notes.viewModel.listViewModel = function (options) {
+    Notes.viewModel.noteListViewModel = function (options) {
         var that = {};
 
         var setTimeout = options.setTimeout;

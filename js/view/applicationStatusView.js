@@ -16,16 +16,14 @@
             var statusText = viewModel.getText();
             updateStatusText(statusText);
 
-            viewModel.onAppStatusChange(updateStatusText);
+            viewModel.setAppStatusChangeListener(updateStatusText);
         }
 
         var updateStatusText = function (newText) {
             animations.crossFadeText(messageNode, newText);
         };
         
-        that.destroy = function () {
-            viewModel.offAppStatusChange(updateStatusText);
-        };
+        that.destroy = function () {};
 
         return that;
     };
