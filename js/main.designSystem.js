@@ -84,6 +84,7 @@
             createNoteListItemView: Notes.view.noteListItemView,
             createNoteListView: Notes.view.noteListView,
             createNoteStatusTextView: Notes.view.noteStatusTextView,
+            createTextView: Notes.view.textView,
         });
 
         return {

@@ -1,8 +1,6 @@
 "use strict";
 
 (function (Notes) {
-    var STATUS_CHECK_INTERVAL_MS = 300;
-
     Notes.viewModel.editorViewModel = function (options) {
         var that = {};
 

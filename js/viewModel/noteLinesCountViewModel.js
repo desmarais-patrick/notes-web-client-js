@@ -5,6 +5,7 @@
         var that = {};
 
         // TODO
+        that.setNoteClientId = function () {};
 
         return that;
     };

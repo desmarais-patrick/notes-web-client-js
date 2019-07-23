@@ -21,6 +21,7 @@
         var createNoteListItemView = options.createNoteListItemView;
         var createNoteListView = options.createNoteListView;
         var createNoteStatusTextView = options.createNoteStatusTextView;
+        var createTextView = options.createTextView;
 
         that.create = function (name, options) {
             var factoryOptions = {
@@ -58,6 +59,8 @@
                     return createNoteListItemView(factoryOptions);
                 case "NoteStatusText":
                     return createNoteStatusTextView(factoryOptions);
+                case "Text":
+                    return createTextView(factoryOptions);
                 default:
                     throw new Error("[ViewFactory] Missing case for view: " +
                         name);

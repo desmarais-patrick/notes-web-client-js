@@ -22,7 +22,7 @@
         var contentNode = viewUtilities.html.createElement("div", {
             cssClass: "list-item-content"
         });
-        var startTextNode = viewUtilities.html.createElement("div", {
+        var textStartNode = viewUtilities.html.createElement("div", {
             cssClass: "list-item-content-starting-text"
         });
         var dateNode = viewUtilities.html.createElement("div", {
@@ -32,18 +32,24 @@
             cssClass: "list-item-content-lines-count"
         });
         viewUtilities.html.appendMany(contentNode,
-            [startTextNode, dateNode, linesCountNode]);
+            [textStartNode, dateNode, linesCountNode]);
 
         // Attach nodes to root.
         viewUtilities.html.append(rootNode, contentNode);
 
         // Initialize sub views.
+        var textStartViewModel = viewModel.getTextStartViewModel();
+        var textStartView = viewFactory.create("Text", {
+            rootNode: textStartNode,
+            viewModel: textStartViewModel
+        });
+
         var editView = null;
         var deleteView = null;
 
         that.render = function () {
             // Render sub-views.
-            // Display text start.
+            textStartView.render();
             // Display date.
             // Display lines count.
 
@@ -133,6 +139,7 @@
             viewUtilities.div.offClick(rootNode, toggleSelection);
 
             // Destroy all sub-views.
+            textStartView.destroy();
             if (editView !== null) {
                 editView.destroy();
             }

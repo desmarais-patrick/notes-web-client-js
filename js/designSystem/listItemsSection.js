@@ -20,5 +20,13 @@
             viewModel: viewModel,
         });
         view.render();
+
+        // Create note that will be displayed in editor.
+        appOptions.requestBuilderMock
+            .setNextPostResponseAsNoteCreatedWithId(1);
+        var note = appOptions.model.createNote(
+            "TED talk, Shawn Achor, Happiness");
+        var noteClientId = note.getClientId();
+        viewModel.setNote(noteClientId);
     };
 })(Notes);
