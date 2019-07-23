@@ -83,10 +83,10 @@
 
             if (newText === null) {
                 textStart = null;
+            } else {
+                var newTextStart = findTextStart(newText);
+                textStart = newTextStart;
             }
-
-            var newTextStart = findTextStart(newText);
-            textStart = newTextStart;
 
             if (oldTextStart !== textStart) {
                 notifyChange();
@@ -94,18 +94,12 @@
         };
 
         var findTextStart = function (text) {
-            var index = text.indexOf("\n");
-            if (index === -1) {
-                return text;
+            var lines = text.split("\n");
+            var firstLine = "";
+            while (lines.length > 0 && firstLine.length === 0) {
+                firstLine = lines.shift();
             }
-
-            var textStart = text.substring(0, index);
-            if (textStart.length !== 0) {
-                return textStart;
-            }
-
-            var remainingText = text.substring(index, text.length);
-            return findTextStart(remainingText);
+            return firstLine;
         };
 
         that.onChange = function (newListenerCallback) {

@@ -44,6 +44,12 @@
             viewModel: textStartViewModel
         });
 
+        var linesCountViewModel = viewModel.getLinesCountViewModel();
+        var linesCountView = viewFactory.create("Text", {
+            rootNode: linesCountNode,
+            viewModel: linesCountViewModel
+        });
+
         var editView = null;
         var deleteView = null;
 
@@ -51,7 +57,7 @@
             // Render sub-views.
             textStartView.render();
             // Display date.
-            // Display lines count.
+            linesCountView.render();
 
             applySelection();
             viewUtilities.div.onClick(rootNode, toggleSelection);
@@ -140,6 +146,7 @@
 
             // Destroy all sub-views.
             textStartView.destroy();
+            linesCountView.destroy();
             if (editView !== null) {
                 editView.destroy();
             }
