@@ -13,6 +13,7 @@
         Notes.designSystem.setupAnimationSection(createAppOptions);
         Notes.designSystem.setupApplicationStatusSection(createAppOptions);
         Notes.designSystem.setupEditorSection(createAppOptions);
+        Notes.designSystem.setupListItemsSection(createAppOptions);
     };
 
     var createAppOptions = function () {
@@ -57,9 +58,12 @@
             createEditorViewModel: Notes.viewModel.editorViewModel,
             createNoteDateViewModel: Notes.viewModel.noteDateViewModel,
             createNoteInputViewModel: Notes.viewModel.noteInputViewModel,
+            createNoteLinesCountViewModel:
+                Notes.viewModel.noteLinesCountViewModel,
             createNoteListItemViewModel: Notes.viewModel.noteListItemViewModel,
             createNoteListViewModel: Notes.viewModel.noteListViewModel,
             createNoteStatusViewModel: Notes.viewModel.noteStatusViewModel,
+            createNoteTextStartViewModel: Notes.viewModel.noteTextStartViewModel,
         });
 
         var viewFactory = Notes.view.viewFactory({

@@ -1,7 +1,7 @@
 "use strict";
 
 (function (Notes) {
-    Notes.view.listItemView = function(options) {
+    Notes.view.noteListItemView = function(options) {
         var that = {};
 
         var viewUtilities = options.viewUtilities;

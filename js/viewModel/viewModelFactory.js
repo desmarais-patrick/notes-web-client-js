@@ -19,9 +19,12 @@
         var createEditorViewModel = options.createEditorViewModel;
         var createNoteDateViewModel = options.createNoteDateViewModel;
         var createNoteInputViewModel = options.createNoteInputViewModel;
+        var createNoteLinesCountViewModel =
+            options.createNoteLinesCountViewModel;
         var createNoteListItemViewModel = options.createNoteListItemViewModel;
         var createNoteListViewModel = options.createNoteListViewModel;
         var createNoteStatusViewModel = options.createNoteStatusViewModel;
+        var createNoteTextStartViewModel = options.createNoteTextStartViewModel;
 
         var viewModelOptions = {
             setTimeout: setTimeout,
@@ -48,12 +51,16 @@
                     return createNoteDateViewModel(viewModelOptions);
                 case "NoteInput":
                     return createNoteInputViewModel(viewModelOptions);
+                case "NoteLinesCount":
+                    return createNoteLinesCountViewModel(viewModelOptions);
                 case "NoteList":
                     return createNoteListViewModel(viewModelOptions);
                 case "NoteListItem":
                     return createNoteListItemViewModel(viewModelOptions);
                 case "NoteStatus":
                     return createNoteStatusViewModel(viewModelOptions);
+                case "NoteTextStart":
+                    return createNoteTextStartViewModel(viewModelOptions);
                 default:
                     throw new Error(
                         "ViewModelFactory: Missing case for view model: " +
