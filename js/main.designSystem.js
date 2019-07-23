@@ -79,7 +79,6 @@
             createEditNoteActionView: Notes.view.editNoteActionView,
             createEditorView: Notes.view.editorView,
             createNewNoteActionView: Notes.view.newNoteActionView,
-            createNoteDateView: Notes.view.noteDateView,
             createNoteInputView: Notes.view.noteInputView,
             createNoteListItemView: Notes.view.noteListItemView,
             createNoteListView: Notes.view.noteListView,

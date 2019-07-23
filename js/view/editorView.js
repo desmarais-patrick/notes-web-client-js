@@ -39,7 +39,7 @@
         var dateRootNode = utils.traversal.findWithCssSelector(rootNode,
             ".editor-date");
         var dateViewModel = viewModel.getDateViewModel();
-        var dateView = viewFactory.create("NoteDate", {
+        var dateView = viewFactory.create("Text", {
             rootNode: dateRootNode,
             viewModel: dateViewModel
         });

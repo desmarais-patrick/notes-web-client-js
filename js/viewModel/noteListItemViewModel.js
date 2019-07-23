@@ -7,11 +7,6 @@
         var noteClientId = null;
         var isSelected = false;
 
-        var dateViewModel = options.viewModelFactory.create("NoteDate");
-        that.getDateViewModel = function () {
-            return dateViewModel;
-        };
-
         var textStartViewModel = options.viewModelFactory.create(
             "NoteTextStart");
         that.getTextStartViewModel = function () {
@@ -22,6 +17,11 @@
             "NoteLinesCount");
         that.getLinesCountViewModel = function () {
             return linesCountViewModel;
+        };
+
+        var dateViewModel = options.viewModelFactory.create("NoteDate");
+        that.getDateViewModel = function () {
+            return dateViewModel;
         };
 
         var statusViewModel = options.viewModelFactory.create("NoteStatus");

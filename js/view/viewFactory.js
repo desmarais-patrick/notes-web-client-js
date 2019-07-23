@@ -16,7 +16,6 @@
         var createEditorView = options.createEditorView;
         var createEditNoteActionView = options.createEditNoteActionView;
         var createNewNoteActionView = options.createNewNoteActionView;
-        var createNoteDateView = options.createNoteDateView;
         var createNoteInputView = options.createNoteInputView;
         var createNoteListItemView = options.createNoteListItemView;
         var createNoteListView = options.createNoteListView;
@@ -49,8 +48,6 @@
                     return createEditorView(factoryOptions);
                 case "NewNoteAction":
                     return createNewNoteActionView(factoryOptions);
-                case "NoteDate":
-                    return createNoteDateView(factoryOptions);
                 case "NoteInput":
                     return createNoteInputView(factoryOptions);
                 case "NoteList":
