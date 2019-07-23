@@ -65,9 +65,7 @@
             linesCountView.render();
 
             applySelection();
-            viewUtilities.div.onClick(rootNode, toggleSelection);
-
-            // Listen to any changes in the viewModel.
+            viewUtilities.div.onClick(contentNode, toggleSelection);
         };
 
         var applySelection = function () {
@@ -141,6 +139,13 @@
 
             editView.render();
             deleteView.render();
+        };
+
+        that.show = function () {
+            viewUtilities.css.removeClass(rootNode, "list-item-hidden");
+        };
+        that.hide = function () {
+            viewUtilities.css.addClass(rootNode, "list-item-hidden");
         };
 
         that.destroy = function () {

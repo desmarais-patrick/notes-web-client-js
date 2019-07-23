@@ -1,4 +1,5 @@
 .list-item {
+    transition: height 400ms ease-out;
     height: 4.5rem;
     width: 100%;
 
@@ -7,25 +8,12 @@
 
 .list-item.list-item-selected {
     height: 8.5rem;
-
-    animation-name: list-item-selection;
-    animation-duration: 400ms;
-    animation-timing-function: ease-out;
-    animation-delay: 0ms;
-    animation-direction: normal;
-    animation-iteration-count: 1;
-    animation-fill-mode: forwards;
-    animation-play-state: running;
 }
 
-@keyframes list-item-selection {
-    from {
-        height: 4.5rem;
-    }
-
-    to {
-        height: 8.5rem;
-    }
+.list-item.list-item-selected.list-item-hidden, 
+.list-item.list-item-hidden {
+    height: 0;
+    overflow: hidden;
 }
 
 .list-item-content {

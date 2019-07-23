@@ -25,3 +25,8 @@
 .design-system section .component-title {
     margin-bottom: 1rem;
 }
+
+.design-system-button {
+    background-color: #FF5252;
+    color: #FAFAFA;
+}
