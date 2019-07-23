@@ -10,6 +10,7 @@
         var viewModel = options.viewModel;
 
         that.render = function () {
+            viewUtilities.text.set(rootNode, "Edit");
             viewUtilities.button.onClick(rootNode, onClicked);
         };
 

@@ -5,6 +5,7 @@
         var that = {};
 
         var noteClientId = null;
+        var isSelected = false;
 
         var dateViewModel = options.viewModelFactory.create("NoteDate");
         that.getDateViewModel = function () {
@@ -26,6 +27,13 @@
         var statusViewModel = options.viewModelFactory.create("NoteStatus");
         that.getStatusViewModel = function () {
             return statusViewModel;
+        };
+
+        that.isSelected = function () {
+            return isSelected;
+        };
+        that.setIsSelected = function (newValue) {
+            isSelected = newValue;
         };
 
         that.setNote = function (newNoteClientId) {

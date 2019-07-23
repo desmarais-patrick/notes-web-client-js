@@ -19,5 +19,6 @@
             rootNode: rootNode,
             viewModel: viewModel,
         });
+        view.render();
     };
 })(Notes);

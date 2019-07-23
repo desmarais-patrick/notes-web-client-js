@@ -106,6 +106,35 @@
             }
         };
 
+        viewUtilities.html = {};
+        viewUtilities.html.clearChildrenNodes = function (node) {
+            var children = node.children;
+            for (var i = children.length - 1; i >= 0; i--) {
+                var child = children[i];
+                node.removeChild(child);
+            }
+        };
+
+        viewUtilities.html.createElement = function (tagName, options) {
+            var element = document.createElement(tagName);
+            if (typeof options.cssClass !== "undefined") {
+                element.className = options.cssClass;
+            }
+            if (typeof options.type !== "undefined") {
+                element.setAttribute("type", options.type);
+            }
+            return element;
+        };
+
+        viewUtilities.html.append = function (node, childNode) {
+            node.appendChild(childNode);
+        };
+        viewUtilities.html.appendMany = function (node, childNodes) {
+            childNodes.forEach(function (childNode) {
+                node.appendChild(childNode);
+            });
+        };
+
         viewUtilities.button = {};
         viewUtilities.div = {};
 
