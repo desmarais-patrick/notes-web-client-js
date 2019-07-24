@@ -127,5 +127,13 @@
             viewUtilities.css.toggleClass(rootNode, "list-item-hidden");
             viewUtilities.text.toggleBetween(hideButtonNode, "Hide", "Show");
         });
+
+        // TODO Create buttons to trigger different scenarios on the list item.
+        //       - Delete
+        //       - Edited text
+        //       - Update to new note
+        //       - Destroy
+        //       - Select, unselect
+        
     };
 })(Notes);
