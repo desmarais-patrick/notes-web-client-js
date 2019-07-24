@@ -1,10 +1,8 @@
 "use strict";
 
 (function (Notes) {
-    Notes.utilities.dateUtilities = function() {
+    Notes.utilities.dateUtilities = function () {
         var that = {};
-
-        var FORMATS = Notes.utilities.dateUtilities.FORMATS;
 
         that.format = function (date) {
             if (date === null) {
@@ -31,8 +29,5 @@
         };
 
         return that;
-    };
-    Notes.utilities.dateUtilities.FORMATS = {
-        FORMAT_O1: "long format",
     };
 })(Notes);
