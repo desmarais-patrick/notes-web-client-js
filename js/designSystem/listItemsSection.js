@@ -45,7 +45,7 @@
         var note = appOptions.model.createNote(
             "TED talk, Shawn Achor, Happiness");
         var noteClientId = note.getClientId();
-        viewModel.setNote(noteClientId);
+        viewModel.setNoteClientId(noteClientId);
     };
 
     var setupHoverExample = function (appOptions, rootNode) {
@@ -68,7 +68,7 @@
             "\n" + 
             "\n");
         var noteClientId = note.getClientId();
-        viewModel.setNote(noteClientId);
+        viewModel.setNoteClientId(noteClientId);
 
         // Force the hover style.
         var viewUtilities = appOptions.viewUtilities;
@@ -97,7 +97,7 @@
             "Link to Notes app on Github:\n" + 
             "https://github.com/desmarais-patrick/notes\n");
         var noteClientId = note.getClientId();
-        viewModel.setNote(noteClientId);
+        viewModel.setNoteClientId(noteClientId);
     };
 
     var setupHideExample = function (appOptions, rootNode) {
@@ -116,7 +116,7 @@
             "Don't forget to bring your work laptop 😉! #work" + 
             "\n");
         var noteClientId = note.getClientId();
-        viewModel.setNote(noteClientId);
+        viewModel.setNoteClientId(noteClientId);
 
         // Hook the hide button.
         var viewUtilities = appOptions.viewUtilities;
