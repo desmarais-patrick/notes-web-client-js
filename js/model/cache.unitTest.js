@@ -24,7 +24,10 @@
             });
             cache.save(note);
 
-            var cachedNote = cache.get("some id");
+            var cachedNote = cache.getById("some id");
+            expect(cachedNote).toEqual(note);
+
+            cachedNote = cache.getByClientId(note.getClientId());
             expect(cachedNote).toEqual(note);
 
             storeNoteTest.success();
@@ -33,7 +36,7 @@
         var cacheMissTest = testSuite.test("Cache miss", function () {
             var cache = createCache();
 
-            var cachedNote = cache.get("some unknown id");
+            var cachedNote = cache.getById("some unknown id");
             expect(cachedNote).toBeNull();
 
             cacheMissTest.success();
