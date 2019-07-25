@@ -1,27 +1,141 @@
 "use strict";
 
 (function (Notes) {
-    var EVENT_CHECK_TIMEOUT_MS = 300;
+    var LIST_CHANGE_CHECK_TIMEOUT_MS = 300;
 
     // TODO Add to design system.
     // TODO Add unit tests for list logic.
     Notes.viewModel.noteListViewModel = function (options) {
         var that = {};
 
+        // Member variables.
         var setTimeout = options.setTimeout;
         var clearTimeout = options.clearTimeout;
 
         var model = options.model;
+
+        var noteClientIds = [];
+        var items = [];
+        var listChangeListeners = [];
+
         var eventIterator = model.listen("change Notes.List");
-
-        listenToModelEvents();
-
         var eventCheckTimeoutId = null;
+
+        // Member functions.
+        var initialize = function () {
+            listenToModelEvents();
+        };
+        
         var listenToModelEvents = function () {
             eventCheckTimeoutId = setTimeout(function () {
-                that.refreshList();
+                // Fast-forward to latest list change event.
+                var event = null;
+                while (eventIterator.hasNext()) {
+                    event = eventIterator.next();
+                }
+
+                if (event === null) {
+                    return;
+                }
+
+                var newNoteClientIds = event.options.newList;
+                refreshList(newNoteClientIds);
+
                 listenToModelEvents();
-            }, EVENT_CHECK_TIMEOUT_MS);
+            }, LIST_CHANGE_CHECK_TIMEOUT_MS);
+        };
+
+        var refreshList = function (newNoteClientIds) {
+            var currentLength = noteClientIds.length;
+            var newLength = newNoteClientIds.length;
+
+            if (newLength > currentLength) {
+                var differenceSets = listUtilities.difference(newNoteClientIds, 
+                    noteClientIds);
+                if (listUtilities.isEqual(differenceSets.rest, noteClientIds)) {
+                    addNewItemsInPlace(differenceSets.result, newNoteClientIds);
+                } else {
+                    applyBroadItemChanges(newNoteClientIds);
+                }
+            } else if (currentLength > newLength) {
+                var differenceSets = listUtilities.difference(noteClientIds, 
+                    newNoteClientIds);
+                if (listUtilities.isEqual(differenceSets.rest, newNoteClientIds)) {
+                    removeOldItemsInPlace(differenceSets.result, newNoteClientIds);
+                } else {
+                    applyBroadItemChanges(newNoteClientIds);
+                }
+            } else if (currentLength === newLength) {
+                if (listUtilities.isEqual(noteClientIds, newNoteClientIds)) {
+                    // No change.
+                    return;
+                }
+
+                applyBroadItemChanges(newNoteClientIds);
+            }
+
+            noteClientIds = newNoteClientIds;
+        };
+
+        var addNewItemsInPlace = function (newItemIds, referenceList) {
+            newItemIds.forEach(function (id) {
+                var listItemViewModel = createItemViewModel(id);
+                var index = referenceList.indexOf(id);
+                items.splice(index, 0, listItemViewModel);
+                notifyNoteAdded(listItemViewModel, index);
+            });
+        };
+
+        var removeOldItemsInPlace = function (oldItemIds) {
+            oldItemIds.forEach(function (id) {
+                var index = noteClientIds.indexOf(id);
+                var listItemViewModel = listItemViewModels[index];
+                deleteItemViewModel(listItemViewModel);
+
+                items.splice(index, 1);
+                notifyNoteRemoved(listItemViewModel, index);
+            });
+        };
+
+        var applyBroadItemChanges = function (newNoteClientIds) {
+            var id;
+            var viewModel;
+            while (noteClientIds.length < newNoteClientIds.length) {
+                id = newNoteClientIds[noteClientIds.length];
+                noteClientIds.push(id);
+
+                viewModel = createItemViewModel(id);
+                items.push(viewModel);
+            }
+            while (noteClientIds.length > newNoteClientIds.length) {
+                id = noteClientIds.pop();
+                viewModel = items.pop();
+                deleteItemViewModel(viewModel);
+            }
+
+            newNoteClientIds.forEach(function (id, index) {
+                if (noteClientIds[index] !== id) {
+                    items[index].setNoteClientId(id);
+                }
+            });
+
+            notifyNoteChanges(items);
+        };
+
+        var createItemViewModel = function (noteClientId) {
+            var itemViewModel = viewModelFactory.create("ListItem");
+            itemViewModel.setNoteClientId(noteClientId);
+            itemViewModel.onEditNote(relayEditNote);
+            itemViewModel.onIsSelected(updateSelection);
+            itemViewModel.onDeleteNote(notifyViewAndRelay);
+            return itemViewModel;
+        };
+
+        var deleteItemViewModel = function (itemViewModel) {
+            itemViewModel.offNoteUnselected(onNoteUnselected);
+            itemViewModel.offNoteSelected(onNoteSelected);
+            itemViewModel.offEditNote(relayEditNote);
+            itemViewModel.setNoteClientId(null);
         };
 
         that.destroy = function () {
@@ -35,125 +149,11 @@
             }
         };
 
-        var noteClientIds = [];
-        var listItemViewModels = [];
-        that.refreshList = function () {
-            // Fast-forward to latest list.
-            var event = null;
-            while (eventIterator.hasNext()) {
-                event = eventIterator.next();
-            }
-
-            if (event === null) {
-                return;
-            }
-
-            var newNoteClientIds = event.options.newList;
-            if (isSingleAddition(newNoteClientIds)) {
-                update(newNoteClientIds);
-                notifyNoteAdded(); // Simple insertion animation.
-            } else if (isSingleRemoval(newNoteClientIds)) {
-                update(newNoteClientIds);
-                notifyNoteRemoved(); // Simple deletion animation.
-            } else {
-                update(newNoteClientIds);
-                notifyListChanged(newNoteClientIds); // Full update animation, fixing number of child nodes and cross-fading notes in, re-selecting item.
-            }
-        };
-
-        var isSingleAddition = function (newNoteClientIds) {
-            if (newNoteClientIds.length !== noteClientIds.length + 1) {
-                return false;
-            }
-
-            var newIndex = 0;
-            var index = 0;
-            for (; index < noteClientIds.length; index++, newIndex++) {
-                if (noteClientIds[index] !== newNoteClientIds[newIndex]) {
-                    newIndex++;
-                }
-                if (newIndex > index + 1) {
-                    // Too many differences or not same order.
-                    return false;
-                }
-            }
-
-            return true;
-        };
-
-        var isSingleRemoval = function (newNoteClientIds) {
-            if (newNoteClientIds.length !== noteClientIds.length - 1) {
-                return false;
-            }
-
-            var newIndex = 0;
-            var index = 0;
-            for (; newIndex < newNoteClientIds.length; index++, newIndex++) {
-                if (newNoteClientIds[newIndex] !== noteClientIds[index]) {
-                    index++;
-                }
-                if (index > newIndex + 1) {
-                    // Too many differences or not same order.
-                    return false;
-                }
-            }
-
-            return true;
-        };
-
-        var update = function (newNoteClientIds) {
-            // Create a copy of current identifiers for tracking differences.
-            var currentNoteClientIdsCopy = [];
-            noteClientIds.forEach(function (clientId) {
-                currentNoteClientIdsCopy.push(clientId);
-            });
-
-            // Create new view models and re-order existing ones.
-            var newNoteClientIdsCopy = [];
-            var newListItemViewModels = [];
-            newNoteClientIds.forEach(function (clientId) {
-                var listItemViewModel;
-                var index = currentNoteClientIdsCopy.indexOf(clientId);
-                if (index === -1) {
-                    // Create new note.
-                    listItemViewModel = viewModelFactory.create("ListItem");
-                    listItemViewModel.setNoteClientId(clientId);
-                    listItemViewModel.onEditNote(relayEditNote);
-                    listItemViewModel.onNoteSelected(onNoteSelected);
-                    listItemViewModel.onNoteUnselected(onNoteUnselected);
-                } else {
-                    // Re-order note.
-                    currentNoteClientIdsCopy.splice(index, 1);
-                    listItemViewModel = listItemViewModels[index];
-                }
-                newNoteClientIdsCopy.push(clientId);
-                newListItemViewModels.push(listItemViewModel);
-            });
-
-            // Delete view models that don't exist in new list.
-            currentNoteClientIdsCopy.forEach(function (clientId) {
-                // Delete note.
-                var index = noteClientIds.indexOf(clientId);
-                var listItemViewModel = listItemViewModels[index];
-                listItemViewModel.offNoteUnselected(onNoteUnselected);
-                listItemViewModel.offNoteSelected(onNoteSelected);
-                listItemViewModel.offEditNote(relayEditNote);
-                listItemViewModel.setNoteClientId(null);
-
-                if (clientId === selectedNoteItemId) {
-                    selectedNoteItemId = null;
-                }
-            });
-
-            noteClientIds = newNoteClientIdsCopy;
-            listItemViewModels = newListItemViewModels;
-        };
-
-        var listChangeListeners = [];
-        that.onListChange = function (newListenerCallback) {
+        // TODO Update publish-subscribe behaviour.
+        that.onChange = function (newListenerCallback) {
             listChangeListeners.push(newListenerCallback);
         };
-        that.offListChange = function (listenerCallback) {
+        that.offChange = function (listenerCallback) {
             var index = listChangeListeners.indexOf(listenerCallback);
 
             if (index === -1) {
@@ -163,12 +163,18 @@
 
             listChangeListeners.splice(index, 1);
         };
-        var notifyListChanged = function (newNoteClientIds) {
+        var notifyChange = function (newNoteClientIds) {
             listChangeListeners.forEach(function (listenerCallback) {
                 listenerCallback(newNoteClientIds);
             });
         };
 
+
+        // Initialization.
+        initialize();
+
+
+        // TODO Move these functions in the member functions.
         var relayEditNote = function (noteClientId) {
             notifyEditNoteListeners(noteClientId);
         };
