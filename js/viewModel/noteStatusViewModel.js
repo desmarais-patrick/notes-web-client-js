@@ -6,6 +6,7 @@
     Notes.viewModel.noteStatusViewModel = function (options) {
         var that = {};
 
+        // Member variables.
         var model = options.model;
 
         var setTimeout = options.setTimeout;
@@ -13,10 +14,19 @@
         var statusCheckTimeoutId = null;
 
         var statusChangeEventIterator = null;
-        var changeListeners = [];
+        var changeListenerCallback = null;
 
         var NOTE_STATUS_ENUM = options.NOTE_STATUS_ENUM;
         var status = null;
+
+        // Member functions.
+        that.initialize = function () {
+
+        };
+
+        that.destroy = function () {
+            stopListeningForModelEvents();
+        };
 
         that.getStatusText = function () {
             if (status === null) {
@@ -58,19 +68,8 @@
             return statusObj;
         };
 
-        that.onChange = function (newListenerCallback) {
-            changeListeners.push(newListenerCallback);
-        };
-
-        that.offChange = function (listenerCallback) {
-            var index = changeListeners.indexOf(listenerCallback);
-
-            if (index === -1) {
-                throw new Error("[NoteStatusViewModel]" + 
-                    " Change listener has never been registered.");
-            }
-
-            changeListeners.splice(index, 1);
+        that.setChangeListener = function (newListenerCallback) {
+            changeListenerCallback = newListenerCallback;
         };
 
         that.setNoteClientId = function (newNoteClientId) {
@@ -85,7 +84,10 @@
                 status = newNote.getStatus();
             }
          
-            notifyChange();
+            if (changeListenerCallback !== null) {
+                var statusObj = that.getStatus();
+                changeListenerCallback(statusObj);
+            }
         };
 
         var stopListeningForModelEvents = function () {
@@ -106,17 +108,13 @@
                 if (statusChangeEventIterator.hasNext()) {
                     var event = statusChangeEventIterator.next();
                     status = event.options.newStatus;
-                    notifyChange();
+                    if (changeListenerCallback !== null) {
+                        var statusObj = that.getStatus();
+                        changeListenerCallback(statusObj);
+                    }
                 }
                 listenToModelEvents(eventName);
             }, STATUS_CHECK_INTERVAL_MS);
-        };
-
-        var notifyChange = function () {
-            var status = that.getStatus();
-            changeListeners.forEach(function (listener) {
-                listener(status);
-            });
         };
 
         return that;

@@ -36,11 +36,11 @@
             editorView.render();
             listView.render();
 
-            viewModel.onEditNote(focusOnEditor);
+            viewModel.setEditNoteListener(focusOnEditor);
         };
 
         that.destroy = function () {
-            viewModel.offEditNote(focusOnEditor);
+            viewModel.setEditNoteListener(null);
 
             appStatusView.destroy();
             editorView.destroy();

@@ -24,8 +24,8 @@
         var saveThrottleTimeoutId = null;
 
         that.render = function () {
-            viewModel.onBeforeNoteChange(onBeforeNoteChanged);
-            viewModel.onAfterNoteChange(onAfterNoteChanged);
+            viewModel.setBeforeNoteChangeListener(onBeforeNoteChanged);
+            viewModel.setAfterNoteChangeListener(onAfterNoteChanged);
 
             viewUtilities.textarea.onValueChange(textareaElement,
                 onValueChanged);
@@ -72,8 +72,8 @@
         };
 
         that.destroy = function () {
-            viewModel.offBeforeNoteChange(onBeforeNoteChanged);
-            viewModel.offAfterNoteChange(onAfterNoteChanged);
+            viewModel.setBeforeNoteChangeListener(null);
+            viewModel.setAfterNoteChangeListener(null);
 
             submitPendingUpdates();
             viewUtilities.textarea.offValueChange(textareaElement,

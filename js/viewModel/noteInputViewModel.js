@@ -4,17 +4,18 @@
     Notes.viewModel.noteInputViewModel = function (options) {
         var that = {};
 
+        // Member variables.
         var model = options.model;
+        var viewModelEvents = options.viewModelEvents;
+
         var clientNoteId = null;
+        
+        var beforeNoteChangeListenerCallback = null;
+        var afterNoteChangeListenerCallback = null;
 
-        // Note change events help notify views for:
-        // - (Before event) last update before change
-        // - (After event) set new text after change
-        var beforeNoteChangeListeners = [];
-        var afterNoteChangeListeners = [];
-
-        // Note creation events help notify viewModels when starting a new note.
-        var noteCreationListeners = [];
+        // Member functions.
+        that.initialize = function () { };
+        that.destroy = function () { };
 
         that.getNoteText = function () {
             if (clientNoteId === null) {
@@ -26,74 +27,39 @@
         };
 
         that.setNoteClientId = function (newClientNoteId) {
-            notifyBeforeNoteChange();
+            if (beforeNoteChangeListenerCallback !== null) {
+                var currentText = this.getNoteText();
+                beforeNoteChangeListenerCallback(currentText);
+            }
+
             clientNoteId = newClientNoteId;
-            notifyAfterNoteChange();
+
+            if (afterNoteChangeListenerCallback !== null) {
+                var newText = this.getNoteText();
+                afterNoteChangeListenerCallback(newText);
+            }
         };
 
-        var notifyBeforeNoteChange = function () {
-            var currentText = that.getNoteText();
-            beforeNoteChangeListeners.forEach(function (listenerCallback) {
-                listenerCallback(currentText);
-            });
-        };
-        var notifyAfterNoteChange = function () {
-            var newText = that.getNoteText();
-            afterNoteChangeListeners.forEach(function (listenerCallback) {
-                listenerCallback(newText);
-            });
+        that.setBeforeNoteChangeListener = function (newListenerCallback) {
+            beforeNoteChangeListenerCallback = newListenerCallback;
         };
 
-        that.onBeforeNoteChange = function (newListenerCallback) {
-            beforeNoteChangeListeners.push(newListenerCallback);
-        };
-        that.onAfterNoteChange = function (newListenerCallback) {
-            afterNoteChangeListeners.push(newListenerCallback);
-        };
-
-        that.offBeforeNoteChange = function (listenerCallback) {
-            offEvent("Before note change", beforeNoteChangeListeners,
-                listenerCallback);
-        };
-        that.offAfterNoteChange = function (listenerCallback) {
-            offEvent("After note change", afterNoteChangeListeners,
-                listenerCallback);
+        that.setAfterNoteChangeListener = function (newListenerCallback) {
+            afterNoteChangeListenerCallback = newListenerCallback;
         };
 
         that.saveInputText = function (newText) {
             if (clientNoteId === null) {
                 var newNote = model.createNote(newText);
                 clientNoteId = newNote.getClientId();
-                notifyNoteCreated();
+                    // Don't trigger note change listeners to avoid 
+                    // interrupting view;
+                    // This is a subtle note creation, only when input. ;)
+                viewModelEvents.notify("NewNoteCreated", clientNoteId);
             } else {
                 var note = model.getNoteByClientId(clientNoteId);
                 model.updateNote(note, newText);
             }
-        };
-
-        that.onNoteCreation = function (newListenerCallback) {
-            noteCreationListeners.push(newListenerCallback);
-        };
-
-        that.offNoteCreation = function (listenerCallback) {
-            offEvent("Create note", noteCreationListeners, listenerCallback);
-        };
-
-        var notifyNoteCreated = function () {
-            noteCreationListeners.forEach(function (listenerCallback) {
-                listenerCallback(clientNoteId);
-            });
-        };
-
-        var offEvent = function (eventName, listeners, listenerCallback) {
-            var index = listeners.indexOf(listenerCallback);
-
-            if (index === -1) {
-                throw new Error("[NoteInputViewModel]" + 
-                    " " + eventName + " listener has never been registered.");
-            }
-
-            listeners.splice(index, 1);
         };
 
         return that;

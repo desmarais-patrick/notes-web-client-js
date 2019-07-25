@@ -12,6 +12,8 @@
         var model = options.model;
         var APP_STATUS_ENUM = options.APP_STATUS_ENUM;
         var NOTE_STATUS_ENUM = options.NOTE_STATUS_ENUM;
+        
+        var viewModelEvents = options.viewModelEvents;
 
         var createAppViewModel = options.createAppViewModel;
         var createApplicationStatusViewModel =
@@ -35,6 +37,8 @@
             model: model,
             APP_STATUS_ENUM: APP_STATUS_ENUM,
             NOTE_STATUS_ENUM: NOTE_STATUS_ENUM,
+
+            viewModelEvents: viewModelEvents,
 
             viewModelFactory: that,
         };

@@ -14,16 +14,31 @@
 
         var model = options.model;
 
+        var viewModelEvents = options.viewModelEvents;
+
         var noteClientIds = [];
         var items = [];
-        var listChangeListeners = [];
+
+        var changeListenerCallback = null;
+        var noteAddedListenerCallback = null;
+        var noteRemovedListenerCallback = null;
 
         var eventIterator = model.listen("change Notes.List");
         var eventCheckTimeoutId = null;
 
         // Member functions.
-        var initialize = function () {
+        that.initialize = function () {
             listenToModelEvents();
+
+            viewModelEvents.on("DeleteNote", onDeleteNote);
+            viewModelEvents.on("SelectNote", onSelectNote);
+        };
+
+        that.destroy = function () {
+            stopListeningToModelEvents();
+
+            viewModelEvents.off("DeleteNote", onDeleteNote);
+            viewModelEvents.off("SelectNote", onSelectNote);
         };
         
         var listenToModelEvents = function () {
@@ -82,7 +97,10 @@
                 var listItemViewModel = createItemViewModel(id);
                 var index = referenceList.indexOf(id);
                 items.splice(index, 0, listItemViewModel);
-                notifyNoteAdded(listItemViewModel, index);
+
+                if (noteAddedListenerCallback !== null) {
+                    noteAddedListenerCallback(listItemViewModel, index);
+                }
             });
         };
 
@@ -90,10 +108,13 @@
             oldItemIds.forEach(function (id) {
                 var index = noteClientIds.indexOf(id);
                 var listItemViewModel = listItemViewModels[index];
-                deleteItemViewModel(listItemViewModel);
+                removeItemViewModel(listItemViewModel);
 
                 items.splice(index, 1);
-                notifyNoteRemoved(listItemViewModel, index);
+
+                if (noteRemovedListenerCallback !== null) {
+                    noteRemovedListenerCallback(listItemViewModel, index);
+                }
             });
         };
 
@@ -110,7 +131,7 @@
             while (noteClientIds.length > newNoteClientIds.length) {
                 id = noteClientIds.pop();
                 viewModel = items.pop();
-                deleteItemViewModel(viewModel);
+                removeItemViewModel(viewModel);
             }
 
             newNoteClientIds.forEach(function (id, index) {
@@ -119,27 +140,19 @@
                 }
             });
 
-            notifyNoteChanges(items);
+            if (changeListenerCallback !== null) {
+                changeListenerCallback(items);
+            }
         };
 
         var createItemViewModel = function (noteClientId) {
             var itemViewModel = viewModelFactory.create("ListItem");
             itemViewModel.setNoteClientId(noteClientId);
-            itemViewModel.onEditNote(relayEditNote);
-            itemViewModel.onIsSelected(updateSelection);
-            itemViewModel.onDeleteNote(notifyViewAndRelay);
             return itemViewModel;
         };
 
-        var deleteItemViewModel = function (itemViewModel) {
-            itemViewModel.offNoteUnselected(onNoteUnselected);
-            itemViewModel.offNoteSelected(onNoteSelected);
-            itemViewModel.offEditNote(relayEditNote);
+        var removeItemViewModel = function (itemViewModel) {
             itemViewModel.setNoteClientId(null);
-        };
-
-        that.destroy = function () {
-            stopListeningToModelEvents();
         };
 
         var stopListeningToModelEvents = function () {
@@ -149,81 +162,34 @@
             }
         };
 
-        // TODO Update publish-subscribe behaviour.
-        that.onChange = function (newListenerCallback) {
-            listChangeListeners.push(newListenerCallback);
-        };
-        that.offChange = function (listenerCallback) {
-            var index = listChangeListeners.indexOf(listenerCallback);
-
-            if (index === -1) {
-                throw new Error("[ListViewModel]" + 
-                    " List change listener has never been registered.");
-            }
-
-            listChangeListeners.splice(index, 1);
-        };
-        var notifyChange = function (newNoteClientIds) {
-            listChangeListeners.forEach(function (listenerCallback) {
-                listenerCallback(newNoteClientIds);
-            });
+        that.setChangeListener = function (newListenerCallback) {
+            changeListenerCallback = newListenerCallback;
         };
 
-
-        // Initialization.
-        initialize();
-
-
-        // TODO Move these functions in the member functions.
-        var relayEditNote = function (noteClientId) {
-            notifyEditNoteListeners(noteClientId);
+        that.setNoteAddedListener = function (newListenerCallback) {
+            noteAddedListenerCallback = newListenerCallback;
         };
 
-        var editNoteListeners = [];
-        that.onEditNote = function (newListenerCallback) {
-            editNoteListeners.push(newListenerCallback);
-        };
-        that.offEditNote = function () {
-            var index = editNoteListeners.indexOf(listenerCallback);
-
-            if (index === -1) {
-                throw new Error("[ListViewModel]" + 
-                    " Edit note listener has never been registered.");
-            }
-
-            editNoteListeners.splice(index, 1);
-        };
-        var notifyEditNoteListeners = function (noteClientId) {
-            editNoteListeners.forEach(function (listenerCallback) {
-                listenerCallback(noteClientId);
-            });
+        that.setNoteRemovedListener = function (newListenerCallback) {
+            noteRemovedListenerCallback = newListenerCallback;
         };
 
-        var selectedNoteItemId = null;
-        that.onNoteSelected = function (newSelectedNoteClientId) {
-            var listItemViewModel;
-
-            if (selectedNoteItemId !== null) {
-                // Unselect previous selection.
-                listItemViewModel = getListItemViewModel(selectedNoteItemId);
-                listItemViewModel.unSelect();
-            }
-
-            selectedNoteItemId = newSelectedNoteClientId;
-        };
-        that.onNoteUnselected = function () {
-            selectedNoteItemId = null;
-        };
-
-        var getListItemViewModel = function (noteClientId) {
+        var onSelectNote = function (noteClientId) {
             var index = noteClientIds.indexOf(noteClientId);
+            items.forEach(function (itemViewModel, itemIndex) {
+                if (itemIndex !== index) {
+                    itemViewModel.setIsSelected(false);
+                }
+            });
+        };
 
-            if (index === -1) {
-                throw new Error("[ListViewMode] Unable to un-select note " +
-                    noteClientId);
-            }
+        var onDeleteNote = function () {
+            var newNoteClientIds = model.getNoteClientIds();
+            refreshList(newNoteClientIds);
+        };
 
-            return listItemViewModels[index];
+        var getItemViewModels = function () {
+            return items;
         };
 
         return that;

@@ -4,41 +4,69 @@
     Notes.viewModel.editorViewModel = function (options) {
         var that = {};
 
+        // Member variables.
         var model = options.model;
+
+        var viewModelEvents = options.viewModelEvents;
 
         var noteClientId = null;
 
-        var dateViewModel = options.viewModelFactory.create("NoteDate");
+        var dateViewModel = null;
+        var statusViewModel = null;
+        var noteInputViewModel = null;
+
+        var viewModelEvents = options.viewModelEvents;
+
+        // Member functions.
+        that.initialize = function () {
+            dateViewModel = options.viewModelFactory.create("NoteDate");
+            dateViewModel.initialize();
+            statusViewModel = options.viewModelFactory.create("NoteStatus");
+            statusViewModel.initialize();
+            noteInputViewModel = options.viewModelFactory.create("NoteInput");
+            noteInputViewModel.initialize();
+
+            viewModelEvents.on("DeleteNote", onDeleteNote);
+            viewModelEvents.on("NewNoteCreated", onNewNoteCreated);
+        };
+
+        that.destroy = function () {
+            dateViewModel.destroy();
+            statusViewModel.destroy();
+            noteInputViewModel.destroy();
+
+            viewModelEvents.off("DeleteNote", onDeleteNote);
+            viewModelEvents.off("NewNoteCreated", onNewNoteCreated);
+        };
+
         that.getDateViewModel = function () {
             return dateViewModel;
         };
-
-        var statusViewModel = options.viewModelFactory.create("NoteStatus");
         that.getStatusViewModel = function () {
             return statusViewModel;
         };
-
-        var noteInputViewModel = options.viewModelFactory.create("NoteInput");
         that.getInputViewModel = function () {
             return noteInputViewModel;
         };
 
-        var onNoteCreatedByInput = function (newNoteClientId) {
+        var onDeleteNote = function (deletedNoteClientId) {
+            if (noteClientId === deletedNoteClientId) {
+                clearEditor();
+            }
+        };
+
+        var onNewNoteCreated = function (newNoteClientId) {
             noteClientId = newNoteClientId;
             dateViewModel.setNoteClientId(newNoteClientId);
             statusViewModel.setNoteClientId(newNoteClientId);
         };
-        noteInputViewModel.onNoteCreation(onNoteCreatedByInput);
-
-        // TODO Listen to IsDeleted on note to clear editor when deleted.
 
         that.startNewNote = function () {
             if (noteClientId === null) {
-                // No change.
                 return;
             }
 
-            that.setNote(null);
+            clearEditor();
         };
 
         that.deleteNote = function () {
@@ -49,10 +77,19 @@
             var note = model.getNoteByClientId(noteClientId);
             model.deleteNote(note);
 
+            viewModelEvents.notify("DeleteNote", noteClientId);
+            clearEditor();
+        };
+
+        var clearEditor = function () {
             that.setNote(null);
         };
 
         that.setNote = function (newNoteClientId) {
+            if (noteClientId === newNoteClientId) {
+                return;
+            }
+
             noteClientId = newNoteClientId;
             dateViewModel.setNoteClientId(newNoteClientId);
             statusViewModel.setNoteClientId(newNoteClientId);

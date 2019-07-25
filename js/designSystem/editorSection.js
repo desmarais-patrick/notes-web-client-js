@@ -23,6 +23,7 @@
 
     var setupInitialExample = function (appOptions, exampleRootNode) {
         var viewModel = appOptions.viewModelFactory.create("Editor");
+        viewModel.initialize();
         var view = appOptions.viewFactory.create("Editor", {
             rootNode: exampleRootNode,
             viewModel: viewModel
@@ -37,6 +38,7 @@
 
     var setupOneSentenceExample = function (appOptions, exampleRootNode) {
         var viewModel = appOptions.viewModelFactory.create("Editor");
+        viewModel.initialize();
         var view = appOptions.viewFactory.create("Editor", {
             rootNode: exampleRootNode,
             viewModel: viewModel
@@ -59,6 +61,7 @@
 
     var setupManySentencesExample = function (appOptions, exampleRootNode) {
         var viewModel = appOptions.viewModelFactory.create("Editor");
+        viewModel.initialize();
         var view = appOptions.viewFactory.create("Editor", {
             rootNode: exampleRootNode,
             viewModel: viewModel

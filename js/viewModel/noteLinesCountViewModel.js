@@ -6,6 +6,7 @@
     Notes.viewModel.noteLinesCountViewModel = function(options) {
         var that = {};
 
+        // Member variables.
         var setTimeout = options.setTimeout;
         var clearTimeout = options.clearTimeout;
         var textCheckTimeoutId = null;
@@ -13,8 +14,15 @@
 
         var model = options.model;
 
-        var changeListeners = [];
         var linesCount = null;
+        var changeListenerCallback = null;
+
+        // Member functions.
+        that.initialize = function () {};
+
+        that.destroy = function () {
+            stopListeningForModelEvents();
+        };
 
         that.getText = function () {
             if (linesCount === null) {
@@ -92,31 +100,16 @@
             var lines = newText.split("\n");
             linesCount = lines.length;
 
-            if (oldLinesCount !== linesCount) {
-                notifyChange();
+            if (oldLinesCount !== linesCount &&
+                    changeListenerCallback !== null) {
+
+                var text = that.getText();
+                changeListenerCallback(text);
             }
         };
 
-        that.onChange = function (newListenerCallback) {
-            changeListeners.push(newListenerCallback);
-        };
-
-        that.offChange = function (listenerCallback) {
-            var index = changeListeners.indexOf(listenerCallback);
-
-            if (index === -1) {
-                throw new Error("[NoteLinesCountViewModel]" + 
-                    " Change listener has never been registered.");
-            }
-
-            changeListeners.splice(index, 1);
-        };
-
-        var notifyChange = function () {
-            var text = that.getText();
-            changeListeners.forEach(function (listener) {
-                listener(text);
-            });
+        that.setChangeListener = function (newListenerCallback) {
+            changeListenerCallback = newListenerCallback;
         };
 
         return that;

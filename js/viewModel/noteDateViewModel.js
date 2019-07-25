@@ -4,12 +4,21 @@
     Notes.viewModel.noteDateViewModel = function (options) {
         var that = {};
 
+        // Member variables.
         var dateUtilities = options.dateUtilities;
 
         var model = options.model;
 
-        var changeListeners = [];
         var date = null;
+        var changeListenerCallback = null;
+
+        // Member functions.
+        that.initialize = function () {
+
+        };
+        that.destroy = function () {
+            
+        };
 
         that.getDateText = function () {
             if (date === null) {
@@ -19,19 +28,8 @@
             return dateUtilities.format(date);
         };
 
-        that.onChange = function (newListenerCallback) {
-            changeListeners.push(newListenerCallback);
-        };
-
-        that.offChange = function (listenerCallback) {
-            var index = changeListeners.indexOf(listenerCallback);
-
-            if (index === -1) {
-                throw new Error("[NoteDateViewModel]" + 
-                    " Change listener has never been registered.");
-            }
-
-            changeListeners.splice(index, 1);
+        that.setChangeListener = function (newListenerCallback) {
+            changeListenerCallback = newListenerCallback;
         };
 
         // Only used by parent view model when note changes.
@@ -45,14 +43,10 @@
                 date = newNote.getDate();
             }
 
-            notifyChange();
-        };
-
-        var notifyChange = function () {
-            var dateText = that.getDateText();
-            changeListeners.forEach(function (listener) {
-                listener(dateText);
-            });
+            if (changeListenerCallback !== null) {
+                var dateText = that.getDateText();
+                changeListenerCallback(dateText);
+            }
         };
 
         return that;

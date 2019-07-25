@@ -6,6 +6,7 @@
     Notes.viewModel.applicationStatusViewModel = function (options) {
         var that = {};
 
+        // Member variables.
         var setTimeout = options.setTimeout;
         var clearTimeout = options.clearTimeout;
 
@@ -13,12 +14,19 @@
         var APP_STATUS_ENUM = options.APP_STATUS_ENUM;
 
         var appStatusListenerCallback = null;
-        that.setAppStatusChangeListener = function (callback) {
-            appStatusListenerCallback = callback;
-        };
 
         var appStatusEventIterator = model.listen("change App.Status");
         var appStatusCheckTimeoutId = null;
+
+        // Member functions.
+        that.initialize = function () {
+            listenToModelEvents();
+        };
+
+        that.destroy = function () {
+            stopListeningToModelEvents();
+        };
+
         var listenToModelEvents = function () {
             appStatusCheckTimeoutId = setTimeout(function () {
                 if (appStatusEventIterator.hasNext()) {
@@ -27,12 +35,6 @@
                 }
                 listenToModelEvents();
             }, REFRESH_TIMING_MS);
-        };
-
-        listenToModelEvents();
-
-        that.destroy = function () {
-            stopListeningToModelEvents();
         };
 
         var notifyAppStatusListener = function (newStatus) {
@@ -65,6 +67,10 @@
             }
 
             return INITIAL_TEXT;
+        };
+
+        that.setAppStatusChangeListener = function (callback) {
+            appStatusListenerCallback = callback;
         };
 
         return that;

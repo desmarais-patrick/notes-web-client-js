@@ -5,17 +5,42 @@
         var that = {};
 
         // Member variables.
+        var viewModelEvents = options.viewModelEvents;
+
         var noteClientId = null;
         var isSelected = false;
 
-        var textStartViewModel = options.viewModelFactory.create(
-            "NoteTextStart");
-        var linesCountViewModel = options.viewModelFactory.create(
-            "NoteLinesCount");
-        var dateViewModel = options.viewModelFactory.create("NoteDate");
-        var statusViewModel = options.viewModelFactory.create("NoteStatus");
+        var textStartViewModel = null;
+        var linesCountViewModel = null;
+        var dateViewModel = null;
+        var statusViewModel = null;
+
+        var selectedListenerCallback = null;
 
         // Member functions.
+        that.initialize = function () {
+            textStartViewModel = options.viewModelFactory.create(
+                "NoteTextStart");
+            textStartViewModel.initialize();
+
+            linesCountViewModel = options.viewModelFactory.create(
+                "NoteLinesCount");
+            linesCountViewModel.initialize();
+
+            dateViewModel = options.viewModelFactory.create("NoteDate");
+            dateViewModel.initialize();
+
+            statusViewModel = options.viewModelFactory.create("NoteStatus");
+            statusViewModel.initialize();
+        };
+
+        that.destroy = function () {
+            textStartViewModel.destroy();
+            linesCountViewModel.destroy();
+            dateViewModel.destroy();
+            statusViewModel.destroy();
+        };
+
         that.getTextStartViewModel = function () {
             return textStartViewModel;
         };
@@ -36,14 +61,18 @@
             that.setIsSelected(!isSelected);
         };
         that.setIsSelected = function (newValue) {
+            if (isSelected === newValue) {
+                return;
+            }
+
             isSelected = newValue;
-            notifyListeners("IsSelected", newValue);
+            if (selectedListenerCallback !== null) {
+                selectedListenerCallback(newValue);
+            }
+            viewModelEvents.notify("SelectNote", noteClientId);
         };
-        that.onIsSelectedChange = function (listenerCallback) {
-            addListenerCallback("IsSelected", listenerCallback);
-        };
-        that.offIsSelectedChange = function (listenerCallback) {
-            removeListenerCallback("IsSelected", listenerCallback);
+        that.setSelectedListener = function (newListenerCallback) {
+            selectedListenerCallback = newListenerCallback;
         };
 
         that.setNoteClientId = function (newNoteClientId) {
@@ -52,63 +81,22 @@
             textStartViewModel.setNoteClientId(noteClientId);
             linesCountViewModel.setNoteClientId(noteClientId);
             statusViewModel.setNoteClientId(newNoteClientId);
+            this.setIsSelected(false);
         };
 
         that.deleteNote = function () {
+            if (noteClientId === null) {
+                return;
+            }
+
             var note = model.getNoteByClientId(noteClientId);
             model.deleteNote(note);
 
-            notifyListeners("DeleteNote", noteClientId);
-        };
-        that.onDeleteNote = function (listenerCallback) {
-            addListenerCallback("DeleteNote", listenerCallback);
-        };
-        that.offDeleteNote = function (listenerCallback) {
-            removeListenerCallback("DeleteNote", listenerCallback);
+            viewModelEvents.notify("DeleteNote", noteClientId);
         };
 
         that.editNote = function () {
-            notifyListeners("EditNote", noteClientId);
-        };
-        that.onEditNote = function (listenerCallback) {
-            addListenerCallback("EditNote", listenerCallback);
-        };
-        that.offEditNote = function (listenerCallback) {
-            removeListenerCallback("EditNote", listenerCallback);
-        };
-
-        var listeners = {
-            "DeleteNote": [],
-            "EditNote": [],
-            "IsSelected": []
-        };
-
-        var addListenerCallback = function (name, callback) {
-            var callbacks = listeners[name];
-            if (callbacks.indexOf(callback) >= 0) {
-                throw new Error("[ListItemViewModel] Listener already " + 
-                    "registered for " + name);
-            }
-            callbacks.push(callback);
-        };
-
-        var removeListenerCallback = function (name, callback) {
-            var callbacks = listeners[name];
-            var index = callbacks.indexOf(callback);
-
-            if (index === -1) {
-                throw new Error("[ListItemViewMode] Listener not registered" +
-                    " for " + name);
-            }
-
-            callbacks.splice(index, 1);
-        };
-
-        var notifyListeners = function (name, valueToPassOn) {
-            var callbacks = listeners[name];
-            callbacks.forEach(function (callback) {
-                callback(valueToPassOn);
-            });
+            viewModelEvents.notify("DeleteNote", noteClientId);
         };
 
         return that;

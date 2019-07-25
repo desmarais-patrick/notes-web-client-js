@@ -24,13 +24,11 @@
         that.render = function () {
             initializeContentViewsAndRender();
 
-            // TODO Clean up selection to keep source of truth in view model.
-            applySelection();
-            viewUtilities.div.onClick(contentNode, toggleSelection);
-        };
+            viewModel.setSelectedListener(onIsSelectedChange);
+            var isSelected = viewModel.isSelected();
+            onIsSelectedChange(isSelected);
 
-        var clearRootNodes = function () {
-            viewUtilities.html.clearChildrenNodes(rootNode);
+            viewUtilities.div.onClick(contentNode, onContentClick);
         };
 
         var initializeContentViewsAndRender = function () {
@@ -76,35 +74,20 @@
             linesCountView.render();
         };
 
-        var applySelection = function () {
-            var isSelected = viewModel.isSelected();
+        var onContentClick = function () {
+            viewModel.toggleSelected();
+        };
+
+        var onIsSelectedChange = function (isSelected) {
             if (isSelected) {
-                that.select()
+                if (actionViewsInitialized === false) {
+                    initializeAndRenderActionViews();
+                }
+    
+                viewUtilities.css.addClass(rootNode, "list-item-selected");
             } else {
-                that.unselect();
+                viewUtilities.css.removeClass(rootNode, "list-item-selected");
             }
-        };
-
-        var toggleSelection = function () {
-            var isSelected = viewModel.isSelected();
-            if (isSelected) {
-                that.unselect();
-            } else {
-                that.select();
-            }
-        };
-
-        that.select = function () {
-            if (actionViewsInitialized === false) {
-                initializeAndRenderActionViews();
-            }
-
-            viewUtilities.css.addClass(rootNode, "list-item-selected");
-            viewModel.setIsSelected(true);
-        };
-        that.unselect = function () {
-            viewUtilities.css.removeClass(rootNode, "list-item-selected");
-            viewModel.setIsSelected(false);
         };
 
         var initializeAndRenderActionViews = function () {
@@ -158,9 +141,10 @@
         // TODO Complete destroy method after all TODOs are complete in this class.
         that.destroy = function () {
             // Stop listening to changes in viewModel.
+            viewModel.setSelectedListener(null);
 
             // Stop listening to HTML events.
-            viewUtilities.div.offClick(rootNode, toggleSelection);
+            viewUtilities.div.offClick(contentNode, toggleSelection);
 
             // Destroy all sub-views.
             textStartView.destroy();
@@ -174,7 +158,7 @@
             }
 
             // Remove all elements created.
-            clearRootNodes();
+            viewUtilities.html.clearChildrenNodes(rootNode);
         };
 
         return that;

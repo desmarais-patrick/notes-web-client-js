@@ -42,6 +42,8 @@
             viewUtilities: viewUtilities,
         });
 
+        var viewModelEvents = Notes.viewModel.events();
+
         var viewModelFactory = Notes.viewModel.viewModelFactory({
             setTimeout: window.setTimeout,
             clearTimeout: window.clearTimeout,
@@ -51,6 +53,8 @@
             model: model,
             APP_STATUS_ENUM: Notes.model.app.STATUS_ENUM,
             NOTE_STATUS_ENUM: Notes.model.note.STATUS_ENUM,
+
+            viewModelEvents: viewModelEvents,
 
             createAppViewModel: Notes.viewModel.appViewModel,
             createApplicationStatusViewModel:

@@ -33,6 +33,15 @@
             return notes;
         };
 
+        that.getNoteClientIds = function () {
+            var noteClientIds = [];
+            notes.forEach(function (note) {
+                var clientId = note.getClientId();
+                noteClientIds.push(clientId);
+            });
+            return noteClientIds;
+        };
+
         that.requestMoreNotes = function (optionalCallback) {
             notes.setStatus(NOTES_STATUS_ENUM.LOADING);
             requestBuilder.get("/notes")

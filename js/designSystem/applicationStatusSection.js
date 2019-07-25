@@ -36,6 +36,7 @@
 
     var setupWorkingExample = function (appOptions, rootNode) {
         var viewModel = appOptions.viewModelFactory.create("ApplicationStatus");
+        viewModel.initialize();
         var view = appOptions.viewFactory.create("ApplicationStatus", {
             viewModel: viewModel,
             rootNode: rootNode,
@@ -50,6 +51,7 @@
 
     var setupReadyExample = function (appOptions, rootNode) {
         var viewModel = appOptions.viewModelFactory.create("ApplicationStatus");
+        viewModel.initialize();
         var view = appOptions.viewFactory.create("ApplicationStatus", {
             viewModel: viewModel,
             rootNode: rootNode,

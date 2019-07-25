@@ -10,7 +10,7 @@
         var viewModel = options.viewModel;
 
         that.render = function () {
-            viewModel.onChange(updateText);
+            viewModel.setChangeListener(updateText);
         };
 
         var updateText = function (newText) {
@@ -18,7 +18,7 @@
         };
         
         that.destroy = function () {
-            viewModel.offChange(updateText);
+            viewModel.setChangeListener(null);
         };
 
         return that;

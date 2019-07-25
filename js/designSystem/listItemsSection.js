@@ -33,6 +33,7 @@
 
     var setupInitialExample = function (appOptions, rootNode) {
         var viewModel = appOptions.viewModelFactory.create("NoteListItem");
+        viewModel.initialize();
         var view = appOptions.viewFactory.create("NoteListItem", {
             rootNode: rootNode,
             viewModel: viewModel,
@@ -50,6 +51,7 @@
 
     var setupHoverExample = function (appOptions, rootNode) {
         var viewModel = appOptions.viewModelFactory.create("NoteListItem");
+        viewModel.initialize();
         var view = appOptions.viewFactory.create("NoteListItem", {
             rootNode: rootNode,
             viewModel: viewModel,
@@ -80,6 +82,7 @@
 
     var setupSelectedExample = function (appOptions, rootNode) {
         var viewModel = appOptions.viewModelFactory.create("NoteListItem");
+        viewModel.initialize();
         var view = appOptions.viewFactory.create("NoteListItem", {
             rootNode: rootNode,
             viewModel: viewModel,
@@ -102,6 +105,7 @@
 
     var setupHideExample = function (appOptions, rootNode) {
         var viewModel = appOptions.viewModelFactory.create("NoteListItem");
+        viewModel.initialize();
         var view = appOptions.viewFactory.create("NoteListItem", {
             rootNode: rootNode,
             viewModel: viewModel,

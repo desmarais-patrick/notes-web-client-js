@@ -3,9 +3,11 @@
 (function (Notes) {
     var TEXT_CHECK_INTERVAL_MS = 1000;
 
+    // TODO See if we could reuse logic between this class and NoteLinesCountViewModel.
     Notes.viewModel.noteTextStartViewModel = function(options) {
         var that = {};
 
+        // Member variables.
         var setTimeout = options.setTimeout;
         var clearTimeout = options.clearTimeout;
         var textCheckTimeoutId = null;
@@ -13,8 +15,15 @@
 
         var model = options.model;
 
-        var changeListeners = [];
+        var changeListenerCallback = null;
         var textStart = null;
+
+        // Member functions.
+        that.initialize = function () {};
+
+        that.destroy = function () {
+            stopListeningForModelEvents();
+        };
 
         that.getText = function () {
             if (textStart === null) {
@@ -88,8 +97,11 @@
                 textStart = newTextStart;
             }
 
-            if (oldTextStart !== textStart) {
-                notifyChange();
+            if (oldTextStart !== textStart &&
+                    changeListenerCallback !== null) {
+
+                var text = that.getText();
+                changeListenerCallback(text);
             }
         };
 
@@ -102,26 +114,8 @@
             return firstLine;
         };
 
-        that.onChange = function (newListenerCallback) {
-            changeListeners.push(newListenerCallback);
-        };
-
-        that.offChange = function (listenerCallback) {
-            var index = changeListeners.indexOf(listenerCallback);
-
-            if (index === -1) {
-                throw new Error("[NoteTextStartViewModel]" + 
-                    " Change listener has never been registered.");
-            }
-
-            changeListeners.splice(index, 1);
-        };
-
-        var notifyChange = function () {
-            var text = that.getText();
-            changeListeners.forEach(function (listener) {
-                listener(text);
-            });
+        that.setChangeListener = function (newListenerCallback) {
+            changeListenerCallback = newListenerCallback;
         };
 
         return that;

@@ -4,51 +4,57 @@
     Notes.viewModel.appViewModel = function (options) {
         var that = {};
 
+        // Member variables.
         var viewModelFactory = options.viewModelFactory;
 
-        var applicationStatusViewModel = viewModelFactory.create(
-            "ApplicationStatus");
-        that.getApplicationStatusViewModel = function () {
-            return applicationStatusViewModel;
+        var viewModelEvents = options.viewModelEvents;
+
+        var appStatusViewModel = null;
+        var editorViewModel = null;
+        var listViewModel = null;
+
+        var editNoteListenerCallback = null;
+
+        // Member functions.
+        that.initialize = function () {
+            appStatusViewModel = viewModelFactory.create("ApplicationStatus");
+            appStatusViewModel.initialize();
+
+            editorViewModel = viewModelFactory.create("Editor");
+            editorViewModel.initialize();
+
+            listViewModel = viewModelFactory.create("List");
+            listViewModel.initialize();
+
+            viewModelEvents.on("EditNote", onEditNote);
         };
 
-        var editorViewModel = viewModelFactory.create("Editor");
-        that.getEditorViewModel = function () { return editorViewModel; };
+        that.destroy = function () {
+            appStatusViewModel.destroy();
+            editorViewModel.destroy();
+            listViewModel.destroy();
 
-        var listViewModel = viewModelFactory.create("List");
-        that.getListViewModel = function () { return listViewModel; };
-
-        editorViewModel.onDeleteNote(function () {
-            listViewModel.forceRefresh();
-        });
-
-        listViewModel.onDeleteNote(function () {
-            editorViewModel.forceRefresh();
-        });
-        listViewModel.onEditNote(function () {
-            editorViewModel.forceRefresh();
-            that.notifyEditNoteListeners();
-        });
-
-        var editNoteListeners = [];
-
-        that.onEditNote = function (newListenerCallback) {
-            editNoteListeners.push(newListenerCallback);
+            viewModelEvents.off("EditNote", onEditNote);
         };
-        that.offEditNode = function (listenerCallback) {
-            var index = editNoteListeners.indexOf(listenerCallback);
 
-            if (index === -1) {
-                throw new Error("[AppViewModel]" + 
-                    " Edit note listener has never been registered.");
+        that.getAppStatusViewModel = function () {
+            return appStatusViewModel;
+        };
+        that.getEditorViewModel = function () {
+            return editorViewModel;
+        };
+        that.getListViewModel = function () {
+            return listViewModel;
+        };
+
+        that.setEditNoteListener = function (newListenerCallback) {
+            editNoteListenerCallback = newListenerCallback;
+        };
+
+        var onEditNote = function () {
+            if (editNoteListenerCallback !== null) {
+                editNoteListenerCallback();
             }
-
-            editNoteListeners.splice(index, 1);
-        };
-        that.notifyEditNoteListeners = function () {
-            editNoteListeners.forEach(function (listenerCallback) {
-                listenerCallback();
-            });
         };
 
         return that;
