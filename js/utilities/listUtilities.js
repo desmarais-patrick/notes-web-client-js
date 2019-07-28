@@ -4,6 +4,40 @@
     Notes.utilities.listUtilities = function () {
         var that = {};
 
+        that.isEqual = function (listA, listB) {
+            if (listA.length !== listB.length) {
+                return false;
+            }
+
+            for (var i = 0; i < listA.length; i++) {
+                if (listA[i] !== listB[i]) {
+                    return false;
+                }
+            }
+
+            return true;
+        };
+
+        that.difference = function (listA, listB) {
+            var result = [];
+            var rest = [];
+
+            var itemA;
+            for (var i = 0; i < listA.length; i++) {
+                itemA = listA[i];
+                if (listB.indexOf(itemA) === -1) {
+                    result.push(itemA);
+                } else {
+                    rest.push(itemA);
+                }
+            }
+
+            return {
+                result: result,
+                rest: rest
+            };
+        };
+
         // Important assumption: all values are unique!
         that.computeChanges = function (listA, listB) {
             var singleAdd = isSingleAddChange(listA, listB);
