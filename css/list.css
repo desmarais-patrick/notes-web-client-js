@@ -1,0 +1,23 @@
+.note-list,
+.note-list-title,
+.note-list-content,
+.note-list-actions {
+    margin-bottom: 1.2rem;
+}
+
+.note-list-content.note-list-content-empty {
+    padding: 5rem;
+
+    background: #CCCCCC;
+    background: rgba(0, 0, 0, .1);
+    border-radius: .2rem;
+}
+
+.note-list-content-empty p,
+.note-list-actions {
+    text-align: center;
+}
+
+.note-list-actions-hidden {
+    visibility: hidden;
+}
