@@ -12,9 +12,12 @@
         var setTimeout = options.setTimeout;
         var clearTimeout = options.clearTimeout;
 
+        var listUtilities = options.listUtilities;
+
         var model = options.model;
 
         var viewModelEvents = options.viewModelEvents;
+        var viewModelFactory = options.viewModelFactory;
 
         var noteClientIds = [];
         var items = [];
@@ -146,7 +149,8 @@
         };
 
         var createItemViewModel = function (noteClientId) {
-            var itemViewModel = viewModelFactory.create("ListItem");
+            var itemViewModel = viewModelFactory.create("NoteListItem");
+            itemViewModel.initialize();
             itemViewModel.setNoteClientId(noteClientId);
             return itemViewModel;
         };

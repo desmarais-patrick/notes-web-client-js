@@ -13,6 +13,7 @@
         Notes.designSystem.setupAnimationSection(createAppOptions);
         Notes.designSystem.setupApplicationStatusSection(createAppOptions);
         Notes.designSystem.setupEditorSection(createAppOptions);
+        Notes.designSystem.setupListSection(createAppOptions);
         Notes.designSystem.setupListItemsSection(createAppOptions);
     };
 
@@ -32,6 +33,7 @@
         });
 
         var dateUtilities = Notes.utilities.dateUtilities();
+        var listUtilities = Notes.utilities.listUtilities();
 
         var viewUtilities = Notes.utilities.viewUtilities({
             document: window.document,
@@ -49,6 +51,7 @@
             clearTimeout: window.clearTimeout,
 
             dateUtilities: dateUtilities,
+            listUtilities: listUtilities,
             
             model: model,
             APP_STATUS_ENUM: Notes.model.app.STATUS_ENUM,

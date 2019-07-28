@@ -8,6 +8,7 @@
         var clearTimeout = options.clearTimeout;
 
         var dateUtilities = options.dateUtilities;
+        var listUtilities = options.listUtilities;
 
         var model = options.model;
         var APP_STATUS_ENUM = options.APP_STATUS_ENUM;
@@ -33,6 +34,7 @@
             clearTimeout: clearTimeout,
     
             dateUtilities: dateUtilities,
+            listUtilities: listUtilities,
     
             model: model,
             APP_STATUS_ENUM: APP_STATUS_ENUM,

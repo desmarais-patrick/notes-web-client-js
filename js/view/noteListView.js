@@ -3,7 +3,7 @@
 (function (Notes) {
 
     // TODO Add to design system.
-    Notes.view.listView = function(options) {
+    Notes.view.noteListView = function(options) {
         var that = {};
 
         var viewUtilities = options.viewUtilities;
