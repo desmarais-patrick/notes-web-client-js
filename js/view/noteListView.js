@@ -2,7 +2,6 @@
 
 (function (Notes) {
 
-    // TODO Add to design system.
     Notes.view.noteListView = function(options) {
         var that = {};
 
@@ -12,13 +11,27 @@
         var viewModel = options.viewModel;
 
         that.render = function () {
+            // Create HTML nodes.
+            // Render initial items.
+
             // TODO Subscribe to listItemAdded.
             // TODO Subscribe to listItemRemoved.
             // TODO Subscribe to listChanged.
         };
 
+        var createHtmlNodes = function () {
+            // Title: "Notes"
+            // Items: NoteListItemView[]
+            // Handle hide or display empty message.
+            // Load more button.
+        };
+
         that.destroy = function () {
-            // Unsubscribe...
+            // ...undo render()
+        };
+
+        var removeHtmlNodes = function () {
+            // ...undo createHtmlNodes()
         };
         
         // Handle creating and deleting sub-views based on subscriptions.
