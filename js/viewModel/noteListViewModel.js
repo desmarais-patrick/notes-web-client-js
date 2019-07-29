@@ -43,6 +43,10 @@
             viewModelEvents.off("DeleteNote", onDeleteNote);
             viewModelEvents.off("SelectNote", onSelectNote);
         };
+
+        that.getItemViewModels = function () {
+            return items;
+        };
         
         var listenToModelEvents = function () {
             eventCheckTimeoutId = setTimeout(function () {
@@ -190,10 +194,6 @@
         var onDeleteNote = function () {
             var newNoteClientIds = model.getNoteClientIds();
             refreshList(newNoteClientIds);
-        };
-
-        var getItemViewModels = function () {
-            return items;
         };
 
         return that;

@@ -114,14 +114,20 @@
                 node.removeChild(child);
             }
         };
+        viewUtilities.html.removeChild = function (node, child) {
+            node.removeChild(child);
+        };
 
         viewUtilities.html.createElement = function (tagName, options) {
             var element = document.createElement(tagName);
-            if (typeof options.cssClass !== "undefined") {
+            if (options.hasOwnProperty("cssClass")) {
                 element.className = options.cssClass;
             }
-            if (typeof options.type !== "undefined") {
+            if (options.hasOwnProperty("type")) {
                 element.setAttribute("type", options.type);
+            }
+            if (options.hasOwnProperty("text")) {
+                element.textContent = options.text;
             }
             return element;
         };
