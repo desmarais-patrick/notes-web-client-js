@@ -9,7 +9,8 @@
 }
 
 .note-list-content.note-list-content-empty {
-    padding: 5rem;
+    height: 4.5rem;
+    padding: 1.5rem 0;
 
     background: #CCCCCC;
     background: rgba(0, 0, 0, .1);
