@@ -20,7 +20,7 @@
             
         };
 
-        that.getDateText = function () {
+        that.getText = function () {
             if (date === null) {
                 return "";
             }
@@ -44,7 +44,7 @@
             }
 
             if (changeListenerCallback !== null) {
-                var dateText = that.getDateText();
+                var dateText = that.getText();
                 changeListenerCallback(dateText);
             }
         };

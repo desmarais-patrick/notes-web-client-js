@@ -9,12 +9,20 @@
         var rootNode = options.rootNode;
         var viewModel = options.viewModel;
 
+        var text = null;
+
         that.render = function () {
+            var text = viewModel.getText();
+            updateText(text);
+
             viewModel.setChangeListener(updateText);
         };
 
         var updateText = function (newText) {
-            animations.crossFadeText(rootNode, newText);
+            if (newText !== text) {
+                animations.crossFadeText(rootNode, newText);
+                text = newText;
+            }
         };
         
         that.destroy = function () {
