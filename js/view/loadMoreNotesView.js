@@ -43,12 +43,14 @@
             if (requestInProgress === false) {
                 viewUtilities.button.disable(buttonNode);
                 viewModel.requestMoreNotes(onRequestMoreNotesReturn);
+                // TODO Show progress bar to help users with feedback.
                 requestInProgress = true;
             }
         };
 
         var onRequestMoreNotesReturn = function (error) {
             if (error !== null) {
+                // TODO Give more helpful error message.
                 var errorMessage =
                     "⚠️ Error occurred while loading more notes.";
                 showMessage(errorMessage);
@@ -56,7 +58,7 @@
                 removeMessage();
             }
             viewUtilities.button.enable(buttonNode);
-            requestInProgress = true;
+            requestInProgress = false;
         };
 
         var showMessage = function (errorMessage) {
