@@ -117,7 +117,7 @@
             .setNextPostResponseAsOfflineError()
             .setNextDeleteResponseAsOfflineError();
         var note = appOptions.model.createNote(
-            "Don't forget to bring your work laptop 😉! #work" + 
+            "Don't forget to bring your work laptop for tomorrow 😉! #work" + 
             "\n");
         var noteClientId = note.getClientId();
         viewModel.setNoteClientId(noteClientId);
