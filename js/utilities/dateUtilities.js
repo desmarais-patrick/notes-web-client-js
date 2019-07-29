@@ -17,9 +17,10 @@
 
             var hours = date.getHours();
             var minutes = padNumberWithFrontZero(date.getMinutes());
-            var timePart = [hours % 12, minutes].join(":");
-
-            var dayPart = hours >= 12 ? "PM" : "AM";
+            var timePart = (hours === 12) ?
+                [12, minutes].join(":") : 
+                [hours % 12, minutes].join(":");
+            var dayPart = (hours >= 12) ? "PM" : "AM";
 
             return [datePart, timePart, dayPart].join(" ");
         };

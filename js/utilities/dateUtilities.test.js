@@ -28,6 +28,20 @@
             date.setHours(1);
             date.setMinutes(1);
             expect(dateUtilities.format(date)).toEqual("2019-07-01 1:01 AM");
+            
+            // Noon.
+            date.setMonth(6);
+            date.setDate(1);
+            date.setHours(12);
+            date.setMinutes(0);
+            expect(dateUtilities.format(date)).toEqual("2019-07-01 12:00 PM");
+            
+            // Midnight.
+            date.setMonth(6);
+            date.setDate(1);
+            date.setHours(0);
+            date.setMinutes(0);
+            expect(dateUtilities.format(date)).toEqual("2019-07-01 0:00 AM");
 
             formatTest.success();
         });
