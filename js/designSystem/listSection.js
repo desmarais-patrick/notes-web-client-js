@@ -81,7 +81,7 @@
             "Link to Notes app on Github:\n" + 
             "https://github.com/desmarais-patrick/notes\n");
         appOptions.model.createNote(
-            "Don't forget to bring your work laptop 😉! #work" + 
+            "Don't forget to bring your work laptop for tomorrow 😉! #work" + 
             "\n");
     };
 
