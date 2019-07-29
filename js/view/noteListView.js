@@ -20,7 +20,7 @@
             renderItems();
 
             viewModel.setNoteAddedListener(onNoteAdded);
-            // TODO Subscribe to listItemRemoved.
+            viewModel.setNoteRemovedListener(onNoteRemoved);
             // TODO Subscribe to listChanged.
         };
 
@@ -67,9 +67,9 @@
             if (itemViewsAndNodes.length === 0) {
                 var newItemNodes = [];
                 itemViewModels.forEach(function (itemViewModel) {
-                    var itemAndView = createAndRenderItem(itemViewModel);
-                    itemViewsAndNodes.push(itemAndView);
-                    newItemNodes.push(itemAndView.node);
+                    var itemViewAndNode = createAndRenderItem(itemViewModel);
+                    itemViewsAndNodes.push(itemViewAndNode);
+                    newItemNodes.push(itemViewAndNode.node);
                 });
                 viewUtilities.html.appendMany(contentNode, newItemNodes);
                 return;
@@ -84,27 +84,29 @@
 
             // Add missing items.
             var itemViewModel;
-            var itemAndView;
+            var itemViewAndNode;
             while (itemViewsAndNodes.length < itemViewModels.length) {
                 itemViewModel = itemViewModels[itemViewsAndNodes.length];
-                itemAndView = createAndRenderItem(itemViewModel);
-                itemViewsAndNodes.push(itemAndView);
-                viewUtilities.html.append(contentNode, itemAndView.node);
+                itemViewAndNode = createAndRenderItem(itemViewModel);
+                itemViewsAndNodes.push(itemViewAndNode);
+                viewUtilities.html.append(contentNode, itemViewAndNode.node);
             }
 
             // Reset view models on each view.
             for (var i = 0; i < itemViewsAndNodes.length; i++) {
                 itemViewModel = itemViewModels[i];
-                itemAndView = itemViewsAndNodes[i];
-                itemAndView.view.setViewModel(itemViewModel);
+                itemViewAndNode = itemViewsAndNodes[i];
+                itemViewAndNode.view.setViewModel(itemViewModel);
             }
         };
 
         var showEmptyMessage = function () {
             clearContent();
 
+            // TODO Smooth transition when changing content height.
             viewUtilities.css.addClass(contentNode, EMPTY_CSS_CLASS);
 
+            // TODO Smooth transition when showing text.
             var emptyNode = viewUtilities.html.createElement("p", {
                 text: "Start typing in the editor to create a note. ;)"
             });
@@ -114,6 +116,7 @@
         var hideEmptyMessage = function () {
             clearContent();
 
+            // TODO Smooth transition.
             var hasEmptyCssClass = viewUtilities.css.hasClass(contentNode,
                 EMPTY_CSS_CLASS);
             if (hasEmptyCssClass) {
@@ -133,27 +136,25 @@
             viewUtilities.html.clearChildNodes(contentNode);
         };
 
-        var destroyAndClearItem = function (itemViewAndNode) {
-            itemViewAndNode.view.destroy();
-            viewUtilities.html.removeChild(contentNode,
-                itemViewAndNode.node);
-        };
-
         var onNoteAdded = function (listItemViewModel, index) {
             if (itemViewsAndNodes.length === 0) {
                 hideEmptyMessage();
             }
 
-            var itemAndView = createAndRenderItem(listItemViewModel);
+            var itemViewAndNode = createAndRenderItem(listItemViewModel);
             var nextItemAndView;
             if (index === itemViewsAndNodes.length) {
-                itemViewsAndNodes.push(itemAndView);
-                viewUtilities.html.append(contentNode, itemAndView.node);
+                itemViewsAndNodes.push(itemViewAndNode);
+
+                // TODO Smooth transition when adding node. 
+                viewUtilities.html.append(contentNode, itemViewAndNode.node);
             } else {
                 nextItemAndView = itemViewsAndNodes[index];
-                itemViewsAndNodes.splice(index, 0, itemAndView);
+                itemViewsAndNodes.splice(index, 0, itemViewAndNode);
+
+                // TODO Smooth transition when adding node. 
                 viewUtilities.html.insertBefore(contentNode,
-                    nextItemAndView.node, itemAndView.node);
+                    nextItemAndView.node, itemViewAndNode.node);
             }
         };
 
@@ -171,6 +172,25 @@
                 view: itemView,
                 node: itemRootNode
             };
+        };
+
+        var onNoteRemoved = function (listItemViewModel, index) {
+            var itemViewAndNode = itemViewsAndNodes[index];
+            destroyAndClearItem(itemViewAndNode);
+
+            itemViewsAndNodes.splice(index, 1);
+
+            if (itemViewsAndNodes.length === 0) {
+                showEmptyMessage();
+            }
+        };
+
+        var destroyAndClearItem = function (itemViewAndNode) {
+            itemViewAndNode.view.destroy();
+
+            // TODO Smooth transition when removing node.
+            viewUtilities.html.removeChild(contentNode,
+                itemViewAndNode.node);
         };
 
         that.destroy = function () {

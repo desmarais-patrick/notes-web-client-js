@@ -144,7 +144,7 @@
             viewModel.setSelectedListener(null);
 
             // Stop listening to HTML events.
-            viewUtilities.div.offClick(contentNode, toggleSelection);
+            viewUtilities.div.offClick(contentNode, onContentClick);
 
             // Destroy all sub-views.
             textStartView.destroy();
