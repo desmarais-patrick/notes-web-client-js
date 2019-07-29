@@ -13,6 +13,8 @@
         var buttonNode = null;
         var errorNode = null;
 
+        var requestInProgress = false;
+
         that.render = function () {
             createHtmlNodes();
             viewUtilities.button.onClick(buttonNode, onClicked);
@@ -38,8 +40,11 @@
         };
 
         var onClicked = function () {
-            viewUtilities.button.disable(buttonNode);
-            viewModel.requestMoreNotes(onRequestMoreNotesReturn);
+            if (requestInProgress === false) {
+                viewUtilities.button.disable(buttonNode);
+                viewModel.requestMoreNotes(onRequestMoreNotesReturn);
+                requestInProgress = true;
+            }
         };
 
         var onRequestMoreNotesReturn = function (error) {
@@ -51,6 +56,7 @@
                 removeMessage();
             }
             viewUtilities.button.enable(buttonNode);
+            requestInProgress = true;
         };
 
         var showMessage = function (errorMessage) {
