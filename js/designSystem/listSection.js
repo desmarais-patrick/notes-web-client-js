@@ -57,7 +57,7 @@
             appOptions.model.deleteNote(note);
         };
 
-        // Add new button.
+        // Add new note button.
         var createNewButton = viewUtilities.traversal.findWithId(
             "list-empty-example-button-create-new");
         var noteIdCounter = 1;
@@ -67,12 +67,24 @@
         appOptions.requestBuilderMock
             .setNextDeleteResponseAsOfflineError();
 
-        // Add/remove button.
+        // Add/remove note button.
         var updateManyButton = viewUtilities.traversal.findWithId(
             "list-empty-example-button-update-many");
         viewUtilities.button.onClick(updateManyButton, function () {
             deleteRandomNote();
             addNewNote();
+        });
+
+        // Remove list button.
+        var removeListButton = viewUtilities.traversal.findWithId(
+            "list-empty-example-button-remove-list");
+        viewUtilities.button.onClick(removeListButton, function () {
+            view.destroy();
+            viewModel.destroy();
+
+            viewUtilities.button.disable(createNewButton);
+            viewUtilities.button.disable(updateManyButton);
+            viewUtilities.button.disable(removeListButton);
         });
     };
 

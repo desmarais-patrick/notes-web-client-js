@@ -155,6 +155,9 @@
         viewUtilities.div.offClick = function (element, callback) {
             element.removeEventListener("click", callback);
         };
+        viewUtilities.button.disable = function (element) {
+            element.setAttribute("disabled", "disabled");
+        };
 
         viewUtilities.scroll = {};
 

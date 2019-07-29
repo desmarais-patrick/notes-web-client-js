@@ -21,7 +21,15 @@
 
             viewModel.setNoteAddedListener(onNoteAdded);
             viewModel.setNoteRemovedListener(onNoteRemoved);
-            // TODO Subscribe to listChanged.
+            // TODO Set viewModel.setChangeListener() and test.
+        };
+
+        that.destroy = function () {
+            viewModel.setNoteRemovedListener(null);
+            viewModel.setNoteAddedListener(null);
+
+            hideAndDestroyItems();
+            removeHtmlNodes();
         };
 
         var createHtmlNodes = function () {
@@ -48,6 +56,12 @@
             viewUtilities.html.appendMany(rootNode, [title, content, actions]);
 
             contentNode = content;
+        };
+
+        var removeHtmlNodes = function () {
+            contentNode = null;
+
+            viewUtilities.html.clearChildNodes(rootNode);
         };
 
         var renderItems = function () {
@@ -125,17 +139,6 @@
             }
         };
 
-        var clearContent = function () {
-            // TODO Smooth transition when clearing content.
-            var itemViewAndNode;
-            while (itemViewsAndNodes.length !== 0) {
-                itemViewAndNode = itemViewsAndNodes.pop();
-                destroyAndClearItem(itemViewAndNode);
-            }
-
-            viewUtilities.html.clearChildNodes(contentNode);
-        };
-
         var onNoteAdded = function (listItemViewModel, index) {
             if (itemViewsAndNodes.length === 0) {
                 hideEmptyMessage();
@@ -186,6 +189,7 @@
         };
 
         var destroyAndClearItem = function (itemViewAndNode) {
+            itemViewAndNode.view.hide();
             itemViewAndNode.view.destroy();
 
             // TODO Smooth transition when removing node.
@@ -193,16 +197,20 @@
                 itemViewAndNode.node);
         };
 
-        that.destroy = function () {
-            // ...undo render()
+        var hideAndDestroyItems = function () {
+            clearContent();
         };
 
-        var removeHtmlNodes = function () {
-            // ...undo createHtmlNodes()
+        var clearContent = function () {
+            // TODO Smooth transition when clearing content.
+            var itemViewAndNode;
+            while (itemViewsAndNodes.length !== 0) {
+                itemViewAndNode = itemViewsAndNodes.pop();
+                destroyAndClearItem(itemViewAndNode);
+            }
+
+            viewUtilities.html.clearChildNodes(contentNode);
         };
-        
-        // Handle creating and deleting sub-views based on subscriptions.
-        // Handle simple animations for addition and removal.
 
         return that;
     };

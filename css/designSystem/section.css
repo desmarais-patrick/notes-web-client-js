@@ -30,4 +30,10 @@
 .design-system-button {
     background-color: #FF5252;
     color: #FAFAFA;
+    margin: 0 1rem 1rem 0;
+}
+.design-system-button:disabled {
+    background-color: #CCCCCC;
+    color: #333333;
+    cursor: not-allowed;
 }
