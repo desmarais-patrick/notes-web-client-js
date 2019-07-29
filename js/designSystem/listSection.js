@@ -57,6 +57,10 @@
             appOptions.model.deleteNote(note);
         };
 
+        // Setup GET /notes for load more notes button.
+        appOptions.requestBuilderMock
+            .setNextGetResponseAsOfflineError();
+
         // Add new note button.
         var createNewButton = viewUtilities.traversal.findWithId(
             "list-empty-example-button-create-new");

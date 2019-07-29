@@ -16,6 +16,13 @@
     
         // GET
         that.get = null;
+        that.setNextGetResponseAsOfflineError = function () {
+            that.get = function () {
+                return requestMock(new Error("[RequestBuilderMock] Offline!"),
+                    null);
+            };
+            return that;
+        };
 
         // POST
         that.post = null;

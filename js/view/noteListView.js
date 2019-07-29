@@ -13,11 +13,19 @@
         var viewModel = options.viewModel;
 
         var contentNode = null;
+        var actionsNode = null;
+        var loadMoreNotesView = null;
         var itemViewsAndNodes = [];
 
         that.render = function () {
             createHtmlNodes();
             renderItems();
+
+            loadMoreNotesView = viewFactory.create("LoadMoreNotes", {
+                viewModel: viewModel,
+                rootNode: actionsNode
+            });
+            loadMoreNotesView.render();
 
             viewModel.setNoteAddedListener(onNoteAdded);
             viewModel.setNoteRemovedListener(onNoteRemoved);
@@ -28,6 +36,8 @@
             viewModel.setNoteRemovedListener(null);
             viewModel.setNoteAddedListener(null);
 
+            loadMoreNotesView.destroy();
+            
             hideAndDestroyItems();
             removeHtmlNodes();
         };
@@ -46,16 +56,10 @@
                 cssClass: "note-list-actions"
             });
 
-            var loadAction = viewUtilities.html.createElement("button", {
-                cssClass: "button-default note-list-actions-load-more",
-                type: "button",
-                text: "Load more notes"
-            });
-
-            viewUtilities.html.append(actions, loadAction);
             viewUtilities.html.appendMany(rootNode, [title, content, actions]);
 
             contentNode = content;
+            actionsNode = actions;
         };
 
         var removeHtmlNodes = function () {

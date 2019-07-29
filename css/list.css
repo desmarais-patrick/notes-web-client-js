@@ -4,7 +4,8 @@
     margin-bottom: 1.2rem;
 }
 
-.note-list-title {
+.note-list-title,
+.note-list-actions-load-more {
     margin-bottom: 1rem;
 }
 
@@ -24,4 +25,9 @@
 
 .note-list-actions-hidden {
     visibility: hidden;
+}
+
+.note-list-actions-load-error {
+    color: #695300;
+    font-size: .8rem;
 }

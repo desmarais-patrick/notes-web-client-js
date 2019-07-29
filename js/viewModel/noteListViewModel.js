@@ -47,6 +47,10 @@
         that.getItemViewModels = function () {
             return items;
         };
+
+        that.requestMoreNotes = function (callback) {
+            model.requestMoreNotes(callback);
+        };
         
         var listenToModelEvents = function () {
             eventCheckTimeoutId = setTimeout(function () {

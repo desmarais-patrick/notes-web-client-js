@@ -15,6 +15,7 @@
         var createDeleteNoteActionView = options.createDeleteNoteActionView;
         var createEditorView = options.createEditorView;
         var createEditNoteActionView = options.createEditNoteActionView;
+        var createLoadMoreNotesView = options.createLoadMoreNotesView;
         var createNewNoteActionView = options.createNewNoteActionView;
         var createNoteInputView = options.createNoteInputView;
         var createNoteListItemView = options.createNoteListItemView;
@@ -46,6 +47,8 @@
                     return createEditNoteActionView(factoryOptions);
                 case "Editor":
                     return createEditorView(factoryOptions);
+                case "LoadMoreNotes":
+                    return createLoadMoreNotesView(factoryOptions);
                 case "NewNoteAction":
                     return createNewNoteActionView(factoryOptions);
                 case "NoteInput":

@@ -85,6 +85,7 @@
             createDeleteNoteActionView: Notes.view.deleteNoteActionView,
             createEditNoteActionView: Notes.view.editNoteActionView,
             createEditorView: Notes.view.editorView,
+            createLoadMoreNotesView: Notes.view.loadMoreNotesView,
             createNewNoteActionView: Notes.view.newNoteActionView,
             createNoteInputView: Notes.view.noteInputView,
             createNoteListItemView: Notes.view.noteListItemView,

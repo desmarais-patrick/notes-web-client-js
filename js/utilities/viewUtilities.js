@@ -158,6 +158,9 @@
         viewUtilities.button.disable = function (element) {
             element.setAttribute("disabled", "disabled");
         };
+        viewUtilities.button.enable = function (element) {
+            element.removeAttribute("disabled");
+        };
 
         viewUtilities.scroll = {};
 
