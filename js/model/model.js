@@ -35,7 +35,7 @@
 
         that.getNoteClientIds = function () {
             var noteClientIds = [];
-            notes.forEach(function (note) {
+            notes.getList().forEach(function (note) {
                 var clientId = note.getClientId();
                 noteClientIds.push(clientId);
             });
