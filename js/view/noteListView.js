@@ -6,6 +6,7 @@
     Notes.view.noteListView = function(options) {
         var that = {};
 
+        var viewFactory = options.viewFactory;
         var viewUtilities = options.viewUtilities;
 
         var rootNode = options.rootNode;
@@ -18,7 +19,7 @@
             createHtmlNodes();
             renderItems();
 
-            // TODO Subscribe to listItemAdded.
+            viewModel.setNoteAddedListener(onNoteAdded);
             // TODO Subscribe to listItemRemoved.
             // TODO Subscribe to listChanged.
         };
@@ -110,6 +111,52 @@
             viewUtilities.html.append(contentNode, emptyNode);
         };
 
+        var hideEmptyMessage = function () {
+            clearContent();
+
+            var hasEmptyCssClass = viewUtilities.css.hasClass(contentNode,
+                EMPTY_CSS_CLASS);
+            if (hasEmptyCssClass) {
+                viewUtilities.css.removeClass(contentNode,
+                    EMPTY_CSS_CLASS);
+            }
+        };
+
+        var clearContent = function () {
+            // TODO Smooth transition when clearing content.
+            var itemViewAndNode;
+            while (itemViewsAndNodes.length !== 0) {
+                itemViewAndNode = itemViewsAndNodes.pop();
+                destroyAndClearItem(itemViewAndNode);
+            }
+
+            viewUtilities.html.clearChildNodes(contentNode);
+        };
+
+        var destroyAndClearItem = function (itemViewAndNode) {
+            itemViewAndNode.view.destroy();
+            viewUtilities.html.removeChild(contentNode,
+                itemViewAndNode.node);
+        };
+
+        var onNoteAdded = function (listItemViewModel, index) {
+            if (itemViewsAndNodes.length === 0) {
+                hideEmptyMessage();
+            }
+
+            var itemAndView = createAndRenderItem(listItemViewModel);
+            var nextItemAndView;
+            if (index === itemViewsAndNodes.length) {
+                itemViewsAndNodes.push(itemAndView);
+                viewUtilities.html.append(contentNode, itemAndView.node);
+            } else {
+                nextItemAndView = itemViewsAndNodes[index];
+                itemViewsAndNodes.splice(index, 0, itemAndView);
+                viewUtilities.html.insertBefore(contentNode,
+                    nextItemAndView.node, itemAndView.node);
+            }
+        };
+
         var createAndRenderItem = function (itemViewModel) {
             var itemRootNode = viewUtilities.html.createElement("div", {
                 cssClass: "list-item"
@@ -124,20 +171,6 @@
                 view: itemView,
                 node: itemRootNode
             };
-        };
-
-        var clearContent = function () {
-            var itemViewAndNode;
-            while (itemViewsAndNodes.length !== 0) {
-                itemViewAndNode = itemViewsAndNodes.pop();
-                destroyAndClearItem(itemViewAndNode);
-            }
-        };
-
-        var destroyAndClearItem = function (itemViewAndNode) {
-            itemViewAndNode.view.destroy();
-            viewUtilities.html.removeChild(contentNode,
-                itemViewAndNode.node);
         };
 
         that.destroy = function () {

@@ -33,6 +33,19 @@
             viewModel: viewModel,
         });
         view.render();
+
+        var viewUtilities = appOptions.viewUtilities;
+        var createNewButton = viewUtilities.traversal.findWithId(
+            "list-empty-example-button-create-new");
+        var noteIdCounter = 1;
+        viewUtilities.button.onClick(createNewButton, function () {
+            appOptions.requestBuilderMock
+                .setNextPostResponseAsNoteCreatedWithId(noteIdCounter++);
+            appOptions.model.createNote("A new note");
+        });
+
+        appOptions.requestBuilderMock
+            .setNextDeleteResponseAsOfflineError();
     };
 
     var setupOneItemExample = function (appOptions, rootNode) {

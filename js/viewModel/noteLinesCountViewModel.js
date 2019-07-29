@@ -97,8 +97,12 @@
         var updateLinesCount = function (newText) {
             var oldLinesCount = linesCount;
 
-            var lines = newText.split("\n");
-            linesCount = lines.length;
+            if (newText === null) {
+                linesCount = 0;
+            } else {
+                var lines = newText.split("\n");
+                linesCount = lines.length;
+            }
 
             if (oldLinesCount !== linesCount &&
                     changeListenerCallback !== null) {

@@ -56,12 +56,10 @@
                     event = eventIterator.next();
                 }
 
-                if (event === null) {
-                    return;
+                if (event !== null) {
+                    var newNoteClientIds = event.options.newList;
+                    refreshList(newNoteClientIds);
                 }
-
-                var newNoteClientIds = event.options.newList;
-                refreshList(newNoteClientIds);
 
                 listenToModelEvents();
             }, LIST_CHANGE_CHECK_TIMEOUT_MS);
@@ -102,6 +100,7 @@
         var addNewItemsInPlace = function (newItemIds, referenceList) {
             newItemIds.forEach(function (id) {
                 var listItemViewModel = createItemViewModel(id);
+
                 var index = referenceList.indexOf(id);
                 items.splice(index, 0, listItemViewModel);
 
@@ -114,7 +113,7 @@
         var removeOldItemsInPlace = function (oldItemIds) {
             oldItemIds.forEach(function (id) {
                 var index = noteClientIds.indexOf(id);
-                var listItemViewModel = listItemViewModels[index];
+                var listItemViewModel = items[index];
                 removeItemViewModel(listItemViewModel);
 
                 items.splice(index, 1);

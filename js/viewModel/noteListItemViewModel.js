@@ -5,6 +5,7 @@
         var that = {};
 
         // Member variables.
+        var model = options.model;
         var viewModelEvents = options.viewModelEvents;
 
         var noteClientId = null;
