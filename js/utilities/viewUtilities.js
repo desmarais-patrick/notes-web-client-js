@@ -107,7 +107,7 @@
         };
 
         viewUtilities.html = {};
-        viewUtilities.html.clearChildrenNodes = function (node) {
+        viewUtilities.html.clearChildNodes = function (node) {
             var children = node.children;
             for (var i = children.length - 1; i >= 0; i--) {
                 var child = children[i];
@@ -139,6 +139,9 @@
             childNodes.forEach(function (childNode) {
                 node.appendChild(childNode);
             });
+        };
+        viewUtilities.html.insertBefore = function (parentNode, nextNode, node) {
+            parentNode.insertBefore(node, nextNode);
         };
 
         viewUtilities.button = {};

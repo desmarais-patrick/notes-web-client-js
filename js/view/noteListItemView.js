@@ -158,7 +158,7 @@
             }
 
             // Remove all elements created.
-            viewUtilities.html.clearChildrenNodes(rootNode);
+            viewUtilities.html.clearChildNodes(rootNode);
         };
 
         return that;
