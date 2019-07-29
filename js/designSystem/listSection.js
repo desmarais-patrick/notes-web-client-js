@@ -35,17 +35,50 @@
         view.render();
 
         var viewUtilities = appOptions.viewUtilities;
+
+        var noteIdCounter = 1;
+        var addNewNote = function () {
+            appOptions.requestBuilderMock
+                .setNextPostResponseAsNoteCreatedWithId(noteIdCounter);
+            appOptions.model.createNote("A new note " + noteIdCounter);
+            noteIdCounter++;
+        };
+        var deleteRandomNote = function () {
+            var notes = appOptions.model.getNotes();
+            var notesList = notes.getList();
+
+            var notesListLength = notesList.length;
+            if (notesListLength === 0) {
+                return;
+            }
+
+            var randomIndex = generateRandom(notesListLength);
+            var note = notesList[randomIndex];
+            appOptions.model.deleteNote(note);
+        };
+
+        // Add new button.
         var createNewButton = viewUtilities.traversal.findWithId(
             "list-empty-example-button-create-new");
         var noteIdCounter = 1;
-        viewUtilities.button.onClick(createNewButton, function () {
-            appOptions.requestBuilderMock
-                .setNextPostResponseAsNoteCreatedWithId(noteIdCounter++);
-            appOptions.model.createNote("A new note");
-        });
+        viewUtilities.button.onClick(createNewButton, addNewNote);
 
+        // Setup delete on each list item.
         appOptions.requestBuilderMock
             .setNextDeleteResponseAsOfflineError();
+
+        // Add/remove button.
+        var updateManyButton = viewUtilities.traversal.findWithId(
+            "list-empty-example-button-update-many");
+        viewUtilities.button.onClick(updateManyButton, function () {
+            deleteRandomNote();
+            addNewNote();
+        });
+    };
+
+    var generateRandom = function (max) {
+        var randomLong = Math.random() * max;
+        return Math.floor(randomLong);
     };
 
     var setupOneItemExample = function (appOptions, rootNode) {
