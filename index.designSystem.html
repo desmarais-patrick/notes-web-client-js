@@ -599,20 +599,23 @@
 
             <div class="component">
                 <div id="backToTop-initial-example" class="back-to-top"
-                    ><a class="default" href="#">Back to top ↑</a></div>
+                    ><a class="default back-to-top-link" href="#top"></a></div>
                 <label class="component-label">Initial</label>
                 <div class="component-notes">
                     <p>Initially, back-to-top component is not shown since 
-                        there is no note to display.</p>
+                        there is no note displayed.</p>
                 </div>
             </div>
 
             <div class="spacer-small"></div>
 
             <div class="component">
-                <div id="backToTop-initial-example" class="back-to-top"
-                    ><a class="default" href="#">Back to top ↑</a></div>
+                <div id="backToTop-withNotes-example" class="back-to-top"
+                    ><a class="default back-to-top-link" href="#top"></a></div>
                 <label class="component-label">With notes</label>
+                <div class="component-notes">
+                    <p>With 4 notes or more, back-to-top component is shown.</p>
+                </div>
             </div>
 
             <a class="section-back-to-top-link" href="top">Return to top ↑</a>
@@ -669,6 +672,7 @@
     <script type="text/javascript" src="js/viewModel/index.js"></script>
     <script type="text/javascript" src="js/viewModel/applicationStatusViewModel.js"></script>
     <script type="text/javascript" src="js/viewModel/appViewModel.js"></script>
+    <script type="text/javascript" src="js/viewModel/backToTopViewModel.js"></script>
     <script type="text/javascript" src="js/viewModel/editorViewModel.js"></script>
     <script type="text/javascript" src="js/viewModel/events.js"></script>
     <script type="text/javascript" src="js/viewModel/noteDateViewModel.js"></script>
@@ -684,6 +688,7 @@
     <script type="text/javascript" src="js/view/animations.js"></script>
     <script type="text/javascript" src="js/view/applicationStatusView.js"></script>
     <script type="text/javascript" src="js/view/appView.js"></script>
+    <script type="text/javascript" src="js/view/backToTopView.js"></script>
     <script type="text/javascript" src="js/view/deleteNoteActionView.js"></script>
     <script type="text/javascript" src="js/view/editNoteActionView.js"></script>
     <script type="text/javascript" src="js/view/editorView.js"></script>
@@ -699,6 +704,7 @@
     <script type="text/javascript" src="js/designSystem/index.js"></script>
     <script type="text/javascript" src="js/designSystem/animationSection.js"></script>
     <script type="text/javascript" src="js/designSystem/applicationStatusSection.js"></script>
+    <script type="text/javascript" src="js/designSystem/backToTopSection.js"></script>
     <script type="text/javascript" src="js/designSystem/editorSection.js"></script>
     <script type="text/javascript" src="js/designSystem/listSection.js"></script>
     <script type="text/javascript" src="js/designSystem/listItemsSection.js"></script>

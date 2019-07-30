@@ -15,6 +15,7 @@
         Notes.designSystem.setupEditorSection(createAppOptions);
         Notes.designSystem.setupListSection(createAppOptions);
         Notes.designSystem.setupListItemsSection(createAppOptions);
+        Notes.designSystem.setupBackToTopSection(createAppOptions);
     };
 
     var createAppOptions = function () {
@@ -62,6 +63,7 @@
             createAppViewModel: Notes.viewModel.appViewModel,
             createApplicationStatusViewModel:
                 Notes.viewModel.applicationStatusViewModel,
+            createBackToTopViewModel: Notes.viewModel.backToTopViewModel,
             createEditorViewModel: Notes.viewModel.editorViewModel,
             createNoteDateViewModel: Notes.viewModel.noteDateViewModel,
             createNoteInputViewModel: Notes.viewModel.noteInputViewModel,
@@ -82,6 +84,7 @@
 
             createAppView: Notes.view.appView,
             createApplicationStatusView: Notes.view.applicationStatusView,
+            createBackToTopView: Notes.view.backToTopView,
             createDeleteNoteActionView: Notes.view.deleteNoteActionView,
             createEditNoteActionView: Notes.view.editNoteActionView,
             createEditorView: Notes.view.editorView,

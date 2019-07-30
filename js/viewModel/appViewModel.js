@@ -12,6 +12,7 @@
         var appStatusViewModel = null;
         var editorViewModel = null;
         var listViewModel = null;
+        var backToTopViewModel = null;
 
         var editNoteListenerCallback = null;
 
@@ -26,6 +27,9 @@
             listViewModel = viewModelFactory.create("List");
             listViewModel.initialize();
 
+            backToTopViewModel = viewModelFactory.create("BackToTop");
+            backToTopViewModel.initialize();
+
             viewModelEvents.on("EditNote", onEditNote);
         };
 
@@ -33,6 +37,7 @@
             appStatusViewModel.destroy();
             editorViewModel.destroy();
             listViewModel.destroy();
+            backToTopViewModel.destroy();
 
             viewModelEvents.off("EditNote", onEditNote);
         };
@@ -45,6 +50,9 @@
         };
         that.getListViewModel = function () {
             return listViewModel;
+        };
+        that.getBackToTopViewModel = function () {
+            return backToTopViewModel;
         };
 
         that.setEditNoteListener = function (newListenerCallback) {

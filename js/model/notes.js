@@ -89,7 +89,7 @@
             }
         };
 
-        var getClientIds = function () {
+        var getClientIds = that.getClientIds = function () {
             var clientIds = [];
             list.forEach(function (note) {
                 var clientId = note.getClientId();

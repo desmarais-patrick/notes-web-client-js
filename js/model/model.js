@@ -34,12 +34,7 @@
         };
 
         that.getNoteClientIds = function () {
-            var noteClientIds = [];
-            notes.getList().forEach(function (note) {
-                var clientId = note.getClientId();
-                noteClientIds.push(clientId);
-            });
-            return noteClientIds;
+            return notes.getClientIds();
         };
 
         that.requestMoreNotes = function (optionalCallback) {

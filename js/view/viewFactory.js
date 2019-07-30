@@ -12,6 +12,7 @@
 
         var createAppView = options.createAppView;
         var createApplicationStatusView = options.createApplicationStatusView;
+        var createBackToTopView = options.createBackToTopView;
         var createDeleteNoteActionView = options.createDeleteNoteActionView;
         var createEditorView = options.createEditorView;
         var createEditNoteActionView = options.createEditNoteActionView;
@@ -41,6 +42,8 @@
                     return createAppView(factoryOptions);
                 case "ApplicationStatus":
                     return createApplicationStatusView(factoryOptions);
+                case "BackToTop":
+                    return createBackToTopView(factoryOptions);
                 case "DeleteNoteAction":
                     return createDeleteNoteActionView(factoryOptions);
                 case "EditNoteAction":

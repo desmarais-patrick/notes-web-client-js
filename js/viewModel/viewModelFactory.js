@@ -19,6 +19,7 @@
         var createAppViewModel = options.createAppViewModel;
         var createApplicationStatusViewModel =
             options.createApplicationStatusViewModel;
+        var createBackToTopViewModel = options.createBackToTopViewModel;
         var createEditorViewModel = options.createEditorViewModel;
         var createNoteDateViewModel = options.createNoteDateViewModel;
         var createNoteInputViewModel = options.createNoteInputViewModel;
@@ -51,6 +52,8 @@
                     return createAppViewModel(viewModelOptions);
                 case "ApplicationStatus":
                     return createApplicationStatusViewModel(viewModelOptions);
+                case "BackToTop":
+                    return createBackToTopViewModel(viewModelOptions);
                 case "Editor":
                     return createEditorViewModel(viewModelOptions);
                 case "NoteDate":
