@@ -1,0 +1,34 @@
+.container {
+    margin: 0 4rem;
+}
+.spacer {
+    width: 100%;
+    height: 6rem;
+}
+.spacer-small {
+    width: 100%;
+    height: 3rem;
+}
+
+@media (min-width: 360px) {
+    .container {
+        margin: 0 auto;
+        padding: 0 4rem;
+        max-width: 500px;
+    }
+
+    .spacer {
+        height: 9rem;
+    }
+    .spacer-small {
+        height: 4.5rem;
+    }
+}
+
+@media (min-width: 720px) {
+    .container {
+        margin: 0 auto;
+        padding: 0 9rem;
+        max-width: 720px;
+    }
+}

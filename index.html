@@ -5,7 +5,20 @@
 
     <!-- Styling -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+
     <link href="css/index.css" rel="stylesheet">
+    <link href="css/animations.css" rel="stylesheet">
+    <link href="css/container.css" rel="stylesheet">
+    <link href="css/editor.css" rel="stylesheet">
+    <link href="css/fonts.css" rel="stylesheet">
+    <link href="css/header.css" rel="stylesheet">
+    <link href="css/links.css" rel="stylesheet">
+    <link href="css/buttons.css" rel="stylesheet">
+    <link href="css/list.css" rel="stylesheet">
+    <link href="css/listItems.css" rel="stylesheet">
+    <link href="css/backToTop.css" rel="stylesheet">
+    <link href="css/footer.css" rel="stylesheet">
 
     <!-- Browser customization -->
     <meta name="theme-color" content="#FF5252">
@@ -18,12 +31,99 @@
     
 </head>
 <body>
-    <img src="img/logo.svg" alt="Notes app logo" />
-    <h1 class="title">Notes</h1>
-    <h2>Hello-World Example</h2>
-    <p id="app"></p>
-    <button>Example button</button>
-    <div><small><a href="https://github.com/desmarais-patrick/notes" target="_blank"><img src="img/info-icon.svg" alt="Info icon" /> About this project</a></small></div>
+    <div id="app" class="container">
+        <div id="top" class="spacer-small"></div>
+
+        <header class="header">
+            <div class="header-first-part">
+                <div class="logo-container">
+                    <img class="logo" src="img/logo.svg" alt="Logo" />
+                </div><div
+                    class="title-container">
+                    <h1 class="title">Notes</h1>
+                </div>
+                <div class="alpha-release-container">
+                    <div class="alpha-release"
+                        >Demo<span class="alpha-release-extra-label"
+                        > version</span></div>
+                </div>
+                <div class="application-status" style="display: none">
+                    <p class="app-status-text"></p>
+                </div>
+            </div>
+        </header>
+
+        <div class="spacer-small"></div>
+
+        <section id="editor" class="editor">
+            <div class="editor-actions editor-actions-top">
+                <button type="button"
+                        class="button-weak editor-actions-delete"
+                        >Delete</button>
+                <button type="button"
+                        class="button-default editor-actions-new"
+                        >New</button>
+            </div>
+            <div class="editor-container">
+                <div class="editor-inner-container">
+                    <div class="editor-header">
+                        <div class="editor-title"
+                            ><label for="note-example-1">Note</label></div><div
+                            class="editor-date secondary-text"></div><div
+                            class="editor-status secondary-text"></div>
+                    </div>
+                    <div class="editor-input">
+                        <textarea class="editor-input-textarea"
+                                placeholder="Type here"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="editor-actions editor-actions-bottom">
+                <button type="button"
+                        class="button-weak editor-actions-delete"
+                        >Delete</button>
+                <button type="button"
+                        class="button-default editor-actions-new"
+                        >New</button>
+            </div>
+        </section>
+
+        <div class="spacer"></div>
+
+        <section id="list" class="list"></section>
+
+        <div class="spacer"></div>
+
+        <nav id="backToTop" class="back-to-top"
+            ><a class="default back-to-top-link" href="#top"></a></nav>
+
+        <div class="spacer-small"></div>
+
+        <div id="footer" class="footer">
+            <div class="footer-item">
+                <div class="logo-container">
+                    <img src="img/logo-small.svg" alt="Footer logo" />
+                </div>
+            </div>
+            <div class="footer-item"
+                ><img src="img/logo-small.svg" alt="Footer logo" /><a class="default"
+                    href="https://github.com/desmarais-patrick/notes"
+                    >About this project</a></div>
+                    <div class="footer-item">
+                        <div class="logo-container">
+                            <img src="img/logo-small.svg" alt="Footer logo" />
+                        </div>
+                    </div>
+            <div class="footer-item">
+                <p>Copyright ⓒ 2019 Patrick Desmarais.</p>
+            </div>
+            <div class="footer-item">
+                <div class="logo-container">
+                    <img src="img/logo-small.svg" alt="Footer logo" />
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Scripts -->
     <script type="text/javascript" src="js/index.js"></script>
@@ -43,10 +143,42 @@
     <script type="text/javascript" src="js/model/note.js"></script>
     <script type="text/javascript" src="js/model/notes.js"></script>
 
-    <script type="text/javascript" src="js/view/index.js"></script>
-    <script type="text/javascript" src="js/view/page.js"></script>
+    <script type="text/javascript" src="js/utilities/index.js"></script>
+    <script type="text/javascript" src="js/utilities/dateUtilities.js"></script>
+    <script type="text/javascript" src="js/utilities/listUtilities.js"></script>
+    <script type="text/javascript" src="js/utilities/viewUtilities.js"></script>
 
     <script type="text/javascript" src="js/viewModel/index.js"></script>
+    <script type="text/javascript" src="js/viewModel/applicationStatusViewModel.js"></script>
+    <script type="text/javascript" src="js/viewModel/appViewModel.js"></script>
+    <script type="text/javascript" src="js/viewModel/backToTopViewModel.js"></script>
+    <script type="text/javascript" src="js/viewModel/editorViewModel.js"></script>
+    <script type="text/javascript" src="js/viewModel/events.js"></script>
+    <script type="text/javascript" src="js/viewModel/noteDateViewModel.js"></script>
+    <script type="text/javascript" src="js/viewModel/noteInputViewModel.js"></script>
+    <script type="text/javascript" src="js/viewModel/noteLinesCountViewModel.js"></script>
+    <script type="text/javascript" src="js/viewModel/noteListItemViewModel.js"></script>
+    <script type="text/javascript" src="js/viewModel/noteListViewModel.js"></script>
+    <script type="text/javascript" src="js/viewModel/noteStatusViewModel.js"></script>
+    <script type="text/javascript" src="js/viewModel/noteTextStartViewModel.js"></script>
+    <script type="text/javascript" src="js/viewModel/viewModelFactory.js"></script>
+
+    <script type="text/javascript" src="js/view/index.js"></script>
+    <script type="text/javascript" src="js/view/animations.js"></script>
+    <script type="text/javascript" src="js/view/applicationStatusView.js"></script>
+    <script type="text/javascript" src="js/view/appView.js"></script>
+    <script type="text/javascript" src="js/view/backToTopView.js"></script>
+    <script type="text/javascript" src="js/view/deleteNoteActionView.js"></script>
+    <script type="text/javascript" src="js/view/editNoteActionView.js"></script>
+    <script type="text/javascript" src="js/view/editorView.js"></script>
+    <script type="text/javascript" src="js/view/loadMoreNotesView.js"></script>
+    <script type="text/javascript" src="js/view/newNoteActionView.js"></script>
+    <script type="text/javascript" src="js/view/noteInputView.js"></script>
+    <script type="text/javascript" src="js/view/noteListItemView.js"></script>
+    <script type="text/javascript" src="js/view/noteListView.js"></script>
+    <script type="text/javascript" src="js/view/noteStatusTextView.js"></script>
+    <script type="text/javascript" src="js/view/textView.js"></script>
+    <script type="text/javascript" src="js/view/viewFactory.js"></script>
 
     <script type="text/javascript" src="js/main.js"></script>
 </body>

@@ -24,7 +24,7 @@
             editorViewModel = viewModelFactory.create("Editor");
             editorViewModel.initialize();
 
-            listViewModel = viewModelFactory.create("List");
+            listViewModel = viewModelFactory.create("NoteList");
             listViewModel.initialize();
 
             backToTopViewModel = viewModelFactory.create("BackToTop");

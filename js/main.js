@@ -26,13 +26,77 @@
     };
     var model = Notes.model.model(modelOptions);
 
-    var rootId = "app";
-    var pageOptions = {
+    var dateUtilities = Notes.utilities.dateUtilities();
+    var listUtilities = Notes.utilities.listUtilities();
+
+    var viewUtilities = Notes.utilities.viewUtilities({
         document: window.document,
+    });
+
+    var animations = Notes.view.animations({
+        setTimeout: window.setTimeout,
+        viewUtilities: viewUtilities,
+    });
+
+    var viewModelEvents = Notes.viewModel.events();
+
+    var viewModelFactory = Notes.viewModel.viewModelFactory({
+        setTimeout: window.setTimeout,
+        clearTimeout: window.clearTimeout,
+
+        dateUtilities: dateUtilities,
+        listUtilities: listUtilities,
+        
         model: model,
-        rootNodeId: rootId
-    };
-    var page = Notes.view.page(pageOptions);
+        APP_STATUS_ENUM: Notes.model.app.STATUS_ENUM,
+        NOTE_STATUS_ENUM: Notes.model.note.STATUS_ENUM,
+
+        viewModelEvents: viewModelEvents,
+
+        createAppViewModel: Notes.viewModel.appViewModel,
+        createApplicationStatusViewModel:
+            Notes.viewModel.applicationStatusViewModel,
+        createBackToTopViewModel: Notes.viewModel.backToTopViewModel,
+        createEditorViewModel: Notes.viewModel.editorViewModel,
+        createNoteDateViewModel: Notes.viewModel.noteDateViewModel,
+        createNoteInputViewModel: Notes.viewModel.noteInputViewModel,
+        createNoteLinesCountViewModel:
+            Notes.viewModel.noteLinesCountViewModel,
+        createNoteListItemViewModel: Notes.viewModel.noteListItemViewModel,
+        createNoteListViewModel: Notes.viewModel.noteListViewModel,
+        createNoteStatusViewModel: Notes.viewModel.noteStatusViewModel,
+        createNoteTextStartViewModel: Notes.viewModel.noteTextStartViewModel,
+    });
+
+    var viewFactory = Notes.view.viewFactory({
+        setTimeout: window.setTimeout,
+        clearTimeout: window.clearTimeout,
+
+        animations: animations,
+        viewUtilities: viewUtilities,
+
+        createAppView: Notes.view.appView,
+        createApplicationStatusView: Notes.view.applicationStatusView,
+        createBackToTopView: Notes.view.backToTopView,
+        createDeleteNoteActionView: Notes.view.deleteNoteActionView,
+        createEditNoteActionView: Notes.view.editNoteActionView,
+        createEditorView: Notes.view.editorView,
+        createLoadMoreNotesView: Notes.view.loadMoreNotesView,
+        createNewNoteActionView: Notes.view.newNoteActionView,
+        createNoteInputView: Notes.view.noteInputView,
+        createNoteListItemView: Notes.view.noteListItemView,
+        createNoteListView: Notes.view.noteListView,
+        createNoteStatusTextView: Notes.view.noteStatusTextView,
+        createTextView: Notes.view.textView,
+    });
+
+    var rootNode = viewUtilities.traversal.findWithId("app");
+    var viewModel = viewModelFactory.create("App");
+    viewModel.initialize();
+    var view = viewFactory.create("App", {
+        viewModel: viewModel,
+        rootNode: rootNode
+    });
 
     // Display page when document is ready.
     var isDocumentReady = function () {
@@ -41,11 +105,11 @@
         return (state === "interactive" || state === "complete");
     };
     if (isDocumentReady()) {
-        page.render();
+        view.render();
     } else {
         document.onreadystatechange = function () {
             if (isDocumentReady()) {
-                page.render();
+                view.render();
                 document.onreadystatechange = null; // Render only once.
             }
         };

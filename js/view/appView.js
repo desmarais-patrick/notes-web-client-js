@@ -5,6 +5,7 @@
     Notes.view.appView = function(options) {
         var that = {};
 
+        var viewFactory = options.viewFactory;
         var viewUtilities = options.viewUtilities;
 
         var rootNode = options.rootNode;
@@ -20,7 +21,7 @@
                 rootNode, ".application-status");
             appStatusView = viewFactory.create("ApplicationStatus", {
                 rootNode: appStatusRootNode,
-                viewModel: viewModel.getApplicationStatusViewModel()
+                viewModel: viewModel.getAppStatusViewModel()
             });
             appStatusView.render();
     
