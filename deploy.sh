@@ -20,17 +20,16 @@ then
     exit 1
 fi
 
-ROOT_FILE_1=index.html
-ROOT_FILE_2=favicon.ico
-DIR_1=css
-DIR_2=img
-DIR_3=js
+ROOT_FILES="index.html favicon.ico index.designSystem.html index.unitTest.html index.liveTest.html"
+DIR_CSS=css
+DIR_IMG=img
+DIR_JS=js
 
-echo "Sending $FILE to '$NOTES_APP_WEB_CLIENT_RESOURCES_BUCKET'"
-gsutil cp ${ROOT_FILE_1} ${ROOT_FILE_2} gs://${NOTES_APP_WEB_CLIENT_RESOURCES_BUCKET}
-gsutil cp -r ${DIR_1} gs://${NOTES_APP_WEB_CLIENT_RESOURCES_BUCKET}
-gsutil -m cp -r ${DIR_2} gs://${NOTES_APP_WEB_CLIENT_RESOURCES_BUCKET}
-gsutil cp -r ${DIR_3} gs://${NOTES_APP_WEB_CLIENT_RESOURCES_BUCKET}
+echo "Sending files to bucket '$NOTES_APP_WEB_CLIENT_RESOURCES_BUCKET'"
+gsutil    cp    ${ROOT_FILES} gs://${NOTES_APP_WEB_CLIENT_RESOURCES_BUCKET}
+gsutil -m cp -r ${DIR_CSS}    gs://${NOTES_APP_WEB_CLIENT_RESOURCES_BUCKET}
+gsutil -m cp -r ${DIR_IMG}    gs://${NOTES_APP_WEB_CLIENT_RESOURCES_BUCKET}
+gsutil -m cp -r ${DIR_JS}     gs://${NOTES_APP_WEB_CLIENT_RESOURCES_BUCKET}
 
 echo
 echo
