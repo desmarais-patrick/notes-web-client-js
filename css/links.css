@@ -1,18 +1,19 @@
 a, a.default {
-    color: #FF5252;
-    text-decoration: none;
+    padding: 1rem;
+    color: #B33939;
+    text-decoration: underline;
     background-color: transparent; /* Gray background on active links in IE 10 :s */
 }
 a:hover, a.hover {
-    color: #B33939;
+    color: #5D1E1E;
     text-decoration: underline;
 }
 a:active, a.active {
-    color: #FF5252;
+    color: #B33939;
     text-decoration: underline;
 }
 a:visited, a.visited {
-    color: #B33939;
+    color: #5D1E1E;
 }
 
 a.secondary, a.secondary {

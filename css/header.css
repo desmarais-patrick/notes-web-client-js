@@ -28,23 +28,6 @@
     vertical-align: middle;
 }
 
-.header ul {
-    list-style: none;
-    border-right: .1rem dashed #D94545;
-    padding-right: .9rem;
-    margin: 0;
-    text-align: right;
-}
-
-.header ul li.last-page-link {
-    margin-bottom: 2rem;
-}
-
-.header ul li a {
-    display: inline-block;
-    padding: .5rem;
-}
-
 @media (min-width: 360px) {
     .header .logo-container {
         height: 4rem;
@@ -53,19 +36,6 @@
     .header .logo-container .logo {
         width: 4rem;
         height: 4rem;
-    }
-
-    .header ul {
-        border-right: none;
-        border-left: .1rem dashed #D94545;
-        padding-right: 0;
-        padding-left: 0;
-        margin-left: 3.8rem;
-        text-align: left;
-    }
-
-    .header ul li {
-        padding-left: .5rem;
     }
 }
 

@@ -2,9 +2,14 @@
     margin-bottom: 3rem;
 }
 
-.design-system section > h2 {
-    color: #B33939;
-    margin-bottom: 1.8rem;
+.design-system .container > h2 {
+    text-transform: uppercase;
+}
+
+.design-system section > h3 {
+    margin-bottom: 2rem;
+
+    border-bottom: .05rem dashed #666666;
 }
 
 .design-system section .component,
@@ -12,15 +17,24 @@
     margin-bottom: 3rem;
 }
 
-.design-system section .component > label,
-.design-system section .component-state > label,
-.design-system section .animation > label,
-.design-system section .component.component-resolution label {
+.design-system section .component .component-label,
+.design-system section .component .component-notes p {
     color: #666666;
-    text-transform: uppercase;
     font-size: .8rem;
+}
+.design-system section .component .component-label {
+    text-transform: uppercase;
+    margin-right: 1rem;
     line-height: 1;
 }
+
+.design-system section .component .component-notes {
+    padding: 2rem 0;
+}
+.design-system section .component .component-notes p {
+    line-height: 1.2;
+}
+
 
 .design-system section .component-state,
 .design-system section .component-title {
@@ -36,4 +50,13 @@
     background-color: #CCCCCC;
     color: #333333;
     cursor: not-allowed;
+}
+
+.design-system section .section-back-to-top-link {
+    display: block;
+    
+    border: .1rem dashed;
+    border-radius: .3rem;
+
+    text-align: center;
 }

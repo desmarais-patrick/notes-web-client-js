@@ -24,7 +24,8 @@ h1, .h1, .title {
     font-weight: normal;
 }
 
-h2, .h2 {
+h2, .h2,
+h3, .h3 {
     font-size: 1.2rem;
     font-weight: lighter;
 }
@@ -38,8 +39,8 @@ a {
     font-size: 1rem;
 }
 
-footer p, .footer p,
-footer a, .footer a {
+footer p, .footer p, p.footer-text,
+footer a, .footer a, a.footer-text {
     font-size: .8rem;
 }
 

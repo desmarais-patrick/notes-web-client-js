@@ -16,6 +16,8 @@
     <link href="css/buttons.css" rel="stylesheet">
     <link href="css/list.css" rel="stylesheet">
     <link href="css/listItems.css" rel="stylesheet">
+    <link href="css/backToTop.css" rel="stylesheet">
+    <link href="css/footer.css" rel="stylesheet">
 
     <link href="css/designSystem/index.css" rel="stylesheet">
     <link href="css/designSystem/footer.css" rel="stylesheet">
@@ -43,12 +45,17 @@
 
         <header>
             <h1>Design System</h1>
-            <p>Notes app</p>
+            <p class="subtitle">Notes app</p>
+
+            <p class="section-group-title">Foundation</p>
             <ul>
                 <li><a href="#breakpoints">Breakpoints</a></li>
                 <li><a href="#texts">Texts</a></li>
                 <li><a href="#colors">Colors</a></li>
                 <li><a href="#animations">Animations</a></li>
+            </ul>
+            <p class="section-group-title">Components</p>
+            <ul>
                 <li><a href="#logo">Logo</a></li>
                 <li><a href="#links">Links</a></li>
                 <li><a href="#buttons">Buttons</a></li>
@@ -57,13 +64,19 @@
                 <li><a href="#editor">Editor</a></li>
                 <li><a href="#list">List</a></li>
                 <li><a href="#listItems">List items</a></li>
+                <li><a href="#backToTop">Back-to-Top</a></li>
+                <li><a href="#footer">Footer</a></li>
             </ul>
         </header>
 
         <div class="spacer"></div>
 
+        <h2>Foundations</h2>
+
+        <div class="spacer-small"></div>
+
         <section id="breakpoints">
-            <h2>Breakpoints</h2>
+            <h3>Breakpoints</h3>
 
             <div class="component component-resolution">
                 <div class="scale">
@@ -81,9 +94,9 @@
                     <div class="large">Active resolution</div>
                 </div>
                 <div class="legend">
-                    <div class="small"><label>Small</label></div>
-                    <div class="medium"><label>Medium</label></div>
-                    <div class="large"><label>Large</label></div>
+                    <div class="small"><label class="component-label">Small</label></div>
+                    <div class="medium"><label class="component-label">Medium</label></div>
+                    <div class="large"><label class="component-label">Large</label></div>
                 </div>
             </div>
         </section>
@@ -91,65 +104,65 @@
         <div class="spacer"></div>
 
         <section id="texts">
-            <h2>Texts</h2>
+            <h3>Texts</h3>
 
             <div class="component component-text-h1">
                 <h1>Notes App</h1>
-                <label>Title</label>
+                <label class="component-label">Title</label>
             </div>
             <div class="component component-text-text">
                 <p>Welcome to the Notes App!</p>
-                <label>Text</label>
+                <label class="component-label">Text</label>
             </div>
-            <div class="component component-text-footer footer">
-                <p>Copyright ⓒ 2019 Patrick Desmarais.</p>
-                <label>Footer text</label>
+            <div class="component component-text-footer">
+                <p class="footer-text">Copyright ⓒ 2019 Patrick Desmarais.</p>
+                <label class="component-label">Footer text</label>
             </div>
-            <a href="#top">Return to top ↑</a>
+            <a class="section-back-to-top-link" href="top">Return to top ↑</a>
         </section>
 
         <div class="spacer"></div>
 
         <section id="colors">
-            <h2>Colors</h2>
+            <h3>Colors</h3>
 
             <div class="component component-color background">
                 <div class="color-square"></div>
-                <label>Background<br>#FAFAFA</label>
+                <label class="component-label">Background<br>#FAFAFA</label>
             </div>
             <div class="component component-color text-1">
                 <div class="color-square"></div>
-                <label>Text 1<br>#333333</label>
+                <label class="component-label">Text 1<br>#333333</label>
             </div>
             <div class="component component-color text-2">
                 <div class="color-square"></div>
-                <label>Text 2<br>#666666</label>
+                <label class="component-label">Text 2<br>#666666</label>
             </div>
 
             <div class="component component-color accent-1">
                 <div class="color-square"></div>
-                <label>Accent 1<br>#FF5252</label>
+                <label class="component-label">Accent 1<br>#FF5252</label>
             </div>
             <div class="component component-color darker-accent-1">
                 <div class="color-square"></div>
-                <label>Darker Accent 1<br>#B33939</label>
+                <label class="component-label">Darker Accent 1<br>#B33939</label>
             </div>
             <div class="component component-color accent-2">
                 <div class="color-square"></div>
-                <label>Accent 2<br>#0E48AB</label>
+                <label class="component-label">Accent 2<br>#0E48AB</label>
             </div>
 
             <div class="clear-left"></div>
-            <a href="#top">Return to top ↑</a>
+            <a class="section-back-to-top-link" href="top">Return to top ↑</a>
         </section>
 
         <div class="spacer"></div>
 
         <section id="animations">
-            <h2>Animations</h2>
+            <h3>Animations</h3>
 
             <div class="animation">
-                <label>Fade in and scale</label>
+                <label class="component-label">Fade in and scale</label>
                 <div class="animation-demo">
                     <div class="animation-description">
                         <p>Example:<br>Logo appears</p>
@@ -165,7 +178,7 @@
             </div>
 
             <div class="animation">
-                <label>Fade out and collapse</label>
+                <label class="component-label">Fade out and collapse</label>
                 <div class="animation-demo">
                     <div class="animation-description">
                         <p>Example:<br>List item disappears</p>
@@ -185,7 +198,7 @@
             </div>
 
             <div class="animation">
-                <label>Cross-fade</label>
+                <label class="component-label">Cross-fade</label>
                 <div class="animation-demo">
                     <div class="animation-description">
                         <p>Example:<br>Text updates</p>
@@ -203,99 +216,103 @@
                     </div>
                 </div>
             </div>
-            <a href="#top">Return to top ↑</a>
+            <a class="section-back-to-top-link" href="top">Return to top ↑</a>
         </section>
 
         <div class="spacer"></div>
 
+        <h2>Components</h2>
+
+        <div class="spacer-small"></div>
+
         <section id="logo">
-            <h2>Logo</h2>
+            <h3>Logo</h3>
 
             <div class="component">
                 <div class="logo-container">
                     <img src="img/logo.svg" alt="Header logo" />
                 </div>
-                <label> Header</label>
+                <label class="component-label"> Header</label>
             </div>
 
             <div class="component">
                 <div class="logo-container">
                     <img src="img/logo-small.svg" alt="Footer logo" />
                 </div>
-                <label> Footer</label>
+                <label class="component-label"> Footer</label>
             </div>
 
-            <a href="#top">Return to top ↑</a>
+            <a class="section-back-to-top-link" href="top">Return to top ↑</a>
         </section>
     
         <div class="spacer"></div>
 
         <section id="links">
-            <h2>Links</h2>
+            <h3>Links</h3>
 
             <div class="component">
                 <p class="component-title"><strong>Default</strong></p>
                 <div class="component-state">
                     <a class="default" href="#links">New note ↓</a><br>
-                    <label>Default</label>
+                    <label class="component-label">Default</label>
                 </div>
                 <div class="component-state">
                     <a class="hover" href="#links">New note ↓</a><br>
-                    <label>Hover</label>
+                    <label class="component-label">Hover</label>
                 </div>
                 <div class="component-state">
                     <a class="active" href="#links">New note ↓</a><br>
-                    <label>Active</label>
+                    <label class="component-label">Active</label>
                 </div>
                 <div class="component-state">
                     <a class="visited" href="#links">New note ↓</a><br>
-                    <label>Visited</label>
+                    <label class="component-label">Visited</label>
                 </div>
             </div>
             <div class="component">
                 <p class="component-title"><strong>Secondary</strong></p>
                 <div class="component-state">
                     <a class="secondary" href="#links">About this project ⇱</a><br>
-                    <label>Default</label>
+                    <label class="component-label">Default</label>
                 </div>
                 <div class="component-state">
                     <a class="secondary hover" href="#links">About this project ⇱</a><br>
-                    <label>Hover</label>
+                    <label class="component-label">Hover</label>
                 </div>
                 <div class="component-state">
                     <a class="secondary active" href="#links">About this project ⇱</a><br>
-                    <label>Active</label>
+                    <label class="component-label">Active</label>
                 </div>
                 <div class="component-state">
                     <a class="secondary visited" href="#links">About this project ⇱</a><br>
-                    <label>Visited</label>
+                    <label class="component-label">Visited</label>
                 </div>
             </div>
 
-            <a href="#top">Return to top ↑</a>
+            <a class="section-back-to-top-link" href="top">Return to top ↑</a>
         </section>
     
         <div class="spacer"></div>
 
         <section id="buttons">
-            <h2>Buttons</h2>
+            <h3>Buttons</h3>
 
             <div class="component">
                 <p class="component-title"><strong>Default</strong></p>
                 <div class="component-state">
                     <button class="button-default"
                         type="button">New</button><br>
-                    <label>Default</label>
+                    <label class="component-label">Default</label>
                 </div>
                 <div class="component-state">
                     <button class="button-default button-hover"
                             type="button">New</button><br>
-                    <label>Hover</label>
+                    <label class="component-label">Hover</label>
                 </div>
                 <div class="component-state">
                     <button class="button-default button-active"
                             type="button">New</button><br>
-                    <label>Active</label>
+                    <label class="component-label">Active</label>
                 </div>
             </div>
             <div class="component">
@@ -303,27 +320,27 @@
                 <div class="component-state">
                     <button class="button-weak"
                             type="button">Delete</button><br>
-                    <label>Default</label>
+                    <label class="component-label">Default</label>
                 </div>
                 <div class="component-state">
                     <button class="button-weak button-hover"
                             type="button">Delete</button><br>
-                    <label>Hover</label>
+                    <label class="component-label">Hover</label>
                 </div>
                 <div class="component-state">
                     <button class="button-weak button-active"
                             type="button">Delete</button><br>
-                    <label>Active</label>
+                    <label class="component-label">Active</label>
                 </div>
             </div>
 
-            <a href="#top">Return to top ↑</a>
+            <a class="section-back-to-top-link" href="top">Return to top ↑</a>
         </section>
     
         <div class="spacer"></div>
 
         <section id="header">
-            <h2>Header</h2>
+            <h3>Header</h3>
 
             <div class="component">
                 <div id="headerExample" class="header">
@@ -335,55 +352,48 @@
                             <h1 class="title">Notes</h1>
                         </div>
                         <div class="alpha-release-container">
-                            <div class="alpha-release">Alpha<span class="alpha-release-extra-label"> version</span></div>
+                            <div class="alpha-release">Demo<span class="alpha-release-extra-label"> version</span></div>
                         </div>
-                    </div>
-                    <div class="header-second-part">
-                        <ul class="links">
-                            <li><a href="#editor">New note ↓</a></li>
-                            <li class="last-page-link"><a href="#editor">Notes ↓</a></li>
-                            <li><a class="secondary" href="https://github.com/desmarais-patrick/notes">About this project ⇱</a></li>
-                        </ul>
                     </div>
                 </div>
             </div>
 
-            <a href="#top">Return to top ↑</a>
+            <a class="section-back-to-top-link" href="top">Return to top ↑</a>
         </section>
     
         <div class="spacer"></div>
 
         <section id="applicationStatus">
-            <h2>Application Status</h2>
+            <h3>Application Status</h3>
 
             <div class="component">
                 <div id="example-app-status-initial" class="app-status">
                     <p class="app-status-text">Welcome!</p>
                 </div>
-                <label>Initial</label>
+                <label class="component-label">Initial</label>
             </div>
 
             <div class="component">
                 <div id="example-app-status-working" class="app-status">
                     <p class="app-status-text">Welcome!</p>
                 </div>
-                <label>Working</label>
+                <label class="component-label">Working</label>
             </div>
 
             <div class="component">
                 <div id="example-app-status-ready" class="app-status">
                     <p class="app-status-text">Welcome!</p>
                 </div>
-                <label>Ready</label>
+                <label class="component-label">Ready</label>
             </div>
 
-            <a href="#top">Return to top ↑</a>
+            <a class="section-back-to-top-link" href="top">Return to top ↑</a>
         </section>
     
         <div class="spacer"></div>
 
         <section id="editor">
-            <h2>Editor</h2>
+            <h3>Editor</h3>
 
             <div class="component">
                 <div id="initial-editor-example" class="editor">
@@ -419,7 +429,7 @@
                                 >New</button>
                     </div>
                 </div>
-                <label>Initial</label>
+                <label class="component-label">Initial</label>
             </div>
 
             <div class="spacer-small"></div>
@@ -458,7 +468,7 @@
                                 >New</button>
                     </div>
                 </div>
-                <label>One sentence</label>
+                <label class="component-label">One sentence</label>
             </div>
 
             <div class="spacer-small"></div>
@@ -497,20 +507,20 @@
                                 >New</button>
                     </div>
                 </div>
-                <label>Many sentences</label>
+                <label class="component-label">Many sentences</label>
             </div>
 
-            <a href="#top">Return to top ↑</a>
+            <a class="section-back-to-top-link" href="top">Return to top ↑</a>
         </section>
     
         <div class="spacer"></div>
 
         <section id="list">
-            <h2>List</h2>
+            <h3>List</h3>
 
             <div class="component">
                 <div id="list-empty-example" class="list"></div>
-                <label>Empty</label>
+                <label class="component-label">Empty</label>
                 <br/>
                 <br/>
                 <button
@@ -531,55 +541,102 @@
 
             <div class="component">
                 <div id="list-oneItem-example" class="list"></div>
-                <label>One item</label>
+                <label class="component-label">One item</label>
             </div>
 
             <div class="spacer-small"></div>
 
             <div class="component">
                 <div id="list-manyItems-example" class="list"></div>
-                <label>Many items</label>
+                <label class="component-label">Many items</label>
             </div>
         </section>
 
-        <a href="#top">Return to top ↑</a>
+        <a class="section-back-to-top-link" href="top">Return to top ↑</a>
     
         <div class="spacer"></div>
 
         <section id="listItems">
-            <h2>List items</h2>
+            <h3>List items</h3>
 
             <div class="component">
                 <div id="listItems-initial-example" class="list-item"></div>
-                <label>Initial</label>
+                <label class="component-label">Initial</label>
             </div>
 
             <div class="spacer-small"></div>
 
             <div class="component">
                 <div id="listItems-hover-example" class="list-item"></div>
-                <label>Hover</label>
+                <label class="component-label">Hover</label>
             </div>
 
             <div class="spacer-small"></div>
 
             <div class="component">
                 <div id="listItems-selected-example" class="list-item"></div>
-                <label>Active</label>
+                <label class="component-label">Active</label>
             </div>
 
             <div class="spacer-small"></div>
 
             <div class="component">
                 <div id="listItems-hide-example" class="list-item"></div>
-                <label>Hide action</label>
+                <label class="component-label">Hide action</label>
                 <button
                     id="listItems-selected-example-button" 
                     type="button" 
                     class="design-system-button">Hide</button>
             </div>
 
-            <a href="#top">Return to top ↑</a>
+            <a class="section-back-to-top-link" href="top">Return to top ↑</a>
+        </section>
+    
+        <div class="spacer"></div>
+
+        <section id="backToTop">
+            <h3>Back-to-Top</h3>
+
+            <div class="component">
+                <div id="backToTop-initial-example" class="back-to-top"
+                    ><a class="default" href="#">Back to top ↑</a></div>
+                <label class="component-label">Initial</label>
+                <div class="component-notes">
+                    <p>Initially, back-to-top component is not shown since 
+                        there is no note to display.</p>
+                </div>
+            </div>
+
+            <div class="spacer-small"></div>
+
+            <div class="component">
+                <div id="backToTop-initial-example" class="back-to-top"
+                    ><a class="default" href="#">Back to top ↑</a></div>
+                <label class="component-label">With notes</label>
+            </div>
+
+            <a class="section-back-to-top-link" href="top">Return to top ↑</a>
+        </section>
+    
+        <div class="spacer"></div>
+
+        <section id="footer">
+            <h3>Footer</h3>
+
+            <div class="component">
+                <div id="footer-example" class="footer">
+                    <div class="footer-item"
+                        ><a class="default"
+                            href="https://github.com/desmarais-patrick/notes"
+                            >About this project</a></div>
+                    <div class="footer-item">
+                        <p>Copyright ⓒ 2019 Patrick Desmarais.</p>
+                    </div>
+                </div>
+                <label class="component-label">Example</label>
+            </div>
+
+            <a class="section-back-to-top-link" href="top">Return to top ↑</a>
         </section>
     
         <div class="spacer"></div>

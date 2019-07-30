@@ -2,14 +2,28 @@
     margin-bottom: 3rem;
 }
 
-.design-system header p {
+.design-system header p.subtitle {
     margin-bottom: 2.1rem;
     color: #666666;
+}
+
+.design-system header p.section-group-title {
+    margin-bottom: 1.2rem;
+    color: #333333;
+    text-transform: uppercase;
+    font-weight: 300;
 }
 
 .design-system header ul {
     list-style: none;
     border-left: .1rem dashed #D94545;
-    padding-left: .9rem;
-    margin: 0;
+    padding: 1.2rem 1rem;
+    margin: 0 0 2rem 0;
+}
+
+.design-system header ul li {
+    margin-bottom: 1.8rem;
+}
+.design-system header ul li:last-child {
+    margin-bottom: .5rem;
 }
