@@ -17,37 +17,48 @@ See also mother [notes](https://github.com/desmarais-patrick/notes) repo for glo
 
 | Name                        | Description                                  |
 |-----------------------------|----------------------------------------------|
-| *css*/                      | Styles                                       |
-| *img*/                      | Image resources                              |
+| *css*/                      | Styles (.CSS files)                          |
+| *img*/                      | Image resources (.SVG, .PNG files)           |
 | *img/favorites-icons*/      | Secondary favorites icons (Chrome, iOS, etc.)|
-| *js*/                       | JavaScript                                   |
-| *js/communication*/         | Module to communicate with API server        |
-| *js/config*/                | Module to divide environment settings        |
-| *js/model*/                 | Module to cache objects and keep data logic  |
-| *js/test*/                  | Module to test with `*.test.js`              |
-| *js/test/mocks*/            | Module to re-use mock classes for tests      |
-| *js/view*/                  | Module to render views: pages and components |
-| *js/viewModel*/             | Module to hold model for views               |
+| *js*/                       | JavaScript (.JS files)                       |
+| *js/communication*/         | To send requests, ex. Get `/notes` API server|
+| *js/config*/                | To run under different environments, ex. dev |
+| *js/model*/                 | To hold business logic and cache objects     |
+| *js/test*/                  | To test scripts, see `*.test.js` files       |
+| *js/test/mocks*/            | To re-use mock classes for tests             |
+| *js/utilities*/             | To interface with dates, DOM, arrays, etc.   |
+| *js/view*/                  | To render view components                    |
+| *js/viewModel*/             | To hold model for views                      |
 | *js*/index.js               | App root script for structure                |
-| *js*/main.js                | App entry point and initialization           |
-| *js*/main.liveTest.js       | App live tests entry point                   |
-| *js*/main.test.js           | App tests initialization                     |
-| *js*/main.unitTest.js       | App unit tests entry point                   |
+| *js*/main.designSystem.js   | App *design system* entry point              |
+| *js*/main.js                | *App* entry point and initialization         |
+| *js*/main.liveTest.js       | App *live tests* entry point                 |
+| *js*/main.test.js           | App common tests initialization              |
+| *js*/main.unitTest.js       | App *unit tests* entry point                 |
 | deploy.sh                   | Deployment script                            |
+| DEV-NOTES.md                | TODOs and other development notes            |
 | favicon.ico                 | Default favorites icon                       |
-| index.html                  | App launch page                              |
-| index.liveTest.html         | Live test launch page                        |
-| index.unitTest.html         | Unit test launch page                        |
+| index.designSystem.html     | *Design system* launch page                  |
+| index.html                  | *App* launch page                            |
+| index.liveTest.html         | *Live test* launch page                      |
+| index.unitTest.html         | *Unit test* launch page                      |
 
-Each module contains an `index.js` file which initializes the module structure.
+*Notes*
 
-<!-- TODO How to point to different API URLs. -->
+ - Each module under `js/` contains an `index.js` file which initializes the 
+   module "namespace".
+ - To launch a different environment, see `main.js`'s `chosenConfiguration`
+   variable and its reference to one of the configurations in 
+   `js/config/configurations.js`.
 
 
 [Back to top ↑](#)
 
 
 ## Deploy
+
+The following steps have been tested on Google Cloud tools.
+(July 2019)
 
 ### Setup
 
@@ -57,7 +68,8 @@ To set permissions to public [[1](#references)], add permission for `allUsers` w
 
 ### Steps
 
-Run the deploy script:
+Run the deploy script after setting the environment variable with the
+chosen bucket name:
 
 ```
 NOTES_APP_WEB_CLIENT_RESOURCES_BUCKET=notes-123456-client-resources
@@ -86,9 +98,11 @@ To run a basic Web server using Python ([[2](#references)], [[3](#references)]),
 python -m SimpleHTTPServer 8000
 ```
 
-> In Python 3, command is a bit different. It uses `http.server` module instead of `SimpleHTTPServer`.
+> If you're using Python 3, the command is a bit different.
+> It uses `http.server` module instead of `SimpleHTTPServer`.
 
-Visit [`http://localhost:8000/`](http://localhost:8000/) in your favorite browser. 🤗
+Visit [`http://localhost:8000/`](http://localhost:8000/) in your 
+favorite browser. 🤗
 
 
 [Back to top ↑](#)
@@ -100,13 +114,23 @@ Visit [`http://localhost:8000/`](http://localhost:8000/) in your favorite browse
 
 *Live tests* can be run by opening [`http://localhost:8000/index.liveTest.html`](http://localhost:8000/index.liveTest.html). ✓
 
-> You may follow the above instructions in *Running locally* to start a development server.
+> Follow the above instructions in [Running locally](#running-locally)
+> to start a development server in order to load all scripts.
 
 > For live tests, you may refer to the `config`'s `configurations.js` file for
-> connecting to an API server. Note that live tests dirty the database. 
+> connecting to an API server.
+> *Note*: live tests dirty the database. 
 
-<!-- TODO Preview project styles, components and animations. Like UXPin ad. -->
+[Back to top ↑](#)
 
+
+## Running design system
+
+To preview project styles, components and animations, you may open 
+[`http://localhost:8000/index.designSystem.html`](http://localhost:8000/index.designSystem.html). ✓
+
+> Follow the above instructions in [Running locally](#running-locally)
+> to start a development server in order to load all scripts.
 
 [Back to top ↑](#)
 

@@ -90,6 +90,7 @@
         createTextView: Notes.view.textView,
     });
 
+    // Initialize app.
     var rootNode = viewUtilities.traversal.findWithId("app");
     var viewModel = viewModelFactory.create("App");
     viewModel.initialize();
@@ -98,7 +99,7 @@
         rootNode: rootNode
     });
 
-    // Display page when document is ready.
+    // Render app when document is ready.
     var isDocumentReady = function () {
         var state = document.readyState;
         // TODO Review what interactive and complete mean.
