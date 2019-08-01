@@ -235,3 +235,60 @@ At least, not from all points of view: development, UX and UI design...
 I chose to reduce the size of the button's hit zone.
 It's maybe the worst UX option, but it reduces some risk of a mis-click. 😊
 
+🤔 **Q6** How to deploy web app?
+
+In the initial architecture, I had a web server to redirect requests.
+Requests for the Web app would return static files.
+Requests for the API would return application data.
+
+Implementing such architecture within the Google Cloud infrastructure
+is a good challenge.
+Since this is still a project in test, I try to limit costs.
+I want to use as much free services as possible.
+
+The code for the Web client application and the API server is ending.
+I try deploying the applications with Google Cloud's services:
+
+ - Storage
+ - App Engine
+ - Datastore (Firestore)
+
+I wish the code to be platform-independent.
+However, I must interface with the Google services, and adapt the architecture.
+
+Experiments...
+
+In one article, the App Engine framework suggests the use of a `dispatch.yaml`.
+This file redirects the requests to specific services.
+
+To account for static files, they suggest various methods:
+
+ - Back-end static server
+ - Storage (my initial choice 😉)
+
+I had initially bought a domain name, thinking a custom domain is the only way.
+However, the article seemed promising in using Storage.
+It isn't clear on how to use Storage directly though.
+(Maybe I could send them feedback once I set it up.)
+
+Here are the experiments to do:
+
+ - Experiment #1: Custom domain and API with CORS configurations
+ - Experiment #2: Experiment with `dispatch.yaml`
+ - Experiment #3: ALIASes to storage-googleapis and API-appspot URLs
+ - Experiment #4: Dispatch file with additional static file server
+
+Experiment #1:
+
+ 1. Buy custom domain ✓
+ 2. Install static website and test it renders ✓ (only HTTP though)
+ 2.1. Wait 24 hours. PENDING
+      Test if HTTPS work.
+ 2.2. Consider `Strict-Transport-Security` headers (extra, 
+      [Google Cloud article](https://cloud.google.com/appengine/docs/standard/python/securing-custom-domains-with-ssl))
+ 3. Implement CORS configurations on API server.
+    Test if calls to API go through.
+ 3.1. Deploy sub-domains for dev and demo projects. (extra)
+ 4. Add sub-domain for docs on Github. (extra)
+
+Other experiments will be extra if this experiment is a success! 😃
