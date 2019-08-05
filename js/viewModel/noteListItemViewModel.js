@@ -70,7 +70,10 @@
             if (selectedListenerCallback !== null) {
                 selectedListenerCallback(newValue);
             }
-            viewModelEvents.notify("SelectNote", noteClientId);
+
+            if (isSelected) {
+                viewModelEvents.notify("SelectNote", noteClientId);
+            }
         };
         that.setSelectedListener = function (newListenerCallback) {
             selectedListenerCallback = newListenerCallback;
