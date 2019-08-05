@@ -237,10 +237,10 @@
 
             var date = note.getDate();
             date = (date === null) ? null : date.toISOString();
-            var body = {
+            var body = JSON.stringify({
                 text: note.getText(),
                 date: date
-            };
+            });
 
             requestBuilder.put("/notes/" + note.getId(), body)
                 .send(function (err) {
