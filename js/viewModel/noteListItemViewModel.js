@@ -97,7 +97,7 @@
         };
 
         that.editNote = function () {
-            viewModelEvents.notify("DeleteNote", noteClientId);
+            viewModelEvents.notify("EditNote", noteClientId);
         };
 
         return that;

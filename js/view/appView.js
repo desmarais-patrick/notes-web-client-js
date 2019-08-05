@@ -11,6 +11,8 @@
         var rootNode = options.rootNode;
         var viewModel = options.viewModel;
 
+        var editorRootNode = null;
+
         var appStatusView = null;
         var editorView = null;
         var listView = null;
@@ -25,10 +27,10 @@
             });
             appStatusView.render();
     
-            var editorRootNote = viewUtilities.traversal.findWithCssSelector(
+            editorRootNode = viewUtilities.traversal.findWithCssSelector(
                 rootNode, ".editor");
             editorView = viewFactory.create("Editor", {
-                rootNode: editorRootNote,
+                rootNode: editorRootNode,
                 viewModel: viewModel.getEditorViewModel()
             });
             editorView.render();
@@ -62,7 +64,7 @@
         };
 
         var focusOnEditor = function () {
-            viewUtilities.scroll.toNode(editorRootNote, function () {
+            viewUtilities.scroll.toNode(editorRootNode, function () {
                 editorView.focus();
             });
         };

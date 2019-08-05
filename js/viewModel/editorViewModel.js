@@ -28,6 +28,7 @@
 
             viewModelEvents.on("DeleteNote", onDeleteNote);
             viewModelEvents.on("NewNoteCreated", onNewNoteCreated);
+            viewModelEvents.on("EditNote", onEditNote);
         };
 
         that.destroy = function () {
@@ -37,6 +38,7 @@
 
             viewModelEvents.off("DeleteNote", onDeleteNote);
             viewModelEvents.off("NewNoteCreated", onNewNoteCreated);
+            viewModelEvents.off("EditNote", onEditNote);
         };
 
         that.getDateViewModel = function () {
@@ -59,6 +61,10 @@
             noteClientId = newNoteClientId;
             dateViewModel.setNoteClientId(newNoteClientId);
             statusViewModel.setNoteClientId(newNoteClientId);
+        };
+
+        var onEditNote = function (noteClientId) {
+            that.setNote(noteClientId);
         };
 
         that.startNewNote = function () {
