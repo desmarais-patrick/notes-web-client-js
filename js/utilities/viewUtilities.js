@@ -165,11 +165,11 @@
         viewUtilities.scroll = {};
 
         viewUtilities.scroll.toNode = function (node, onScrollEnd) {
-            var offset = node.offsetTop;
+            var offsetY = node.offsetTop;
 
             // TODO Better smooth scrolling.
             setTimeout(function () {
-                window.scrollTo(offset);
+                window.scrollTo(0, offsetY);
                 onScrollEnd();
             }, 100);
         };

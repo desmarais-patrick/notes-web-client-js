@@ -31,6 +31,7 @@
 
     var viewUtilities = Notes.utilities.viewUtilities({
         document: window.document,
+        window: window,
     });
 
     var animations = Notes.view.animations({
