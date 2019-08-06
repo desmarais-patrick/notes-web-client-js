@@ -18,13 +18,22 @@
     border-radius: .2rem;
 }
 
+.note-list-actions {
+    opacity: 1;
+    height: 5rem;
+
+    transition: height 1000ms ease-out;
+    transition: opacity 500ms ease-out;
+}
+
 .note-list-content-empty p,
 .note-list-actions {
     text-align: center;
 }
 
 .note-list-actions-hidden {
-    visibility: hidden;
+    opacity: 0;
+    height: 0;
 }
 
 .note-list-actions-load-error {
