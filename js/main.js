@@ -25,6 +25,7 @@
         setTimeout: window.setTimeout
     };
     var model = Notes.model.model(modelOptions);
+    model.requestMoreNotes();
 
     var dateUtilities = Notes.utilities.dateUtilities();
     var listUtilities = Notes.utilities.listUtilities();
@@ -59,6 +60,7 @@
             Notes.viewModel.applicationStatusViewModel,
         createBackToTopViewModel: Notes.viewModel.backToTopViewModel,
         createEditorViewModel: Notes.viewModel.editorViewModel,
+        createLoadMoreNotesViewModel: Notes.viewModel.loadMoreNotesViewModel,
         createNoteDateViewModel: Notes.viewModel.noteDateViewModel,
         createNoteInputViewModel: Notes.viewModel.noteInputViewModel,
         createNoteLinesCountViewModel:

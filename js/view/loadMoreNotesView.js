@@ -1,6 +1,8 @@
 "use strict";
 
 (function (Notes) {
+    var HIDE_CSS_CLASS = "note-list-actions-hidden";
+
     Notes.view.loadMoreNotesView = function (options) {
         var that = {};
 
@@ -11,18 +13,39 @@
         var viewModel = options.viewModel;
 
         var buttonNode = null;
-        var errorNode = null;
-
-        var requestInProgress = false;
+        var messageNode = null;
 
         that.render = function () {
+            updateRootVisibility();
+            viewModel.setVisibilityChangeListener(updateRootVisibility);
+
             createHtmlNodes();
             viewUtilities.button.onClick(buttonNode, onClicked);
+
+            updateButtonEnabledState();
+            viewModel.setStateChangeListener(updateButtonEnabledState);
+
+            updateMessageText();
+            viewModel.setMessageChangeListener(updateMessageText);
         };
 
         that.destroy = function () {
+            viewModel.setMessageChangeListener(null);
+            viewModel.setStateChangeListener(null);
             viewUtilities.button.offClick(buttonNode, onClicked);
             removeHtmlNodes();
+            viewModel.setVisibilityChangeListener(null);
+        };
+
+        var updateRootVisibility = function () {
+            var isVisible = viewModel.isVisible();
+            var hasHideCssClass =
+                (viewUtilities.css.hasClass(rootNode, HIDE_CSS_CLASS) === true);
+            if (isVisible && hasHideCssClass) {
+                viewUtilities.css.removeClass(rootNode, HIDE_CSS_CLASS);
+            } else if (!isVisible && !hasHideCssClass) {
+                viewUtilities.css.addClass(rootNode, HIDE_CSS_CLASS);
+            }
         };
 
         var createHtmlNodes = function () {
@@ -39,43 +62,45 @@
             viewUtilities.html.clearChildNodes(rootNode);
         };
 
-        var onClicked = function () {
-            if (requestInProgress === false) {
-                viewUtilities.button.disable(buttonNode);
-                viewModel.requestMoreNotes(onRequestMoreNotesReturn);
-                // TODO Show progress bar to help users with feedback.
-                requestInProgress = true;
-            }
-        };
-
-        var onRequestMoreNotesReturn = function (error) {
-            if (error !== null) {
-                // TODO Give more helpful error message.
-                var errorMessage =
-                    "⚠️ Error occurred while loading more notes.";
-                showMessage(errorMessage);
+        var updateButtonEnabledState = function () {
+            var isEnabled = viewModel.isEnabled();
+            if (isEnabled) {
+                viewUtilities.button.enable(buttonNode);
             } else {
-                removeMessage();
+                viewUtilities.button.disable(buttonNode);
             }
-            viewUtilities.button.enable(buttonNode);
-            requestInProgress = false;
+            // TODO Show progress bar upon state change.
         };
 
-        var showMessage = function (errorMessage) {
-            if (errorNode === null) {
-                errorNode = viewUtilities.html.createElement("p", {
+        var onClicked = function () {
+            viewModel.requestMoreNotes();
+        };
+
+        var updateMessageText = function () {
+            var message = viewModel.getMessage();
+            if (message.length === 0) {
+                removeMessage();
+            } else {
+                showMessage(message);
+            }
+        };
+
+        var showMessage = function (message) {
+            if (messageNode === null) {
+                messageNode = viewUtilities.html.createElement("p", {
                     cssClass: "note-list-actions-load-error"
                 });
-                viewUtilities.html.append(rootNode, errorNode);
+                viewUtilities.html.append(rootNode, messageNode);
             }
-            animations.crossFadeText(errorNode, errorMessage);
+            animations.crossFadeText(messageNode, message);
         };
 
         var removeMessage = function () {
-            if (errorNode !== null) {
-                viewUtilities.html.removeChild(rootNode, errorNode);
+            if (messageNode !== null) {
+                viewUtilities.html.removeChild(rootNode, messageNode);
+                messageNode = null;
             }
-        }
+        };
 
         return that;
     };

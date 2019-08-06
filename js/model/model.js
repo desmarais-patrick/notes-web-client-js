@@ -39,9 +39,12 @@
 
         that.requestMoreNotes = function (optionalCallback) {
             notes.setStatus(NOTES_STATUS_ENUM.LOADING);
+
+            var limit = 10;
+            var offset = notes.getList().length;
             requestBuilder.get("/notes")
-                .addQueryParameter("limit", 10)
-                .addQueryParameter("offset", 0)
+                .addQueryParameter("limit", limit)
+                .addQueryParameter("offset", offset)
                 .send(function (err, response) {
                     if (err) {
                         notes.setStatus(NOTES_STATUS_ENUM.READY);
@@ -57,6 +60,10 @@
                     }
 
                     var newNotes = parseNotesResponse(response);
+
+                    var hasMore = (newNotes.length === limit);
+                    notes.setHasMore(hasMore);
+
                     notes.insertMany(newNotes);
                     notes.setStatus(NOTES_STATUS_ENUM.READY);
 

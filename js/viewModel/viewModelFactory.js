@@ -21,6 +21,8 @@
             options.createApplicationStatusViewModel;
         var createBackToTopViewModel = options.createBackToTopViewModel;
         var createEditorViewModel = options.createEditorViewModel;
+        var createLoadMoreNotesViewModel = 
+            options.createLoadMoreNotesViewModel;
         var createNoteDateViewModel = options.createNoteDateViewModel;
         var createNoteInputViewModel = options.createNoteInputViewModel;
         var createNoteLinesCountViewModel =
@@ -56,6 +58,8 @@
                     return createBackToTopViewModel(viewModelOptions);
                 case "Editor":
                     return createEditorViewModel(viewModelOptions);
+                case "LoadMoreNotes":
+                    return createLoadMoreNotesViewModel(viewModelOptions);
                 case "NoteDate":
                     return createNoteDateViewModel(viewModelOptions);
                 case "NoteInput":

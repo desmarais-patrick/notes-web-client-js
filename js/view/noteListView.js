@@ -21,9 +21,10 @@
             createHtmlNodes();
             renderItems();
 
+            var loadMoreNotesViewModel = viewModel.getLoadMoreNotesViewModel();
             loadMoreNotesView = viewFactory.create("LoadMoreNotes", {
-                viewModel: viewModel,
-                rootNode: actionsNode
+                rootNode: actionsNode,
+                viewModel: loadMoreNotesViewModel,
             });
             loadMoreNotesView.render();
 
@@ -118,6 +119,61 @@
             }
         };
 
+        var onNoteAdded = function (listItemViewModel, index) {
+            if (itemViewsAndNodes.length === 0) {
+                hideEmptyMessage();
+            }
+
+            var itemViewAndNode = createAndRenderItem(listItemViewModel);
+        
+            var nextItemAndView;
+            if (index === itemViewsAndNodes.length) {
+                itemViewsAndNodes.push(itemViewAndNode);
+
+                // TODO Smooth transition when adding node. 
+                viewUtilities.html.append(contentNode, itemViewAndNode.node);
+            } else {
+                nextItemAndView = itemViewsAndNodes[index];
+                itemViewsAndNodes.splice(index, 0, itemViewAndNode);
+
+                // TODO Smooth transition when adding node. 
+                viewUtilities.html.insertBefore(contentNode,
+                    nextItemAndView.node, itemViewAndNode.node);
+            }
+        };
+
+        var createAndRenderItem = function (itemViewModel) {
+            var cssClass = "list-item";
+            var itemRootNode = viewUtilities.html.createElement("div", {
+                cssClass: cssClass
+            });
+            var itemView = viewFactory.create("NoteListItem", {
+                rootNode: itemRootNode,
+                viewModel: itemViewModel
+            });
+            itemView.render();
+
+            return {
+                view: itemView,
+                node: itemRootNode
+            };
+        };
+
+        var onNoteRemoved = function (listItemViewModel, index) {
+            var itemViewAndNode = itemViewsAndNodes[index];
+            destroyAndClearItem(itemViewAndNode);
+
+            itemViewsAndNodes.splice(index, 1);
+
+            if (itemViewsAndNodes.length === 0) {
+                showEmptyMessage();
+            }
+        };
+
+        var hideAndDestroyItems = function () {
+            clearContent();
+        };
+
         var showEmptyMessage = function () {
             clearContent();
 
@@ -143,68 +199,6 @@
             }
         };
 
-        var onNoteAdded = function (listItemViewModel, index) {
-            if (itemViewsAndNodes.length === 0) {
-                hideEmptyMessage();
-            }
-
-            var itemViewAndNode = createAndRenderItem(listItemViewModel);
-            var nextItemAndView;
-            if (index === itemViewsAndNodes.length) {
-                itemViewsAndNodes.push(itemViewAndNode);
-
-                // TODO Smooth transition when adding node. 
-                viewUtilities.html.append(contentNode, itemViewAndNode.node);
-            } else {
-                nextItemAndView = itemViewsAndNodes[index];
-                itemViewsAndNodes.splice(index, 0, itemViewAndNode);
-
-                // TODO Smooth transition when adding node. 
-                viewUtilities.html.insertBefore(contentNode,
-                    nextItemAndView.node, itemViewAndNode.node);
-            }
-        };
-
-        var createAndRenderItem = function (itemViewModel) {
-            var itemRootNode = viewUtilities.html.createElement("div", {
-                cssClass: "list-item"
-            });
-            var itemView = viewFactory.create("NoteListItem", {
-                rootNode: itemRootNode,
-                viewModel: itemViewModel
-            });
-            itemView.render();
-
-            return {
-                view: itemView,
-                node: itemRootNode
-            };
-        };
-
-        var onNoteRemoved = function (listItemViewModel, index) {
-            var itemViewAndNode = itemViewsAndNodes[index];
-            destroyAndClearItem(itemViewAndNode);
-
-            itemViewsAndNodes.splice(index, 1);
-
-            if (itemViewsAndNodes.length === 0) {
-                showEmptyMessage();
-            }
-        };
-
-        var destroyAndClearItem = function (itemViewAndNode) {
-            itemViewAndNode.view.hide();
-            itemViewAndNode.view.destroy();
-
-            // TODO Smooth transition when removing node.
-            viewUtilities.html.removeChild(contentNode,
-                itemViewAndNode.node);
-        };
-
-        var hideAndDestroyItems = function () {
-            clearContent();
-        };
-
         var clearContent = function () {
             // TODO Smooth transition when clearing content.
             var itemViewAndNode;
@@ -214,6 +208,18 @@
             }
 
             viewUtilities.html.clearChildNodes(contentNode);
+        };
+
+        var destroyAndClearItem = function (itemViewAndNode) {
+            itemViewAndNode.view.destroy();
+
+            viewUtilities.html.removeChild(contentNode, itemViewAndNode.node);
+        };
+
+        var onItemsChange = function (items) {
+            // TODO Update list item views using a generic fade.
+            //      This is pending implementing features for synchronization 
+            //      without page refresh.
         };
 
         return that;

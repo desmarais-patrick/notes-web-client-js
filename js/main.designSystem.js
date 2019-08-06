@@ -66,6 +66,8 @@
                 Notes.viewModel.applicationStatusViewModel,
             createBackToTopViewModel: Notes.viewModel.backToTopViewModel,
             createEditorViewModel: Notes.viewModel.editorViewModel,
+            createLoadMoreNotesViewModel:
+                Notes.viewModel.loadMoreNotesViewModel,
             createNoteDateViewModel: Notes.viewModel.noteDateViewModel,
             createNoteInputViewModel: Notes.viewModel.noteInputViewModel,
             createNoteLinesCountViewModel:

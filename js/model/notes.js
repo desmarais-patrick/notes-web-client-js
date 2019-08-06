@@ -12,7 +12,7 @@
         var events = options.events;
 
         var list = options.list || []; // Keep sorted!
-        var hasMore = options.hasMore || true; // To avoid unnecessary server requests.
+        var hasMore = options.hasMore || false; // To avoid unnecessary server requests.
         var status = options.status || STATUS_ENUM.READY;
             // To initialize list and show loading.
 

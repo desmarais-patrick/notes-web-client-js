@@ -19,6 +19,8 @@
         var viewModelEvents = options.viewModelEvents;
         var viewModelFactory = options.viewModelFactory;
 
+        var loadMoreNotesViewModel = null;
+
         var noteClientIds = [];
         var items = [];
 
@@ -26,30 +28,38 @@
         var noteAddedListenerCallback = null;
         var noteRemovedListenerCallback = null;
 
-        var eventIterator = model.listen("change Notes.List");
+        var eventIterator = null;
         var eventCheckTimeoutId = null;
 
         // Member functions.
         that.initialize = function () {
+            eventIterator = model.listen("change Notes.List");
             listenToModelEvents();
+
+            loadMoreNotesViewModel = viewModelFactory.create("LoadMoreNotes");
+            loadMoreNotesViewModel.initialize();
 
             viewModelEvents.on("DeleteNote", onDeleteNote);
             viewModelEvents.on("SelectNote", onSelectNote);
         };
 
         that.destroy = function () {
-            stopListeningToModelEvents();
-
             viewModelEvents.off("DeleteNote", onDeleteNote);
             viewModelEvents.off("SelectNote", onSelectNote);
+
+            loadMoreNotesViewModel.destroy();
+            loadMoreNotesViewModel = null;
+
+            stopListeningToModelEvents();
+            eventIterator = null;
         };
 
         that.getItemViewModels = function () {
             return items;
         };
 
-        that.requestMoreNotes = function (callback) {
-            model.requestMoreNotes(callback);
+        that.getLoadMoreNotesViewModel = function () {
+            return loadMoreNotesViewModel;
         };
         
         var listenToModelEvents = function () {
