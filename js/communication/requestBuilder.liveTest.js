@@ -19,6 +19,14 @@
             baseUrl: configuration.apiServerBaseUrl
         });
 
+        var dateUtilities = Notes.utilities.dateUtilities();
+        var userUtilities = Notes.utilities.userUtilities({
+            dateUtilities: dateUtilities,
+            Date: window.Date,
+            Math: window.Math
+        });
+        var user = userUtilities.generateUser();
+
         testSuite.start();
 
         var scenario1Test = testSuite.test("CRUD", function () {
@@ -26,6 +34,7 @@
             requestBuilder.get("/notes")
                 .addQueryParameter("limit", 10)
                 .addQueryParameter("offset", 0)
+                .setHeader("Notes-User", user)
                 .send(function (err, response) {
                     try {
                         expect(err).toBeNull();
@@ -43,6 +52,7 @@
                 var note = {text: "someText", date: date.toISOString()};
                 var noteAsString = JSON.stringify(note);
                 requestBuilder.post("/notes", noteAsString)
+                    .setHeader("Notes-User", user)
                     .send(function (err, response) {
                         try {
                             expect(err).toBeNull();
@@ -60,6 +70,7 @@
                 requestBuilder.get("/notes")
                     .addQueryParameter("limit", 10)
                     .addQueryParameter("offset", 0)
+                    .setHeader("Notes-User", user)
                     .send(function (err, response) {
                         try {
                             expect(err).toBeNull();
@@ -78,6 +89,7 @@
 
             var getTheOne = function (id) {
                 requestBuilder.get("/notes/" + id)
+                    .setHeader("Notes-User", user)
                     .send(function (err, response) {
                         try {
                             expect(err).toBeNull();
@@ -97,6 +109,7 @@
             var updateTheOne = function (id, updatedNote) {
                 var noteAsString = JSON.stringify(updatedNote);
                 requestBuilder.put("/notes/" + id, noteAsString)
+                    .setHeader("Notes-User", user)
                     .send(function (err, response) {
                         try {
                             expect(err).toBeNull();
@@ -112,6 +125,7 @@
 
             var deleteTheOne = function (id) {
                 requestBuilder.delete("/notes/" + id)
+                    .setHeader("Notes-User", user)
                     .send(function (err, response) {
                         try {
                             expect(err).toBeNull();
@@ -128,6 +142,7 @@
 
         var scenario2Test = testSuite.test("Invalid URL", function () {
             requestBuilder.get("/invalid-url")
+                .setHeader("Notes-User", user)
                 .send(function (err, response) {
                     try {
                         expect(err).toNotBeNull();
@@ -137,6 +152,8 @@
                     }
                 });
         });
+
+        // TODO Unit test without header.
 
         testSuite.end();
 
