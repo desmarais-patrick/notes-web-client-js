@@ -11,6 +11,7 @@
         var body = options.body;
 
         var queryParams = null;
+        var headers = null;
 
         that.addQueryParameter = function (key, value) {
             if (!queryParams) {
@@ -18,6 +19,15 @@
             }
     
             queryParams[key] = value;
+            return that;
+        };
+
+        that.setHeader = function (key, value) {
+            if (headers === null) {
+                headers = {};
+            }
+            headers[key] = value;
+
             return that;
         };
 
@@ -29,6 +39,13 @@
             }
             var url = _buildUrl();
             request.open(method, url);
+
+            if (headers !== null) {
+                Object.keys(headers).forEach(function (key) {
+                    request.setRequestHeader(key, headers[key]);
+                });
+            }
+
             request.onload = function () {
                 var status = request.status;
                 var responseContent = request.responseText;

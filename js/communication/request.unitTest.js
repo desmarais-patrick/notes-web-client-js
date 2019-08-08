@@ -45,6 +45,7 @@
 
         // TODO Test for timeout ==> It returns an error!
         // TODO Test for error ==> It bubbles up the error!
+        // TODO Test with headers.
 
         testSuite.end();
 
