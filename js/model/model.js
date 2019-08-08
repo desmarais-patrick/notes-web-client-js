@@ -1,6 +1,8 @@
 "use strict";
 
 (function (Notes) {
+    var LOCAL_STORAGE_USER_KEY = "user";
+
     Notes.model.model = function (options) {
         var that = {};
 
@@ -25,6 +27,13 @@
         var NOTE_STATUS_ENUM = options.NOTE_STATUS_ENUM;
         var createNote = options.createNote;
 
+        var userUtilities = options.userUtilities;
+        var localStorage = options.localStorage;
+        var user = options.createUser({
+            userUtilities: userUtilities,
+            localStorage: localStorage
+        });
+
         that.getApp = function () {
             return app;
         };
@@ -35,6 +44,10 @@
 
         that.getNoteClientIds = function () {
             return notes.getClientIds();
+        };
+
+        that.getUser = function () {
+            return user;
         };
 
         that.requestMoreNotes = function (optionalCallback) {

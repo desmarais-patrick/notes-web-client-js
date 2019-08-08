@@ -21,6 +21,16 @@
     var createAppOptions = function () {
         var requestBuilderMock = Notes.test.mocks.requestBuilderMock();
 
+        var dateUtilities = Notes.utilities.dateUtilities();
+        var listUtilities = Notes.utilities.listUtilities();
+        var userUtilities = Notes.utilities.userUtilities({
+            dateUtilities: dateUtilities,
+            Date: window.Date,
+            Math: window.Math
+        });
+
+        var localStorageMock = Notes.test.mocks.localStorageMock();
+
         var model = Notes.model.model({
             createApp: Notes.model.app,
             createCache: Notes.model.cache,
@@ -29,12 +39,12 @@
             NOTE_STATUS_ENUM: Notes.model.note.STATUS_ENUM,
             createNotes: Notes.model.notes,
             NOTES_STATUS_ENUM: Notes.model.notes.STATUS_ENUM,
+            createUser: Notes.model.user,
             requestBuilder: requestBuilderMock,
-            setTimeout: window.setTimeout
+            setTimeout: window.setTimeout,
+            userUtilities: userUtilities,
+            localStorage: localStorageMock
         });
-
-        var dateUtilities = Notes.utilities.dateUtilities();
-        var listUtilities = Notes.utilities.listUtilities();
 
         var viewUtilities = Notes.utilities.viewUtilities({
             document: window.document,

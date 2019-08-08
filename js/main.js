@@ -13,6 +13,15 @@
     };
     var requestBuilder = Notes.communication.requestBuilder(reqBuilderOptions);
 
+    var dateUtilities = Notes.utilities.dateUtilities();
+    var listUtilities = Notes.utilities.listUtilities();
+    var userUtilitiesOptions = {
+        dateUtilities: dateUtilities,
+        Date: window.Date,
+        Math: window.Math
+    };
+    var userUtilities = Notes.utilities.userUtilities(userUtilitiesOptions);
+
     var modelOptions = {
         createApp: Notes.model.app,
         createCache: Notes.model.cache,
@@ -21,14 +30,14 @@
         NOTE_STATUS_ENUM: Notes.model.note.STATUS_ENUM,
         createNotes: Notes.model.notes,
         NOTES_STATUS_ENUM: Notes.model.notes.STATUS_ENUM,
+        createUser: Notes.model.user,
         requestBuilder: requestBuilder,
-        setTimeout: window.setTimeout
+        setTimeout: window.setTimeout,
+        userUtilities: userUtilities,
+        localStorage: window.localStorage
     };
     var model = Notes.model.model(modelOptions);
     model.requestMoreNotes();
-
-    var dateUtilities = Notes.utilities.dateUtilities();
-    var listUtilities = Notes.utilities.listUtilities();
 
     var viewUtilities = Notes.utilities.viewUtilities({
         document: window.document,

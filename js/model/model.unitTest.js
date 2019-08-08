@@ -28,6 +28,7 @@
                 request: createRequest,
                 baseUrl: configuration.apiServerBaseUrl
             });
+            var localStorageMock = Notes.test.mocks.localStorageMock();
     
             var setTimeout = window.setTimeout;
     
@@ -38,6 +39,14 @@
             var NOTE_STATUS_ENUM = Notes.model.note.STATUS_ENUM;
             var createNotes = Notes.model.notes;
             var NOTES_STATUS_ENUM = Notes.model.notes.STATUS_ENUM;
+            var createUser = Notes.model.user;
+
+            var dateUtilities = Notes.utilities.dateUtilities();
+            var userUtilities = Notes.utilities.userUtilities({
+                dateUtilities: dateUtilities,
+                Date: window.Date,
+                Math: window.Math
+            });
     
             var createModel = Notes.model.model;
             var createModelOptions = {
@@ -48,8 +57,11 @@
                 NOTE_STATUS_ENUM: NOTE_STATUS_ENUM,
                 createNotes: createNotes,
                 NOTES_STATUS_ENUM: NOTES_STATUS_ENUM,
+                createUser: createUser,
                 requestBuilder: requestBuilder,
-                setTimeout: setTimeout
+                setTimeout: setTimeout,
+                userUtilities: userUtilities,
+                localStorage: localStorageMock
             };
 
             testContext.model = createModel(createModelOptions);

@@ -28,7 +28,7 @@
             });
             try {
                 expect(notes.getList().length).toEqual(0);
-                expect(notes.hasMore()).toEqual(true);
+                expect(notes.hasMore()).toEqual(false);
                 expect(notes.getStatus()).toEqual(STATUS_ENUM.READY);
                 emptyTest.success();
             } catch (expectError) {
@@ -247,9 +247,9 @@
 
             // A new hasMore is dispatched.
             var eventIterator = events.listen("change Notes.HasMore");
-            notes.setHasMore(false);
+            notes.setHasMore(true);
             expect(eventIterator.next().options.newHasMore)
-                .toEqual(false);
+                .toEqual(true);
 
 
             // A new status is dispatched!

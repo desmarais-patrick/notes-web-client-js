@@ -21,7 +21,6 @@
         that.getEditorNoteClientId = function () {
             return editorNoteClientId;
         };
-        that.set
 
         that.getStatus = function () {
             return status;
