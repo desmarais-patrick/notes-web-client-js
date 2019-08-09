@@ -2,9 +2,32 @@
     margin-bottom: 4rem;
 }
 
-.header .header-first-part {
-    margin-bottom: 2rem;
+.header .header-left {
+    margin-bottom: 4rem;
 }
+
+.header .header-right {
+    margin-bottom: 0;
+}
+
+@media (min-width: 720px) {
+    .header .header-left {
+        display: inline-block;
+        width: 25%;
+        text-align: left;
+        vertical-align: top;
+        margin-bottom: 0;
+    }
+
+    .header .header-right {
+        display: inline-block;
+        width: 75%;
+        text-align: right;
+        margin-bottom: 0;
+    }
+}
+
+/** Logo **/
 
 .header .logo-container {
     display: inline-block;
@@ -15,16 +38,6 @@
 .header .logo-container .logo {
     width: 3rem;
     height: 3rem;
-    vertical-align: middle;
-}
-
-.header .title-container {
-    display: inline-block;
-    height: 3rem;
-    vertical-align: middle;
-}
-.header .title-container .title {
-    line-height: 3rem;
     vertical-align: middle;
 }
 
@@ -39,34 +52,46 @@
     }
 }
 
-.alpha-release-container {
-    display: block;
-    float: right;
-    padding-top: .7rem;
-}
-.alpha-release {
-    padding: .3rem .5rem;
+/** Title **/
 
-    border: 1px dashed #B33939;
-    border-radius: 3px;
-
-    text-transform: uppercase;
-    font-size: .9rem;
-    color: #B33939;
-    line-height: 1.2rem;
+.header .title-container {
+    display: inline-block;
+    height: 3rem;
+    vertical-align: middle;
 }
-.alpha-release-extra-label {
-    display: none;
+.header .title-container .title {
+    line-height: 3rem;
+    vertical-align: middle;
 }
 
-@media (min-width: 360px) {
-    .alpha-release-container {
-        padding-top: 1.1rem;
-    }
+/* Version information */
+
+.header-right .version-info {
+    margin: 0 auto;
 }
 
 @media (min-width: 720px) {
-    .alpha-release-extra-label {
-        display: inline;
+    .header-right .version-info {
+        display: inline-block;
+        margin: -2rem -2rem 0 0;
+        transform: rotate(6deg);
+        transition: transform,opacity 600ms,200ms ease-in-out;
+    }
+}
+
+@media (min-width: 1200px) {
+    .header .header-right {
+        position: relative;
+    }
+    .header-right .version-info {
+        display: block;
+        position: absolute;
+        right: -24rem;
+        margin: 0;
+        transform: rotate(0deg);
+        opacity: .5;
+    }
+    .header-right .version-info:hover {
+        opacity: 1;
     }
 }

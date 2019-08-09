@@ -13,6 +13,7 @@
     <link href="css/editor.css" rel="stylesheet">
     <link href="css/fonts.css" rel="stylesheet">
     <link href="css/header.css" rel="stylesheet">
+    <link href="css/versionInfo.css" rel="stylesheet">
     <link href="css/links.css" rel="stylesheet">
     <link href="css/buttons.css" rel="stylesheet">
     <link href="css/list.css" rel="stylesheet">
@@ -35,21 +36,28 @@
         <div id="top" class="spacer"></div>
 
         <header class="header">
-            <div class="header-first-part">
-                <div class="logo-container">
-                    <img class="logo" src="img/logo.svg" alt="Logo" />
+            <div class="header-left"><div
+                class="logo-container">
+                    <img class="logo" src="img/logo-small.svg" alt="Logo" />
                 </div><div
-                    class="title-container">
+                class="title-container">
                     <h1 class="title">Notes</h1>
+                </div></div><div
+            class="header-right">
+                <div class="version-info">
+                    <div class="version-info-title">Preview Version</div>
+                    <div class="version-info-subtitle">Pre-Alpha 0.1.1</div>
+                    <div class="version-info-description">
+                        <p>Notes are kept on a remote Google server. 🕵</p>
+                        <p>Texts are linked to your browser;
+                        hence, using different browsers will keep notes separate.</p>
+                        <p>Service interruptions and data loss are likely 
+                            in this preview version. 😅</p>
+                    </div>
                 </div>
-                <div class="alpha-release-container">
-                    <div class="alpha-release"
-                        >Demo<span class="alpha-release-extra-label"
-                        > version</span></div>
-                </div>
-                <div class="application-status" style="display: none">
-                    <p class="app-status-text"></p>
-                </div>
+            </div>
+            <div class="application-status" style="display: none">
+                <p class="app-status-text"></p>
             </div>
         </header>
 
