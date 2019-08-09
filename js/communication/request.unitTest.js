@@ -32,6 +32,7 @@
             })
                 .addQueryParameter("someKey1", "someValue1")
                 .addQueryParameter("someKey2", "someValue2")
+                .setHeader("someKey3", "someValue3")
                 .send(function (err, response) {
                     try {
                         expect(err).toBeNull();
@@ -45,7 +46,6 @@
 
         // TODO Test for timeout ==> It returns an error!
         // TODO Test for error ==> It bubbles up the error!
-        // TODO Test with headers.
 
         testSuite.end();
 

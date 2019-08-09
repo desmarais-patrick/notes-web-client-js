@@ -1,7 +1,8 @@
 "use strict";
 
 (function (Notes) {
-    var LOCAL_STORAGE_USER_KEY = "user";
+    var LOCAL_STORAGE_USER_KEY = "notes-user";
+    var REQUEST_HEADER_USER_KEY = "notes-user";
 
     Notes.model.model = function (options) {
         var that = {};
@@ -55,9 +56,11 @@
 
             var limit = 10;
             var offset = notes.getList().length;
+            var userName = user.getName();
             requestBuilder.get("/notes")
                 .addQueryParameter("limit", limit)
                 .addQueryParameter("offset", offset)
+                .setHeader(REQUEST_HEADER_USER_KEY, userName)
                 .send(function (err, response) {
                     if (err) {
                         notes.setStatus(NOTES_STATUS_ENUM.READY);
@@ -133,7 +136,9 @@
             });
             cache.save(note);
 
+            var userName = user.getName();
             requestBuilder.get("/notes/" + id)
+                .setHeader(REQUEST_HEADER_USER_KEY, userName)
                 .send(function (err, response) {
                     if (err) {
                         note.setStatus(NOTE_STATUS_ENUM.FAILED_TO_LOAD);
@@ -182,7 +187,9 @@
                 text: text,
                 date: date.toISOString()
             });
+            var userName = user.getName();
             requestBuilder.post("/notes", body)
+                .setHeader(REQUEST_HEADER_USER_KEY, userName)
                 .send(function (err, response) {
                     if (err) {
                         note.setStatus(NOTE_STATUS_ENUM.FAILED_TO_SYNC);
@@ -241,17 +248,19 @@
 
             note.setIsSynchronized(true);
 
+            var userName = user.getName();
             if (note.isDeleted()) {
                 requestBuilder.delete("/notes/" + note.getId())
-                .send(function (err) {
-                    if (err) {
-                        note.setIsSynchronized(false);
-                        note.setStatus(NOTE_STATUS_ENUM.FAILED_TO_SYNC);
-                        return;
-                    }
+                    .setHeader(REQUEST_HEADER_USER_KEY, userName)
+                    .send(function (err) {
+                        if (err) {
+                            note.setIsSynchronized(false);
+                            note.setStatus(NOTE_STATUS_ENUM.FAILED_TO_SYNC);
+                            return;
+                        }
 
-                    note.setStatus(NOTE_STATUS_ENUM.READY);
-                });
+                        note.setStatus(NOTE_STATUS_ENUM.READY);
+                    });
                 return;
             }
 
@@ -263,6 +272,7 @@
             });
 
             requestBuilder.put("/notes/" + note.getId(), body)
+                .setHeader(REQUEST_HEADER_USER_KEY, userName)
                 .send(function (err) {
                     if (err) {
                         note.setIsSynchronized(false);

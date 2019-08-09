@@ -62,6 +62,9 @@
         that.addQueryParameter = function () {
             return that;
         };
+        that.setHeader = function (key, value) {
+            return that;
+        }
         that.send = function (callback) {
             setTimeout(function () {
                 callback(error, response || sampleResponse);

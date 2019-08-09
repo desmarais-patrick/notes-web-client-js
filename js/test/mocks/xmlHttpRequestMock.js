@@ -11,6 +11,7 @@
 
         function XMLHttpRequestMock() {
             this.onload = null;
+            this.headers = {};
         }
         XMLHttpRequestMock.prototype.open = function (method, url) {
             if (expectedMethod && expectedMethod !== method) {
@@ -19,6 +20,9 @@
             if (expectedUrl && expectedUrl !== url) {
                 throw new Error("URL " + url + " does NOT match " + expectedUrl);
             }
+        };
+        XMLHttpRequestMock.prototype.setRequestHeader = function (key, value) {
+            this.headers[key] = value;
         };
         XMLHttpRequestMock.prototype.send = function (body) {
             if (expectedBody && expectedBody !== body) {
@@ -38,7 +42,11 @@
         function XMLHttpRequestMock() {
             this.onload = null;
             this.onerror = null;
+            this.headers = {};
         }
+        XMLHttpRequestMock.prototype.setRequestHeader = function (key, value) {
+            this.headers[key] = value;
+        };
         XMLHttpRequestMock.prototype.open = function (method, url) { };
         XMLHttpRequestMock.prototype.send = function (body) {
             sendCallback(this);
@@ -55,8 +63,6 @@
         XMLHttpRequestMock.prototype.error = function (err, callback) {
             this.onerror(err);
             callback();
-            throw new Error("TODO Check for existence of onerror callback.");
-            throw new Error("TODO Check if onerror is called async or sync.");
         };
         return XMLHttpRequestMock;
     };

@@ -41,6 +41,7 @@
 
         var deleteTest = testSuite.test("DELETE request", function () {
             requestBuilder.delete("/notes/1")
+                .setHeader("user", "pat")
                 .send(function (err, response) {
                     try {
                         expect(err).toBeNull();
@@ -54,6 +55,7 @@
         
         var getTest = testSuite.test("GET request", function () {
             requestBuilder.get("/notes/1")
+                .setHeader("user", "pat")
                 .send(function (err, response) {
                     try {
                         expect(err).toBeNull();
@@ -69,6 +71,7 @@
             requestBuilder.get("/notes")
                 .addQueryParameter("limit", 10)
                 .addQueryParameter("offset", 0)
+                .setHeader("user", "pat")
                 .send(function (err, response) {
                     try {
                         expect(err).toBeNull();
@@ -82,6 +85,7 @@
 
         var errorTest = testSuite.test("GET request (with server error)", function () {
             errorRequestBuilder.get("serverReturnsBadRequest")
+                .setHeader("user", "pat")
                 .send(function (err, response) {
                     try {
                         expect(err).toNotBeNull();
@@ -95,6 +99,7 @@
         var postBody = JSON.stringify({ someKey: "someValue" });
         var postTest = testSuite.test("POST request", function () {
             requestBuilder.post("/notes", postBody)
+                .setHeader("user", "pat")
                 .send(function (err, response) {
                     try {
                         expect(err).toBeNull();
