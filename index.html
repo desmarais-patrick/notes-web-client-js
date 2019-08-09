@@ -31,8 +31,8 @@
     
 </head>
 <body>
-    <div id="app" class="container">
-        <div id="top" class="spacer-small"></div>
+    <div id="app" class="container container-hidden">
+        <div id="top" class="spacer"></div>
 
         <header class="header">
             <div class="header-first-part">
@@ -53,51 +53,49 @@
             </div>
         </header>
 
-        <div class="spacer-small"></div>
-
         <section id="editor" class="editor">
-            <div class="editor-actions editor-actions-top">
-                <button type="button"
+            <div class="editor-header"><h2
+                    class="editor-header-title">Editor</h2><div
+                    class="editor-actions editor-header-actions"><button
+                        type="button"
                         class="button-weak editor-actions-delete"
-                        >Delete</button>
-                <button type="button"
+                        >Delete</button><button
+                        type="button"
                         class="button-default editor-actions-new"
-                        >New</button>
-            </div>
+                        >New</button></div></div>
             <div class="editor-container">
                 <div class="editor-inner-container">
-                    <div class="editor-header">
-                        <div class="editor-title"
-                            ><label for="note-example-1">Note</label></div><div
-                            class="editor-date secondary-text"></div><div
-                            class="editor-status secondary-text"></div>
+                    <div class="editor-container-header">
+                        <div class="editor-container-header-title"
+                            ><label
+                            for="note-input"
+                            aria-hidden="true">Note</label></div><div
+                            class="editor-container-header-date secondary-text"></div><div
+                            class="editor-container-header-status secondary-text"></div>
                     </div>
                     <div class="editor-input">
-                        <textarea class="editor-input-textarea"
-                                placeholder="Type here"></textarea>
+                        <textarea id="note-input"
+                            class="editor-input-textarea"
+                            placeholder="Type here"></textarea>
                     </div>
                 </div>
             </div>
-            <div class="editor-actions editor-actions-bottom">
-                <button type="button"
-                        class="button-weak editor-actions-delete"
-                        >Delete</button>
-                <button type="button"
-                        class="button-default editor-actions-new"
-                        >New</button>
+            <div class="editor-footer">
+                <div class="editor-actions editor-footer-actions">
+                    <button type="button"
+                            class="button-weak editor-actions-delete"
+                            >Delete</button>
+                    <button type="button"
+                            class="button-default editor-actions-new"
+                            >New</button>
+                </div>
             </div>
         </section>
 
-        <div class="spacer"></div>
+        <section id="list" class="note-list"></section>
 
-        <section id="list" class="list"></section>
-
-        <div class="spacer"></div>
-
-        <nav id="backToTop" class="back-to-top"
+        <nav id="backToTop" class="back-to-top back-to-top-hidden"
             ><a class="default back-to-top-link" href="#top"></a></nav>
-
-        <div class="spacer-small"></div>
 
         <div id="footer" class="footer">
             <div class="footer-item"

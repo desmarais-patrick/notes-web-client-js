@@ -1,7 +1,6 @@
 .footer {
-    padding: 4rem 1rem 6rem;
-
-    border-top: .05rem dashed #B33939;
+    padding: 2rem 1rem 0;
+    margin-bottom: 4rem;
 }
 
 .footer-item {

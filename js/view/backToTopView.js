@@ -26,13 +26,13 @@
         };
 
         var updateVisibility = function (isVisible) {
-            var hasHiddenClass = viewUtilities.css.hasClass(linkNode,
+            var hasHiddenClass = viewUtilities.css.hasClass(rootNode,
                 HIDDEN_CSS_CLASS);
             
             if (isVisible === true && hasHiddenClass === true) {
-                viewUtilities.css.removeClass(linkNode, HIDDEN_CSS_CLASS);
+                viewUtilities.css.removeClass(rootNode, HIDDEN_CSS_CLASS);
             } else if (isVisible === false && hasHiddenClass === false) {
-                viewUtilities.css.addClass(linkNode, HIDDEN_CSS_CLASS);
+                viewUtilities.css.addClass(rootNode, HIDDEN_CSS_CLASS);
             }
         };
 

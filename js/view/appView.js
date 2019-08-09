@@ -36,7 +36,7 @@
             editorView.render();
     
             var listRootNode = viewUtilities.traversal.findWithCssSelector(
-                rootNode, ".list");
+                rootNode, ".note-list");
             listView = viewFactory.create("NoteList", {
                 rootNode: listRootNode,
                 viewModel: viewModel.getListViewModel()
@@ -52,6 +52,9 @@
             backToTopView.render();
 
             viewModel.setEditNoteListener(focusOnEditor);
+
+            // Show the content.
+            viewUtilities.css.removeClass(rootNode, "container-hidden");
         };
 
         that.destroy = function () {

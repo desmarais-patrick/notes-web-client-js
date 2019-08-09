@@ -1,30 +1,54 @@
-/* Editor actions */
-
-.editor .editor-actions {
-    text-align: right;
+.editor {
+    margin-bottom: 4rem;
 }
 
-.editor .editor-actions.editor-actions-top {
+/* Editor header */
+
+.editor-header {
     margin-bottom: 1rem;
+}
+
+.editor-header-title {
+    display: block;
+    padding-left: .5rem;
+}
+
+.editor-header-actions {
     display: none;
 }
 
-@media (min-width: 720px) {
-    .editor .editor-actions.editor-actions-top {
-        display: block;
+.editor-footer-actions {
+    display: block;
+}
+
+@media (min-width: 360px) {
+    .editor-header-title {
+        display: inline-block;
+        width: 45%;
+        vertical-align: middle;
     }
-    .editor .editor-actions.editor-actions-bottom {
+    .editor-header-actions {
+        display: inline-block;
+        width: 55%;
+    }
+    .editor-footer-actions {
         display: none;
     }
 }
 
-.editor .editor-actions .editor-actions-delete {
+/* Editor actions */
+
+.editor-actions {
+    text-align: right;
+}
+
+.editor-actions-delete {
     margin-right: 2rem;
 }
 
 /* Editor container */
 
-.editor .editor-container {
+.editor-container {
     border: .1rem solid #666666;
     border-radius: .2rem;
     box-shadow: 0 .1rem .1rem #999999;
@@ -36,73 +60,73 @@
     cursor: text;
 }
 
-.editor .editor-container:hover {
+.editor-container:hover {
     box-shadow: 0 .2rem .4rem #666666;
 }
 
 @media (min-width: 360px) {
-    .editor .editor-container {
+    .editor-container {
         background: linear-gradient(0deg, #CCCCCC, transparent) 0 24rem no-repeat;
     }
 }
 
 @media (min-width: 720px) {
-    .editor .editor-container {
+    .editor-container {
         background: linear-gradient(0deg, #CCCCCC, transparent) 0 35rem no-repeat;
     }
 }
 
-.editor .editor-container .editor-inner-container {
+.editor-inner-container {
     padding: 1rem 0;
 }
 
 @media (min-width: 360px) {
-    .editor .editor-container .editor-inner-container {
+    .editor-inner-container {
         margin-left: 3.8rem;
         padding: 2rem 0 2rem;
         border-left: .1rem dashed #D94545;
     }
 }
 
-/* Editor header */
+/* Editor container header */
 
-.editor .editor-container .editor-header {
+.editor-container-header {
     margin-bottom: 1rem;
     padding-left: 1rem;
     min-height: 3rem; /* To account for status not shown initially. */
 }
 
 @media (min-width: 360px) {
-    .editor .editor-container .editor-header {
+    .editor-container-header {
         margin-bottom: 2rem;
     }
 }
 
-.editor .editor-container .editor-header .editor-title {
+.editor-container-header-title {
     display: inline-block;
     width: 25%;
     text-align: left;
 }
 
-.editor .editor-container .editor-header .editor-date {
+.editor-container-header-date {
     display: inline-block;
     width: 75%;
     text-align: right;
 }
 
-.editor .editor-container .editor-header .editor-status {
+.editor-container-header-status {
     display: block;
     width: 100%;
     text-align: right;
 }
 
-/* Editor input */
+/* Editor container input */
 
-.editor .editor-container .editor-input {
+.editor-input {
     padding-left: 1rem;
 }
 
-.editor .editor-container .editor-input textarea {
+.editor-input textarea {
     width: 100%;
     height: 20rem;
     padding: 0;
@@ -112,24 +136,24 @@
     color: #333333;
     resize: none;
 }
-.editor .editor-container .editor-input textarea:focus {
+.editor-input textarea:focus {
     outline-offset: .3rem;
     outline-color: #0E48AB;
 }
 
 @media (min-width: 360px) {
-    .editor .editor-container .editor-input textarea {
+    .editor-input textarea {
         height: 20.5rem;
     }
 }
 
 @media (min-width: 720px) {
-    .editor .editor-container .editor-input textarea {
+    .editor-input textarea {
         height: 30.5rem;
     }
 }
 
-.editor .editor-container .editor-input textarea.input-overflows {
+.editor-input textarea.input-overflows {
     border-bottom: .1rem dotted #666666;
     border-radius: .5rem;
     padding-bottom: .5rem;

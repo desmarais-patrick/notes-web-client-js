@@ -1,4 +1,7 @@
-.note-list,
+.note-list {
+    margin-bottom: 4rem;
+}
+
 .note-list-content,
 .note-list-actions {
     margin-bottom: 1.2rem;
@@ -7,6 +10,10 @@
 .note-list-title,
 .note-list-actions-load-more {
     margin-bottom: 1rem;
+}
+
+.note-list-title {
+    padding-left: .5rem;
 }
 
 .note-list-content.note-list-content-empty {

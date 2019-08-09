@@ -46,7 +46,7 @@
         var createHtmlNodes = function () {
             var title = viewUtilities.html.createElement("h2", {
                 cssClass: "note-list-title",
-                text: "Notes"
+                text: "List"
             });
 
             var content = viewUtilities.html.createElement("div", {

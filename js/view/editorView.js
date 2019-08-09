@@ -11,33 +11,33 @@
         var viewFactory = options.viewFactory;
 
         var topDeleteRootNode = utils.traversal.findWithCssSelector(rootNode,
-            ".editor-actions-top .editor-actions-delete");
+            ".editor-header-actions .editor-actions-delete");
         var topDeleteActionView = viewFactory.create("DeleteNoteAction", {
             rootNode: topDeleteRootNode,
             viewModel: viewModel
         });
         var bottomDeleteRootNode = utils.traversal.findWithCssSelector(
-            rootNode, ".editor-actions-bottom .editor-actions-delete");
+            rootNode, ".editor-footer-actions .editor-actions-delete");
         var bottomDeleteActionView = viewFactory.create("DeleteNoteAction", {
             rootNode: bottomDeleteRootNode,
             viewModel: viewModel
         });
 
         var topNewRootNode = utils.traversal.findWithCssSelector(rootNode, 
-            ".editor-actions-top .editor-actions-new");
+            ".editor-header-actions .editor-actions-new");
         var topNewActionView = viewFactory.create("NewNoteAction", {
             rootNode: topNewRootNode,
             viewModel: viewModel
         });
         var bottomNewRootNode = utils.traversal.findWithCssSelector(rootNode, 
-            ".editor-actions-bottom .editor-actions-new");
+            ".editor-footer-actions .editor-actions-new");
         var bottomNewActionView = viewFactory.create("NewNoteAction", {
             rootNode: bottomNewRootNode,
             viewModel: viewModel
         });
 
         var dateRootNode = utils.traversal.findWithCssSelector(rootNode,
-            ".editor-date");
+            ".editor-container-header-date");
         var dateViewModel = viewModel.getDateViewModel();
         var dateView = viewFactory.create("Text", {
             rootNode: dateRootNode,
@@ -45,7 +45,7 @@
         });
 
         var statusRootNode = utils.traversal.findWithCssSelector(rootNode,
-            ".editor-status");
+            ".editor-container-header-status");
         var statusViewModel = viewModel.getStatusViewModel();
         var statusView = viewFactory.create("NoteStatusText", {
             rootNode: statusRootNode,

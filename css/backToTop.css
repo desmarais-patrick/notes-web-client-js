@@ -1,8 +1,17 @@
 .back-to-top {
-    margin: 0 1rem 1rem 0;
+    margin: 0 1rem 4rem 0;
     text-align: right;
+    height: 1.5rem;
+    opacity: 1;
 }
 
 .back-to-top-hidden {
-    visibility: hidden;
+    transition-property: margin,height,opacity;
+    transition-duration: 500ms,500ms,200ms;
+    transition-timing-function: ease-in;
+    
+    margin: 0;
+    height: 0;
+    opacity: 0;
+    overflow: hidden;
 }

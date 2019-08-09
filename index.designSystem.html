@@ -100,6 +100,8 @@
                     <div class="large"><label class="component-label">Large</label></div>
                 </div>
             </div>
+
+            <a class="section-back-to-top-link" href="#top">Return to top ↑</a>
         </section>
 
         <div class="spacer"></div>
@@ -115,11 +117,7 @@
                 <p>Welcome to the Notes App!</p>
                 <label class="component-label">Text</label>
             </div>
-            <div class="component component-text-footer">
-                <p class="footer-text">Copyright ⓒ 2019 Patrick Desmarais.</p>
-                <label class="component-label">Footer text</label>
-            </div>
-            <a class="section-back-to-top-link" href="top">Return to top ↑</a>
+            <a class="section-back-to-top-link" href="#top">Return to top ↑</a>
         </section>
 
         <div class="spacer"></div>
@@ -154,7 +152,7 @@
             </div>
 
             <div class="clear-left"></div>
-            <a class="section-back-to-top-link" href="top">Return to top ↑</a>
+            <a class="section-back-to-top-link" href="#top">Return to top ↑</a>
         </section>
 
         <div class="spacer"></div>
@@ -217,7 +215,7 @@
                     </div>
                 </div>
             </div>
-            <a class="section-back-to-top-link" href="top">Return to top ↑</a>
+            <a class="section-back-to-top-link" href="#top">Return to top ↑</a>
         </section>
 
         <div class="spacer"></div>
@@ -239,7 +237,7 @@
                 <label class="component-label"> Footer</label>
             </div>
 
-            <a class="section-back-to-top-link" href="top">Return to top ↑</a>
+            <a class="section-back-to-top-link" href="#top">Return to top ↑</a>
         </section>
     
         <div class="spacer"></div>
@@ -286,7 +284,7 @@
                 </div>
             </div>
 
-            <a class="section-back-to-top-link" href="top">Return to top ↑</a>
+            <a class="section-back-to-top-link" href="#top">Return to top ↑</a>
         </section>
     
         <div class="spacer"></div>
@@ -331,7 +329,7 @@
                 </div>
             </div>
 
-            <a class="section-back-to-top-link" href="top">Return to top ↑</a>
+            <a class="section-back-to-top-link" href="#top">Return to top ↑</a>
         </section>
     
         <div class="spacer"></div>
@@ -359,7 +357,7 @@
                 </div>
             </div>
 
-            <a class="section-back-to-top-link" href="top">Return to top ↑</a>
+            <a class="section-back-to-top-link" href="#top">Return to top ↑</a>
         </section>
     
         <div class="spacer"></div>
@@ -388,7 +386,7 @@
                 <label class="component-label">Ready</label>
             </div>
 
-            <a class="section-back-to-top-link" href="top">Return to top ↑</a>
+            <a class="section-back-to-top-link" href="#top">Return to top ↑</a>
         </section>
     
         <div class="spacer"></div>
@@ -398,36 +396,41 @@
 
             <div class="component">
                 <div id="initial-editor-example" class="editor">
-                    <div class="editor-actions editor-actions-top">
-                        <button type="button"
-                                class="button-weak editor-actions-delete"
-                                >Delete</button>
-                        <button type="button"
-                                class="button-default editor-actions-new"
-                                >New</button>
-                    </div>
+                    <div class="editor-header"><h2
+                        class="editor-header-title">Editor</h2><div
+                        class="editor-actions editor-header-actions"><button
+                            type="button"
+                            class="button-weak editor-actions-delete"
+                            >Delete</button><button
+                            type="button"
+                            class="button-default editor-actions-new"
+                            >New</button></div></div>
                     <div class="editor-container">
                         <div class="editor-inner-container">
-                            <div class="editor-header">
-                                    <div
-                                        class="editor-title"><label
-                                            for="note-example-1">Note</label></div><div
-                                                class="editor-date secondary-text"></div><div
-                                                    class="editor-status secondary-text"></div>
-                                </div>
-                                <div class="editor-input">
-                                    <textarea class="editor-input-textarea"
-                                            placeholder="Type here"></textarea>
-                                </div>
+                            <div class="editor-container-header">
+                                <div class="editor-container-header-title"
+                                    ><label
+                                    for="note-input"
+                                    aria-hidden="true">Note</label></div><div
+                                    class="editor-container-header-date secondary-text"></div><div
+                                    class="editor-container-header-status secondary-text"></div>
+                            </div>
+                            <div class="editor-input">
+                                <textarea id="note-input"
+                                    class="editor-input-textarea"
+                                    placeholder="Type here"></textarea>
+                            </div>
                         </div>
                     </div>
-                    <div class="editor-actions editor-actions-bottom">
-                        <button type="button"
-                                class="button-weak editor-actions-delete"
-                                >Delete</button>
-                        <button type="button"
-                                class="button-default editor-actions-new"
-                                >New</button>
+                    <div class="editor-footer">
+                        <div class="editor-actions editor-footer-actions">
+                            <button type="button"
+                                    class="button-weak editor-actions-delete"
+                                    >Delete</button>
+                            <button type="button"
+                                    class="button-default editor-actions-new"
+                                    >New</button>
+                        </div>
                     </div>
                 </div>
                 <label class="component-label">Initial</label>
@@ -437,36 +440,41 @@
 
             <div class="component">
                 <div id="editor-example-one-sentence" class="editor">
-                    <div class="editor-actions editor-actions-top">
-                        <button type="button"
-                                class="button-weak editor-actions-delete"
-                                >Delete</button>
-                        <button type="button"
-                                class="button-default editor-actions-new"
-                                >New</button>
-                    </div>
+                    <div class="editor-header"><h2
+                        class="editor-header-title">Editor</h2><div
+                        class="editor-actions editor-header-actions"><button
+                            type="button"
+                            class="button-weak editor-actions-delete"
+                            >Delete</button><button
+                            type="button"
+                            class="button-default editor-actions-new"
+                            >New</button></div></div>
                     <div class="editor-container">
                         <div class="editor-inner-container">
-                            <div class="editor-header">
-                                    <div
-                                        class="editor-title"><label
-                                            for="note-example-1">Note</label></div><div
-                                                class="editor-date secondary-text"></div><div
-                                                    class="editor-status secondary-text"></div>
-                                </div>
-                                <div class="editor-input">
-                                    <textarea class="editor-input-textarea"
-                                            placeholder="Type here"></textarea>
-                                </div>
+                            <div class="editor-container-header">
+                                <div class="editor-container-header-title"
+                                    ><label
+                                    for="note-input"
+                                    aria-hidden="true">Note</label></div><div
+                                    class="editor-container-header-date secondary-text"></div><div
+                                    class="editor-container-header-status secondary-text"></div>
+                            </div>
+                            <div class="editor-input">
+                                <textarea id="note-input"
+                                    class="editor-input-textarea"
+                                    placeholder="Type here"></textarea>
+                            </div>
                         </div>
                     </div>
-                    <div class="editor-actions editor-actions-bottom">
-                        <button type="button"
-                                class="button-weak editor-actions-delete"
-                                >Delete</button>
-                        <button type="button"
-                                class="button-default editor-actions-new"
-                                >New</button>
+                    <div class="editor-footer">
+                        <div class="editor-actions editor-footer-actions">
+                            <button type="button"
+                                    class="button-weak editor-actions-delete"
+                                    >Delete</button>
+                            <button type="button"
+                                    class="button-default editor-actions-new"
+                                    >New</button>
+                        </div>
                     </div>
                 </div>
                 <label class="component-label">One sentence</label>
@@ -476,42 +484,47 @@
 
             <div class="component">
                 <div id="editor-example-many-sentences" class="editor">
-                    <div class="editor-actions editor-actions-top">
-                        <button type="button"
-                                class="button-weak editor-actions-delete"
-                                >Delete</button>
-                        <button type="button"
-                                class="button-default editor-actions-new"
-                                >New</button>
-                    </div>
+                    <div class="editor-header"><h2
+                        class="editor-header-title">Editor</h2><div
+                        class="editor-actions editor-header-actions"><button
+                            type="button"
+                            class="button-weak editor-actions-delete"
+                            >Delete</button><button
+                            type="button"
+                            class="button-default editor-actions-new"
+                            >New</button></div></div>
                     <div class="editor-container">
                         <div class="editor-inner-container">
-                            <div class="editor-header">
-                                    <div
-                                        class="editor-title"><label
-                                            for="note-example-1">Note</label></div><div
-                                                class="editor-date secondary-text"></div><div
-                                                    class="editor-status secondary-text"></div>
-                                </div>
-                                <div class="editor-input">
-                                    <textarea class="editor-input-textarea"
-                                            placeholder="Type here"></textarea>
-                                </div>
+                            <div class="editor-container-header">
+                                <div class="editor-container-header-title"
+                                    ><label
+                                    for="note-input"
+                                    aria-hidden="true">Note</label></div><div
+                                    class="editor-container-header-date secondary-text"></div><div
+                                    class="editor-container-header-status secondary-text"></div>
+                            </div>
+                            <div class="editor-input">
+                                <textarea id="note-input"
+                                    class="editor-input-textarea"
+                                    placeholder="Type here"></textarea>
+                            </div>
                         </div>
                     </div>
-                    <div class="editor-actions editor-actions-bottom">
-                        <button type="button"
-                                class="button-weak editor-actions-delete"
-                                >Delete</button>
-                        <button type="button"
-                                class="button-default editor-actions-new"
-                                >New</button>
+                    <div class="editor-footer">
+                        <div class="editor-actions editor-footer-actions">
+                            <button type="button"
+                                    class="button-weak editor-actions-delete"
+                                    >Delete</button>
+                            <button type="button"
+                                    class="button-default editor-actions-new"
+                                    >New</button>
+                        </div>
                     </div>
                 </div>
                 <label class="component-label">Many sentences</label>
             </div>
 
-            <a class="section-back-to-top-link" href="top">Return to top ↑</a>
+            <a class="section-back-to-top-link" href="#top">Return to top ↑</a>
         </section>
     
         <div class="spacer"></div>
@@ -551,9 +564,9 @@
                 <div id="list-manyItems-example" class="list"></div>
                 <label class="component-label">Many items</label>
             </div>
-        </section>
 
-        <a class="section-back-to-top-link" href="top">Return to top ↑</a>
+            <a class="section-back-to-top-link" href="#top">Return to top ↑</a>
+        </section>
     
         <div class="spacer"></div>
 
@@ -590,7 +603,7 @@
                     class="design-system-button">Hide</button>
             </div>
 
-            <a class="section-back-to-top-link" href="top">Return to top ↑</a>
+            <a class="section-back-to-top-link" href="#top">Return to top ↑</a>
         </section>
     
         <div class="spacer"></div>
@@ -619,7 +632,7 @@
                 </div>
             </div>
 
-            <a class="section-back-to-top-link" href="top">Return to top ↑</a>
+            <a class="section-back-to-top-link" href="#top">Return to top ↑</a>
         </section>
     
         <div class="spacer"></div>
@@ -645,7 +658,7 @@
                 <label class="component-label">Example</label>
             </div>
 
-            <a class="section-back-to-top-link" href="top">Return to top ↑</a>
+            <a class="section-back-to-top-link" href="#top">Return to top ↑</a>
         </section>
     
         <div class="spacer"></div>

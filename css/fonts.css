@@ -39,11 +39,6 @@ a {
     font-size: 1rem;
 }
 
-footer p, .footer p, p.footer-text,
-footer a, .footer a, a.footer-text {
-    font-size: .8rem;
-}
-
 button {
     font-size: 1rem;
     font-weight: bold;
