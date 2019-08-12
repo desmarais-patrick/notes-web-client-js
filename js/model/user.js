@@ -14,9 +14,9 @@
         };
 
         var getUserFromLocalStorage = function () {
-            var user = null;
+            var name = null;
             try {
-                user = localStorage.getItem(LOCAL_STORAGE_USER_KEY);
+                name = localStorage.getItem(LOCAL_STORAGE_USER_KEY);
             } catch (err) {
                 var message = [
                     "[Model.User]",
@@ -25,23 +25,22 @@
                 ].join(" ");
                 console.log(message);
             }
-            return user;
+            return name;
         };
 
         var saveUserToLocalStorage = function () {
             try {
-                localStorage.setItem(LOCAL_STORAGE_USER_KEY, user);
+                localStorage.setItem(LOCAL_STORAGE_USER_KEY, name);
             } catch (err) {
                 var message = [
                     "[Model.User]",
                     "Error saving user",
-                    ["'", user, "'"].join(""),
+                    ["'", name, "'"].join(""),
                     "to LocalStorage",
                     err.stack
                 ].join(" ");
                 console.log(message);
             }
-            return user;
         };
 
         var name = getUserFromLocalStorage();
