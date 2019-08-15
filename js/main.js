@@ -2,7 +2,7 @@
 
 (function (Notes) {
     // Setup.
-    var chosenConfiguration = Notes.config.configurations["Development"];
+    var chosenConfiguration = Notes.config.configurations["Production"];
 
     var reqBuilderOptions = {
         XMLHttpRequest: window.XMLHttpRequest,
