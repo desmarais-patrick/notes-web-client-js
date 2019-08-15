@@ -76,6 +76,20 @@ NOTES_APP_WEB_CLIENT_RESOURCES_BUCKET=notes-123456-client-resources
 ./deploy.sh
 ```
 
+> Using a custom domain:
+>
+>  1. Create a bucket with your domain on Google Cloud Storage.
+>  2. Run `deploy.sh` to that bucket by setting the environment
+>     variable above.
+>  3. Configure a *CNAME* record to `c.storage.googleapis.com.`.
+>     For example, `app` sub-domain to `c.storage.googleapis.com.`.
+>  4. Assign specialty pages (index) in the bucket list view.
+>     Items detected as valid URLs have *Edit Website configuration* option.
+>
+> Google article reference: [Hosting a Static Website](https://cloud.google.com/storage/docs/hosting-static-website).
+>
+> Note that SSL is not automatically setup with those steps.
+
 ### Clean-up
 
 Remote the storage bucket from your Google Cloud project, or delete your Google Cloud project.
