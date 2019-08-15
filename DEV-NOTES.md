@@ -35,6 +35,8 @@
  - App-wide notifications (dismissable errors, actionable events).
  - Undo.
  - 404 page.
+ - *Firebase Hosting* to support SSL and multiple sites per project.
+   (Spark plan is free with generous limits.)
 
 
  Extra:
