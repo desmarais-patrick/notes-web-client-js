@@ -34,6 +34,7 @@
  - Authentication and app secret with server API.
  - App-wide notifications (dismissable errors, actionable events).
  - Undo.
+ - 404 page.
 
 
  Extra:
