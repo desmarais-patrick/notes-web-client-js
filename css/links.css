@@ -16,7 +16,7 @@ a:visited, a.visited {
     color: #5D1E1E;
 }
 
-a.secondary, a.secondary {
+a.secondary {
     color: #0E48AB;
 }
 a.secondary:hover, a.secondary.hover {
